@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Sitka Text", Sitka, "Lora", Georgia, serif;
+    color: #33130C;
+    background-color: #D5BCA0;
+  }
+
+  h1, h2, h3, .font-display-serif {
+    font-family: "Broadsheet", "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  }
+}
+
+/* Textura de papel Kraft / Pergamino Arrugado (Vistas principales) */
+.bg-kraft-texture {
+  background-color: #D3B99C;
+  background-image:
+    linear-gradient(rgba(211, 185, 156, 0.76), rgba(203, 174, 142, 0.78)),
+    url('/assets/ui/texture-paper.jpg');
+  background-size: 600px auto;
+  background-repeat: repeat;
+}
+
+/* Textura de papel Mostaza / Ocre cálido (Formularios y franja de registro en Home) */
+.bg-mustard-texture {
+  background-color: #D8923E;
+  background-image:
+    linear-gradient(rgba(218, 145, 58, 0.80), rgba(204, 130, 44, 0.84)),
+    url('/assets/ui/texture-paper.jpg');
+  background-size: 600px auto;
+  background-repeat: repeat;
+}
+
+/* Fondo editorial del Curso de Comunicación */
+.bg-course-editorial {
+  background-color: #EAE0D2;
+}
+
+/* Hoja de papel inclinada para formularios (Crear cuenta, Registro artesano, Gracias) */
+.paper-sheet-form {
+  background-color: #F2E5D2;
+  background-image:
+    radial-gradient(circle at 5% 8%, rgba(80, 55, 35, 0.16) 0%, transparent 28%),
+    radial-gradient(circle at 95% 10%, rgba(80, 55, 35, 0.18) 0%, transparent 26%),
+    radial-gradient(circle at 6% 92%, rgba(80, 55, 35, 0.18) 0%, transparent 28%),
+    radial-gradient(circle at 94% 92%, rgba(80, 55, 35, 0.15) 0%, transparent 28%),
+    repeating-linear-gradient(90deg, rgba(160, 125, 85, 0.06) 0px, rgba(160, 125, 85, 0.06) 1px, transparent 1px, transparent 58px),
+    url('/assets/ui/texture-paper.jpg');
+  background-size: cover;
+  transform: rotate(-0.8deg);
+  box-shadow: 0 18px 40px rgba(35, 12, 5, 0.25);
+}
+
+/* Botón rojo terracota inclinado característico de los PDFs */
+.btn-artesanal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #7C1B15 0%, #63120D 100%);
+  color: #F4E6D4;
+  font-family: "Sitka Text", Sitka, "Lora", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transform: rotate(-1.8deg);
+  box-shadow: 0 6px 12px rgba(32, 8, 4, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  border: 1px solid #4E0D09;
+}
+
+.btn-artesanal:hover {
+  transform: rotate(-0.6deg) translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 9px 16px rgba(32, 8, 4, 0.5);
+}
+
+.btn-artesanal:active {
+  transform: rotate(-1.2deg) translateY(0);
+}
+
+/* Botón marrón oscuro (Guardar cambios / Publicar / Pagar y finalizar) */
+.btn-artesanal-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #54140E 0%, #3E0D08 100%);
+  color: #F4E6D4;
+  font-family: "Sitka Text", Sitka, "Lora", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transform: rotate(-1.2deg);
+  box-shadow: 0 6px 12px rgba(32, 8, 4, 0.42);
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.btn-artesanal-dark:hover {
+  transform: rotate(-0.3deg) translateY(-1px);
+  filter: brightness(1.12);
+}
+
+/* Zócalo curvo convexo de las tarjetas de producto */
+.product-card-footer {
+  position: relative;
+}
+.product-card-footer::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: -6%;
+  width: 112%;
+  height: 44px;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background-color: inherit;
+  z-index: 1;
+}
+

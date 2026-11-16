@@ -1,0 +1,9 @@
+node_modules
+dist
+.env.local
+.DS_Store
+tsconfig.tsbuildinfo
+
+# Ignorar PDFs pesados en la raíz del proyecto
+/*.pdf
+
