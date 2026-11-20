@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/* CURSO DE COMUNICACIÓN PARA ARTESANOS — ÍNDICE + 4 UNIDADES ACTUALIZADAS (curso de comunicación.pdf y Parte de la web Andrés págs. 9 y 10) */
+/* CURSO DE COMUNICACIÓN PARA ARTESANOS — 100% TEXTO Y DIAGRAMAS HTML/SVG NÍTIDOS (curso de comunicación.pdf y Parte de la web Andrés págs. 9 y 10) */
 export const CoursePage: React.FC = () => {
   const [unit, setUnit] = useState<0 | 1 | 2 | 3 | 4>(0);
   const navigate = useNavigate();
@@ -82,8 +82,9 @@ export const CoursePage: React.FC = () => {
                     Como fotografiar tus piezas | Duración 25 min.
                   </p>
                   <p>Usar el celular para fotos y vídeos</p>
-                  <p>5 Reglas de la fotografía con celular</p>
-                  <p>Fondos, formatos y ángulos</p>
+                  <p>Fondos</p>
+                  <p>Sobre la pieza a fotografíar</p>
+                  <p>Conceptos básicos de fotografía (ángulos, encuadres, etc)</p>
                 </div>
               </div>
 
@@ -104,9 +105,10 @@ export const CoursePage: React.FC = () => {
                   <p className="font-bold">
                     Tu vidriera digital lista | Duración 15 minutos
                   </p>
-                  <p>Completar tu perfil</p>
-                  <p>Categorías de piezas</p>
-                  <p>Descripciones de piezas y ficha técnica</p>
+                  <p>Conocé el perfil para artesanos</p>
+                  <p>Redacción de copys</p>
+                  <p>Carga de stock</p>
+                  <p>Personalización</p>
                 </div>
               </div>
 
@@ -151,7 +153,8 @@ export const CoursePage: React.FC = () => {
                 <div
                   className="text-4xl md:text-5xl text-[#33130C] py-2 select-none leading-none"
                   style={{
-                    fontFamily: '"KitSans-Light", "Cormorant Garamond", Georgia, serif',
+                    fontFamily:
+                      '"kit-sans", "KitSans-Light", "Cormorant Garamond", Georgia, serif',
                   }}
                 >
                   <div className="tracking-[0.12em]">C~RRIENTE</div>
@@ -453,7 +456,7 @@ export const CoursePage: React.FC = () => {
             </div>
           )}
 
-          {/* ================= VISTA 3: UNIDAD 3 - FOTOGRAFÍA (Parte de la web Andrés pág. 9) ================= */}
+          {/* ================= VISTA 3: UNIDAD 3 - FOTOGRAFÍA ================= */}
           {unit === 3 && (
             <div className="space-y-8 text-sm md:text-[15px] leading-relaxed">
               <div className="space-y-3">
@@ -508,29 +511,48 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
-              {/* NUEVA SECCIÓN: 5 Reglas de la fotografía con celular (Parte de la web Andrés pág. 9) */}
+              {/* 5 Reglas de la fotografía con celular — Con fotografía limpia + iconos SVG nítidos */}
               <div className="space-y-4">
                 <h2 className="text-lg md:text-xl font-bold">
                   5 Reglas de la fotografía con celular
                 </h2>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <h3 className="font-bold">#1 Usá ambas manos</h3>
                   <p>
                     Si se sujeta el teléfono como si fuera una cámara, con ambas manos resulta
                     mejor para tomar las fotografías, no todos tenemos un pulso de cirujano,
                     por lo que sostenerlo así ayudará a que tus fotos salgan más nítidas.
                   </p>
-                  <div className="py-2">
+
+                  {/* Fotografía original sin texto incrustado + iconos X / Check vectoriales */}
+                  <div className="max-w-lg pt-2">
                     <img
-                      src="/assets/course/reglas-celular-checks.jpg"
+                      src="/assets/course/reglas-celular.jpg"
                       alt="Cómo sujetar el celular con ambas manos"
-                      className="w-full max-w-lg rounded shadow-sm"
+                      className="w-full rounded shadow-sm"
                     />
+                    <div className="grid grid-cols-3 text-center pt-3">
+                      <div className="flex justify-center">
+                        <svg viewBox="0 0 32 32" className="w-7 h-7 text-[#8C1D15]" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round">
+                          <path d="M7 7 L25 25 M25 7 L7 25" />
+                        </svg>
+                      </div>
+                      <div className="flex justify-center">
+                        <svg viewBox="0 0 32 32" className="w-7 h-7 text-[#2A331B]" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M6 17 L13 24 L26 8" />
+                        </svg>
+                      </div>
+                      <div className="flex justify-center">
+                        <svg viewBox="0 0 32 32" className="w-7 h-7 text-[#2A331B]" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M6 17 L13 24 L26 8" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 pt-2">
                   <h3 className="font-bold">#2 En lo posible no usar zoom</h3>
                   <p>
                     La mayoría de los teléfonos móviles tienen un zoom digital que no acerca la
@@ -664,14 +686,36 @@ export const CoursePage: React.FC = () => {
                     alt="Ángulos de cámara"
                     className="w-36 h-36 object-contain rounded"
                   />
-                  <ul className="space-y-2 text-xs md:text-sm font-semibold">
-                    <li>• Ángulo cenital</li>
-                    <li>• Ángulo picado</li>
-                    <li>• Ángulo normal</li>
-                    <li>• Ángulo contrapicado</li>
-                    <li>• Ángulo nadir</li>
+                  <ul className="space-y-2.5 text-xs md:text-sm font-semibold">
+                    <li className="flex items-center gap-3">
+                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
+                      <span>Ángulo cenital</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
+                      <span>Ángulo picado</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
+                      <span>Ángulo normal</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
+                      <span>Ángulo contrapicado</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
+                      <span>Ángulo nadir</span>
+                    </li>
                   </ul>
                 </div>
+
+                <p className="text-xs md:text-sm">
+                  Conocerlos nos ayuda a ver las opciones con las que contamos al momento de
+                  fotografiar para encontrar el ángulo que más le favorezca. No dejes de probar
+                  y experimentar nuevas formas de componer tus fotos según lo que quieras
+                  transmitir
+                </p>
 
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
@@ -744,7 +788,7 @@ export const CoursePage: React.FC = () => {
             </div>
           )}
 
-          {/* ================= VISTA 4: UNIDAD 4 - OPTIMIZAR TU VIDRIERA DIGITAL (Parte de la web Andrés pág. 10) ================= */}
+          {/* ================= VISTA 4: UNIDAD 4 - OPTIMIZAR TU VIDRIERA DIGITAL ================= */}
           {unit === 4 && (
             <div className="space-y-8 text-sm md:text-[15px] leading-relaxed">
               <div className="space-y-4">
@@ -788,7 +832,7 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Completar tu perfil (Parte de la web Andrés pág. 10) */}
+              {/* Completar tu perfil — Maquetado en HTML/CSS 100% nítido (sin capturas pixeladas) */}
               <div className="space-y-4">
                 <h2 className="text-lg md:text-xl font-bold">Completar tu perfil</h2>
                 <p>
@@ -799,11 +843,37 @@ export const CoursePage: React.FC = () => {
                   registrados.
                 </p>
 
-                <img
-                  src="/assets/course/u4-completar-perfil.jpg"
-                  alt="Ejemplo de cómo completar tu perfil"
-                  className="w-full max-w-xl rounded shadow-sm"
-                />
+                {/* Diagrama interactivo 1: Tarjeta de Perfil en HTML nítido */}
+                <div className="bg-kraft-texture rounded-xl p-6 md:p-8 shadow-sm max-w-xl">
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch pt-5">
+                    <div className="sm:col-span-6 relative bg-[#865D4E] text-[#F5E9D9] rounded-lg px-5 pt-11 pb-5 shadow">
+                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-black text-white flex items-center justify-center text-2xl font-bold shadow">
+                        +
+                      </div>
+                      <p className="italic font-bold text-center text-base text-[#E6CEB5] leading-snug">
+                        Nombre personal
+                        <br />o del negocio
+                      </p>
+                      <div className="mt-3 space-y-1 text-[11px] text-[#F5E9D9]/95">
+                        <p>Contacto: 3794 557744</p>
+                        <p>Instagram: Artesanales_Silvia</p>
+                        <p>Taller: 9 de Julio 111</p>
+                      </div>
+                    </div>
+
+                    <div className="sm:col-span-6 bg-[#D6BFA6]/90 rounded-lg p-5 flex flex-col justify-between">
+                      <p className="text-xs text-[#33130C] leading-relaxed">
+                        Breve descripción: nombre, materiales y técnicas con las que trabajas,
+                        algún característica que te diferencie.
+                      </p>
+                      <div className="mt-4 flex justify-center">
+                        <span className="bg-[#4E120B] text-[#F4E6D4] text-[11px] font-semibold px-5 py-1 shadow">
+                          Editar perfil
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <p>
                   Otra sección es la de tu historia personal, a diferencia del perfil que es
@@ -812,14 +882,27 @@ export const CoursePage: React.FC = () => {
                   oficio.
                 </p>
 
-                <img
-                  src="/assets/course/u4-historia-personal.jpg"
-                  alt="Ejemplo de sección Un poco de mi historia"
-                  className="w-full max-w-xl rounded shadow-sm"
-                />
+                {/* Diagrama interactivo 2: Un poco de mi historia en HTML nítido */}
+                <div className="bg-kraft-texture rounded-xl p-6 md:p-7 shadow-sm max-w-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1.5 max-w-xs">
+                    <h3 className="font-display-serif text-lg font-bold text-[#4A170E]">
+                      Un poco de mi historia
+                    </h3>
+                    <p className="text-[11px] text-[#33130C] leading-relaxed">
+                      Mi acercamiento a la artesanía comenzó hace más de diez años, cuando
+                      descubrí el mundo del trabajo con metales y piedras naturales. Al
+                      principio, todo era curiosidad: me interesaba conocer los materiales,
+                      entender cómo se comportaban y descubrir de qué manera podían
+                      transformarse en objetos...
+                    </p>
+                  </div>
+                  <span className="bg-[#4E120B] text-[#F4E6D4] text-[11px] font-semibold px-4 py-1.5 shadow shrink-0">
+                    Editar descripción
+                  </span>
+                </div>
               </div>
 
-              {/* Categorías de piezas actualizada */}
+              {/* Categorías de piezas */}
               <div className="space-y-3">
                 <h2 className="text-lg md:text-xl font-bold">Categorías de piezas</h2>
                 <p>
@@ -867,7 +950,7 @@ export const CoursePage: React.FC = () => {
                 </ul>
               </div>
 
-              {/* Descripciones de piezas con diagrama */}
+              {/* Descripciones de piezas — Con esquema HTML nítido */}
               <div className="space-y-4">
                 <h2 className="text-lg md:text-xl font-bold">Descripciones de piezas</h2>
                 <p>
@@ -896,11 +979,59 @@ export const CoursePage: React.FC = () => {
                   </div>
                 </div>
 
-                <img
-                  src="/assets/course/u4-ficha-tecnica-diagrama.jpg"
-                  alt="Esquema del formulario de carga de pieza"
-                  className="w-full max-w-xl rounded shadow-sm"
-                />
+                {/* Diagrama HTML nítido de la ficha de carga de pieza */}
+                <div className="bg-kraft-texture rounded-xl p-6 shadow-sm max-w-xl">
+                  <div className="bg-[#D6BFA6]/90 rounded-xl p-5 grid grid-cols-12 gap-5 items-start">
+                    <div className="col-span-7 space-y-2 text-[11px] text-[#2B0F08]">
+                      <div className="border-l-2 border-[#741712] pl-2.5 space-y-1">
+                        <p className="text-[10px] font-bold uppercase text-[#741712]">
+                          Datos genéricos
+                        </p>
+                        <p>Nombre de la pieza:</p>
+                        <p>Medidas:</p>
+                        <p>Precio (si se omite queda como consultable):</p>
+                        <p>Stock (si contas con existencias):</p>
+                      </div>
+
+                      <div className="border-l-2 border-[#741712] pl-2.5 space-y-1 pt-1">
+                        <p className="text-[10px] font-bold uppercase text-[#741712]">
+                          Datos específicos
+                        </p>
+                        <p>Horas de trabajo:</p>
+                        <p>Material/es:</p>
+                        <p>Técnica/s:</p>
+                      </div>
+
+                      <div className="border border-[#741712] rounded p-2 mt-1">
+                        <p className="font-semibold">Descripción:</p>
+                      </div>
+
+                      <div className="pt-1 space-y-1">
+                        <p className="font-semibold">Categoría</p>
+                        <p className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full border border-[#D8923E] inline-block" />
+                          <span>Decorativo</span>
+                        </p>
+                        <p className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#D8923E] inline-block" />
+                          <span>Utilitario</span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="col-span-5 space-y-1.5">
+                      <p className="text-[11px] font-medium">Añadir fotografías</p>
+                      <div className="bg-black aspect-[3/3.6] flex items-center justify-center text-[#C8B29B] text-4xl font-bold">
+                        +
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex justify-center">
+                    <span className="bg-[#4E120B] text-[#F4E6D4] text-xs font-semibold px-8 py-1 shadow">
+                      Publicar
+                    </span>
+                  </div>
+                </div>
 
                 <p>
                   Es justamente en el apartado de breve descripción donde tenemos el espacio

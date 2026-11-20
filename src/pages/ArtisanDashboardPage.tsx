@@ -47,11 +47,20 @@ export const ArtisanDashboardPage: React.FC = () => {
 
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [isEditingHistory, setIsEditingHistory] = useState(false);
+  const [brandName, setBrandName] = useState(artisan.brand_name);
   const [phone, setPhone] = useState(artisan.phone);
   const [instagram, setInstagram] = useState(artisan.instagram || 'Artesanales_Eltimbo');
   const [address, setAddress] = useState(artisan.address || 'Taller 9 de Julio 111');
   const [shortBio, setShortBio] = useState(artisan.short_bio);
   const [historyText, setHistoryText] = useState(artisan.history_text);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(
+    artisan.avatar_url || null
+  );
+  const [storyImageUrl, setStoryImageUrl] = useState<string | null>(
+    artisan.story_image_url || null
+  );
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [uploadingStoryImg, setUploadingStoryImg] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
   const [openShared, setOpenShared] = useState(true);
@@ -59,26 +68,48 @@ export const ArtisanDashboardPage: React.FC = () => {
   const [openBought, setOpenBought] = useState(true);
 
   useEffect(() => {
+    setBrandName(artisan.brand_name);
     setPhone(artisan.phone);
     setInstagram(artisan.instagram || 'Artesanales_Eltimbo');
     setAddress(artisan.address || 'Taller 9 de Julio 111');
     setShortBio(artisan.short_bio);
     setHistoryText(artisan.history_text);
+    setAvatarUrl(artisan.avatar_url || null);
+    setStoryImageUrl(artisan.story_image_url || null);
   }, [artisan]);
 
-  const sharedProducts = useMemo(() => {
-    const sameMat = products.filter((p) => p.material_id === (artisan.material_id || 1));
-    if (sameMat.length >= 8) {
-      const mLechuza = products.find((p) => p.slug === 'mate-lechuza') || sameMat[0];
-      const bCarp =
-        products.find((p) => p.slug === 'billetera-de-carpincho') || sameMat[1];
-      const mFam =
-        products.find((p) => p.slug === 'mate-familia-de-carpinchos') || sameMat[2];
-      const bill = products.find((p) => p.slug === 'billetera-cincelada') || sameMat[3];
-      return [mLechuza, bCarp, mFam, bill, ...sameMat.slice(4, 8)];
+  const handleAvatarUpload = async (file?: File | null) => {
+    if (!file) return;
+    setUploadingAvatar(true);
+    setFeedbackMsg(null);
+    try {
+      const url = await uploadMediaFile(file, 'artesanos-avatar');
+      setAvatarUrl(url);
+      await updateArtisanProfile(artisan.id, { avatar_url: url });
+      setFeedbackMsg('¡Foto de perfil actualizada!');
+    } finally {
+      setUploadingAvatar(false);
     }
-    return products.slice(0, 8);
-  }, [products, artisan]);
+  };
+
+  const handleStoryImageUpload = async (file?: File | null) => {
+    if (!file) return;
+    setUploadingStoryImg(true);
+    setFeedbackMsg(null);
+    try {
+      const url = await uploadMediaFile(file, 'artesanos-historia');
+      setStoryImageUrl(url);
+      await updateArtisanProfile(artisan.id, { story_image_url: url });
+      setFeedbackMsg('¡Imagen de tu historia actualizada!');
+    } finally {
+      setUploadingStoryImg(false);
+    }
+  };
+
+  // Mostrar ÚNICAMENTE los productos que pertenecen al artesano logueado
+  const sharedProducts = useMemo(() => {
+    return products.filter((p) => p.artisan_id === artisan.id);
+  }, [products, artisan.id]);
 
   const openCreateForm = () => {
     setPieceForm({
@@ -87,9 +118,9 @@ export const ArtisanDashboardPage: React.FC = () => {
       price: null,
       stock: 2,
       work_hours: '',
-      material_label: 'Cuero',
+      material_label: artisan.materials_text || 'Cuero',
       material_id: artisan.material_id || 1,
-      technique: '',
+      technique: artisan.techniques || '',
       short_description: '',
       category_type: 'utilitario',
       is_featured: false,
@@ -382,7 +413,6 @@ export const ArtisanDashboardPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Columna derecha: Añadir fotografías (3:4) */}
               <div className="md:col-span-6 space-y-3">
                 <p className="text-sm md:text-[15.5px] text-[#2B0F08] font-medium">
                   Añadir fotografías
@@ -486,22 +516,51 @@ export const ArtisanDashboardPage: React.FC = () => {
         {/* 1. BLOQUE SUPERIOR DE PERFIL (2 COLUMNAS) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch pt-8">
           <div className="md:col-span-5 relative bg-[#865D4E] text-[#F5E9D9] rounded-xl px-7 pt-16 pb-8 shadow-md flex flex-col justify-between">
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-[#5B2220] shadow-lg flex items-center justify-center text-5xl font-bold text-[#C8A796]">
-              +
-            </div>
+            {/* Círculo superior clickable para subir/cambiar la foto de perfil del artesano */}
+            <label
+              title="Hacé clic para subir o cambiar tu foto de perfil"
+              className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-[#5B2220] shadow-lg flex items-center justify-center text-5xl font-bold text-[#C8A796] cursor-pointer group border-2 border-[#865D4E]"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={(e) => handleAvatarUpload(e.target.files?.[0])}
+              />
+              {uploadingAvatar ? (
+                <span className="text-xs text-white font-semibold">Subiendo...</span>
+              ) : avatarUrl ? (
+                <>
+                  <img
+                    src={avatarUrl}
+                    alt={brandName}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <span className="text-3xl text-white font-bold">+</span>
+                  </div>
+                </>
+              ) : (
+                <span className="group-hover:scale-110 transition-transform select-none">
+                  +
+                </span>
+              )}
+            </label>
 
             <div className="text-center mt-2">
-              <h1 className="italic font-bold text-2xl md:text-[26px] text-[#E6CEB5] leading-tight">
-                {artisan.brand_name.includes('Ariel') ? (
-                  <>
-                    Artesanales
-                    <br />
-                    Ariel Morales
-                  </>
-                ) : (
-                  artisan.brand_name
-                )}
-              </h1>
+              {isEditingBio ? (
+                <input
+                  type="text"
+                  value={brandName}
+                  onChange={(e) => setBrandName(e.target.value)}
+                  className="w-full text-center bg-transparent border-b border-white/60 italic font-bold text-2xl text-[#E6CEB5] focus:outline-none"
+                  placeholder="Nombre del taller o marca"
+                />
+              ) : (
+                <h1 className="italic font-bold text-2xl md:text-[26px] text-[#E6CEB5] leading-tight">
+                  {brandName}
+                </h1>
+              )}
             </div>
 
             <div className="mt-6 space-y-2 text-sm md:text-[15px] text-[#F5E9D9]">
@@ -513,18 +572,21 @@ export const ArtisanDashboardPage: React.FC = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
+                    placeholder="Teléfono"
                   />
                   <input
                     type="text"
                     value={instagram}
                     onChange={(e) => setInstagram(e.target.value)}
                     className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
+                    placeholder="Instagram / Red social"
                   />
                   <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
+                    placeholder="Dirección o localidad"
                   />
                 </>
               ) : (
@@ -550,11 +612,8 @@ export const ArtisanDashboardPage: React.FC = () => {
                   className="w-full bg-[#DFCCB6] p-3 rounded text-sm md:text-base text-[#33130C] focus:outline-none"
                 />
               ) : (
-                <p className="text-base md:text-[17px] text-[#33130C] leading-relaxed">
-                  Hola! soy {artisan.full_name.split(' ')[0]}, Desde hace más de diez años me
-                  dedico a trabajar con cuero crudo.. Mi especialidad es la elaboración de
-                  billeteras, mates y accesorios artesanales, piezas que realizo cuidando cada
-                  detalle.
+                <p className="text-base md:text-[17px] text-[#33130C] leading-relaxed whitespace-pre-line">
+                  {shortBio}
                 </p>
               )}
             </div>
@@ -566,13 +625,15 @@ export const ArtisanDashboardPage: React.FC = () => {
                     type="button"
                     onClick={async () => {
                       await updateArtisanProfile(artisan.id, {
+                        brand_name: brandName,
                         phone,
                         instagram,
                         address,
                         short_bio: shortBio,
+                        avatar_url: avatarUrl || artisan.avatar_url,
                       });
                       setIsEditingBio(false);
-                      setFeedbackMsg('Perfil actualizado en Supabase.');
+                      setFeedbackMsg('¡Perfil y descripción guardados con éxito!');
                     }}
                     className="btn-artesanal-dark px-8 py-1.5 text-sm md:text-base"
                   >
@@ -616,37 +677,62 @@ export const ArtisanDashboardPage: React.FC = () => {
                 className="w-full bg-[#DFCCB6] p-3 rounded text-sm text-[#3B170E] focus:outline-none"
               />
             ) : (
-              <p className="text-sm md:text-[15px] text-[#3B170E] leading-relaxed">
+              <p className="text-sm md:text-[15px] text-[#3B170E] leading-relaxed whitespace-pre-line">
                 {historyText}
               </p>
             )}
           </div>
 
-          <div className="md:col-span-5 bg-[#865D4E] md:rounded-l-[120px] p-6 flex flex-col items-center justify-center gap-3">
-            <span className="text-6xl font-bold text-[#C8A796] select-none">+</span>
-            {isEditingHistory ? (
-              <button
-                type="button"
-                onClick={async () => {
-                  await updateArtisanProfile(artisan.id, {
-                    history_text: historyText,
-                  });
-                  setIsEditingHistory(false);
-                  setFeedbackMsg('Historia guardada en Supabase.');
-                }}
-                className="btn-artesanal-dark px-6 py-1.5 text-sm"
-              >
-                Guardar descripción
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setIsEditingHistory(true)}
-                className="btn-artesanal-dark px-6 py-1.5 text-sm"
-              >
-                Editar descripción
-              </button>
+          <div className="md:col-span-5 bg-[#865D4E] md:rounded-l-[120px] p-6 relative overflow-hidden flex flex-col items-center justify-center gap-3">
+            {storyImageUrl && (
+              <img
+                src={storyImageUrl}
+                alt="Historia del taller"
+                className="absolute inset-0 w-full h-full object-cover opacity-45"
+              />
             )}
+
+            <label
+              title="Subir o cambiar imagen de tu historia"
+              className="relative z-10 cursor-pointer flex flex-col items-center group"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={(e) => handleStoryImageUpload(e.target.files?.[0])}
+              />
+              <span className="text-6xl font-bold text-[#E6CEB5] group-hover:scale-110 transition-transform select-none drop-shadow">
+                {uploadingStoryImg ? '...' : '+'}
+              </span>
+            </label>
+
+            <div className="relative z-10">
+              {isEditingHistory ? (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await updateArtisanProfile(artisan.id, {
+                      history_text: historyText,
+                      story_image_url: storyImageUrl || artisan.story_image_url,
+                    });
+                    setIsEditingHistory(false);
+                    setFeedbackMsg('¡Historia guardada con éxito!');
+                  }}
+                  className="btn-artesanal-dark px-6 py-1.5 text-sm"
+                >
+                  Guardar descripción
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIsEditingHistory(true)}
+                  className="btn-artesanal-dark px-6 py-1.5 text-sm"
+                >
+                  Editar descripción
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -711,22 +797,32 @@ export const ArtisanDashboardPage: React.FC = () => {
 
           {openShared && (
             <div className="space-y-4">
-              <p className="text-xs md:text-sm text-[#3B170E] px-1">
-                Selecciona un producto para eliminarlo o editar su información.
-              </p>
+              {sharedProducts.length === 0 ? (
+                <div className="bg-[#D6BFA6]/75 rounded-xl p-8 text-center text-sm md:text-base text-[#4A170E]">
+                  Todavía no compartiste productos en tu catálogo. Hacé clic en{' '}
+                  <strong>Añadir (+)</strong> arriba en{' '}
+                  <em>Compartí una nueva pieza</em> para publicar tu primer producto.
+                </div>
+              ) : (
+                <>
+                  <p className="text-xs md:text-sm text-[#3B170E] px-1">
+                    Selecciona un producto para eliminarlo o editar su información.
+                  </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                {sharedProducts.map((prod, idx) => (
-                  <ProductCard
-                    key={`shared-${prod.id}-${idx}`}
-                    product={prod}
-                    artisan={artisan}
-                    highlighted={idx === 0}
-                    showArtisanName={false}
-                    onClickOverride={(p) => openEditForm(p)}
-                  />
-                ))}
-              </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    {sharedProducts.map((prod, idx) => (
+                      <ProductCard
+                        key={`shared-${prod.id}-${idx}`}
+                        product={prod}
+                        artisan={artisan}
+                        highlighted={idx === 0}
+                        showArtisanName={false}
+                        onClickOverride={(p) => openEditForm(p)}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </section>

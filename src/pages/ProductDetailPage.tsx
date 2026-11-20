@@ -59,26 +59,19 @@ export const ProductDetailPage: React.FC = () => {
     return map;
   }, [artisans]);
 
-  // "Más productos del Artesano" (paginas.pdf pág. 2: Mate Lechuza, Billetera de Carpincho, Mate familia de carpinchos, Billetera)
+  // "Más productos del Artesano": únicamente productos que pertenecen a este mismo artesano
   const moreFromArtisan = useMemo(() => {
-    const sameMat = products.filter((p) => p.material_id === product.material_id);
-    if (product.material_id === 1 && sameMat.length >= 4) {
-      const mLechuza = products.find((p) => p.slug === 'mate-lechuza') || sameMat[0];
-      const bCarp = products.find((p) => p.slug === 'billetera-de-carpincho') || sameMat[1];
-      const mFam =
-        products.find((p) => p.slug === 'mate-familia-de-carpinchos') || sameMat[2];
-      const bill = products.find((p) => p.slug === 'billetera-cincelada') || sameMat[3];
-      return [mLechuza, bCarp, mFam, bill];
-    }
-    return sameMat.slice(0, 4);
+    const own = products.filter(
+      (p) => p.artisan_id === product.artisan_id && p.id !== product.id
+    );
+    return own.slice(0, 4);
   }, [products, product]);
 
-  // "Productos similares" (paginas.pdf pág. 2: Mate de flor, Llavero de dorado, Termera pequeña, Billetera temática de animales)
+  // "Productos similares": otros productos del mismo material
   const similarProducts = useMemo(() => {
-    const sameMat = products.filter((p) => p.material_id === product.material_id);
-    if (product.material_id === 1 && sameMat.length >= 8) {
-      return sameMat.slice(4, 8);
-    }
+    const sameMat = products.filter(
+      (p) => p.material_id === product.material_id && p.id !== product.id
+    );
     return sameMat.slice(0, 4);
   }, [products, product]);
 

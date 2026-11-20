@@ -130,13 +130,30 @@ const DEFAULT_PURCHASED_ORDERS: PurchasedOrderItem[] = [
   },
 ];
 
+const ARTISANS_STORAGE_KEY = 'ca_artisans_v3';
+const PRODUCTS_STORAGE_KEY = 'ca_products_v3';
+
 const AppContext = createContext<AppContextValue | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [materials] = useState<Material[]>(INITIAL_MATERIALS);
-  const [artisans, setArtisans] = useState<Artisan[]>(INITIAL_ARTISANS);
+  const [artisans, setArtisans] = useState<Artisan[]>(() => {
+    try {
+      const saved = localStorage.getItem(ARTISANS_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : INITIAL_ARTISANS;
+    } catch {
+      return INITIAL_ARTISANS;
+    }
+  });
   const [catalogs] = useState<Catalog[]>(INITIAL_CATALOGS);
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const [products, setProducts] = useState<Product[]>(() => {
+    try {
+      const saved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+    } catch {
+      return INITIAL_PRODUCTS;
+    }
+  });
   const [loading, setLoading] = useState<boolean>(true);
 
   const [userRole, setUserRoleState] = useState<UserRole>(() => {
@@ -240,31 +257,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const refreshData = async () => {
     try {
-      const [artRes, prodRes] = await Promise.all([
+      const [artRes] = await Promise.all([
         supabase.from('artisans').select('*').order('id', { ascending: true }),
-        supabase.from('products').select('*').order('id', { ascending: true }),
       ]);
 
-      if (artRes.data && artRes.data.length > 0) {
-        const knownSlugs = new Set(INITIAL_ARTISANS.map((a) => a.slug));
-        const customArtisans = artRes.data.filter((a) => !knownSlugs.has(a.slug));
-        if (customArtisans.length > 0) {
-          setArtisans([...INITIAL_ARTISANS, ...customArtisans]);
-        }
-      }
+      let savedLocalArtisans: Artisan[] = [];
+      try {
+        const raw = localStorage.getItem(ARTISANS_STORAGE_KEY);
+        if (raw) savedLocalArtisans = JSON.parse(raw);
+      } catch {}
+      const localBySlug = new Map(savedLocalArtisans.map((a) => [a.slug, a]));
 
-      if (prodRes.data && prodRes.data.length > 0) {
-        const dbBySlug = new Map(prodRes.data.map((p) => [p.slug, p]));
-        const mergedInitial = INITIAL_PRODUCTS.map((item) => {
-          const dbMatch = dbBySlug.get(item.slug);
-          return dbMatch
-            ? { ...item, stock: dbMatch.stock, price: dbMatch.price }
-            : item;
-        });
-        const initialSlugs = new Set(INITIAL_PRODUCTS.map((p) => p.slug));
-        const customProducts = prodRes.data.filter((p) => !initialSlugs.has(p.slug));
-        setProducts([...customProducts, ...mergedInitial]);
-      }
+      // Los 11 artesanos iniciales mantienen SIEMPRE su id fijo (1..11) para no colisionar con productos de otros artesanos
+      const initialSlugs = new Set(INITIAL_ARTISANS.map((a) => a.slug));
+      const mergedInitial = INITIAL_ARTISANS.map((item) => {
+        const localMatch = localBySlug.get(item.slug);
+        return localMatch ? { ...localMatch, id: item.id } : item;
+      });
+
+      // Cualquier artesano nuevo registrado recibe un ID >= 1000 para que su catálogo empiece vacío y sea 100% propio
+      const customFromLocal = savedLocalArtisans.filter(
+        (a) => !initialSlugs.has(a.slug)
+      );
+      const localSlugs = new Set([
+        ...initialSlugs,
+        ...customFromLocal.map((a) => a.slug),
+      ]);
+
+      const customFromDb: Artisan[] = (artRes.data || [])
+        .filter((a) => !localSlugs.has(a.slug))
+        .map((a) => ({
+          ...a,
+          id: a.id < 1000 ? a.id + 1000 : a.id,
+        }));
+
+      const finalArtisans = [...mergedInitial, ...customFromLocal, ...customFromDb];
+      setArtisans(finalArtisans);
+      try {
+        localStorage.setItem(ARTISANS_STORAGE_KEY, JSON.stringify(finalArtisans));
+      } catch {}
     } catch (err) {
       console.warn('Using local catalog data:', err);
     } finally {
@@ -308,8 +339,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '')}-${Date.now().toString().slice(-4)}`;
 
-    const avatarUrl =
-      input.production_photos[0] || '/assets/artisans/ariel-morales.jpg';
+    const avatarUrl = input.production_photos[0] || '';
 
     const payload = {
       slug,
@@ -318,45 +348,55 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       dni: input.dni,
       phone: input.phone,
       instagram: input.instagram,
-      address: input.locality || 'Taller 9 de Julio 111',
+      address: input.locality || 'Corrientes Capital',
       locality: input.locality || 'Corrientes Capital',
-      experience_years: input.experience_years || '10 años',
+      experience_years: input.experience_years || '5 años',
       materials_text: input.materials_text,
       material_id: input.material_id || 1,
-      techniques: input.techniques || 'Cincelado y trabajo manual',
+      techniques: input.techniques || 'Elaboración artesanal',
       short_bio: `Hola! soy ${input.full_name.split(' ')[0]}, ya llevo ${
-        input.experience_years || '10 años'
+        input.experience_years || '5 años'
       } siendo artesano trabajando con ${input.materials_text}`,
       history_text: `Mi acercamiento a la artesanía comenzó hace ${
-        input.experience_years || 'más de diez años'
+        input.experience_years || 'varios años'
       }, trabajando con ${input.materials_text} mediante técnicas de ${
         input.techniques || 'elaboración tradicional correntina'
       }.`,
       avatar_url: avatarUrl,
-      story_image_url: '/assets/artisans/ariel-historia-taller.jpg',
-      production_photos:
-        input.production_photos.length > 0
-          ? input.production_photos
-          : ['/assets/products/billetera-cincelada.jpg'],
+      story_image_url: '',
+      production_photos: input.production_photos,
       status: 'approved',
     };
 
     const { data, error } = await supabase
       .from('artisans')
-      .insert(payload)
+      .insert({
+        ...payload,
+        avatar_url: avatarUrl || '/assets/artisans/ariel-morales.jpg',
+      })
       .select('*')
       .single();
-
-    const created: Artisan = data || {
-      id: Date.now(),
-      ...payload,
-    };
 
     if (error) {
       console.warn('Supabase artisan insert warning:', error.message);
     }
 
-    setArtisans((prev) => [...prev, created]);
+    // Asignamos un ID único >= 1000 para que su catálogo empiece limpio sin productos de otros artesanos
+    const uniqueArtisanId =
+      data && data.id ? (data.id < 1000 ? data.id + 1000 : data.id) : Date.now();
+
+    const created: Artisan = {
+      id: uniqueArtisanId,
+      ...payload,
+    };
+
+    setArtisans((prev) => {
+      const next = [...prev, created];
+      try {
+        localStorage.setItem(ARTISANS_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
     setActiveArtisanId(created.id);
     setUserRole('artesano');
     return created;
@@ -366,18 +406,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     artisanId: number,
     updates: Partial<Artisan>
   ) => {
-    const { error } = await supabase
-      .from('artisans')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', artisanId);
+    const target = artisans.find((a) => a.id === artisanId);
+    if (target?.slug) {
+      const { error } = await supabase
+        .from('artisans')
+        .update({ ...updates, updated_at: new Date().toISOString() })
+        .eq('slug', target.slug);
 
-    if (error) {
-      console.warn('Supabase artisan update warning:', error.message);
+      if (error) {
+        console.warn('Supabase artisan update warning:', error.message);
+      }
     }
 
-    setArtisans((prev) =>
-      prev.map((a) => (a.id === artisanId ? { ...a, ...updates } : a))
-    );
+    setArtisans((prev) => {
+      const next = prev.map((a) => (a.id === artisanId ? { ...a, ...updates } : a));
+      try {
+        localStorage.setItem(ARTISANS_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   };
 
   const savePiece = async (
@@ -427,9 +474,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     if (input.id) {
       const existing = products.find((p) => p.id === input.id);
+      if (existing && existing.artisan_id !== artisanId) {
+        throw new Error('Solo podés editar productos de tu propio catálogo.');
+      }
+
       const updatedProduct: Product = {
         ...(existing || { id: input.id }),
         ...rowPayload,
+        artisan_id: artisanId,
         slug: existing?.slug || rowPayload.slug,
       };
 
@@ -451,32 +503,51 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         })
         .eq('slug', updatedProduct.slug);
 
-      setProducts((prev) =>
-        prev.map((p) => (p.id === input.id ? updatedProduct : p))
-      );
+      setProducts((prev) => {
+        const next = prev.map((p) => (p.id === input.id ? updatedProduct : p));
+        try {
+          localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(next));
+        } catch {}
+        return next;
+      });
       return updatedProduct;
     } else {
-      const { data } = await supabase
+      const dbArtisanId = artisanId >= 1000 ? 1 : artisanId;
+      await supabase
         .from('products')
-        .insert(rowPayload)
-        .select('*')
-        .single();
+        .insert({ ...rowPayload, artisan_id: dbArtisanId });
 
-      const created: Product = data || {
+      const created: Product = {
         id: Date.now(),
         ...rowPayload,
+        artisan_id: artisanId,
       };
-      setProducts((prev) => [created, ...prev]);
+      setProducts((prev) => {
+        const next = [created, ...prev];
+        try {
+          localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(next));
+        } catch {}
+        return next;
+      });
       return created;
     }
   };
 
   const deletePiece = async (productId: number) => {
     const target = products.find((p) => p.id === productId);
+    if (target && target.artisan_id !== activeArtisanId) {
+      throw new Error('Solo podés eliminar productos de tu propio catálogo.');
+    }
     if (target) {
       await supabase.from('products').delete().eq('slug', target.slug);
     }
-    setProducts((prev) => prev.filter((p) => p.id !== productId));
+    setProducts((prev) => {
+      const next = prev.filter((p) => p.id !== productId);
+      try {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   };
 
   const completePurchase = async (
@@ -513,9 +584,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     if (!error && data) {
       const dbStock = Number(data.new_stock);
-      setProducts((prev) =>
-        prev.map((p) => (p.id === productId ? { ...p, stock: dbStock } : p))
-      );
+      setProducts((prev) => {
+        const next = prev.map((p) =>
+          p.id === productId ? { ...p, stock: dbStock } : p
+        );
+        try {
+          localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(next));
+        } catch {}
+        return next;
+      });
       return { order_id: Number(data.order_id), new_stock: dbStock };
     }
 
@@ -526,9 +603,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .eq('slug', target.slug);
     }
 
-    setProducts((prev) =>
-      prev.map((p) => (p.id === productId ? { ...p, stock: nextStock } : p))
-    );
+    setProducts((prev) => {
+      const next = prev.map((p) =>
+        p.id === productId ? { ...p, stock: nextStock } : p
+      );
+      try {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
     return { order_id: Date.now(), new_stock: nextStock };
   };
 

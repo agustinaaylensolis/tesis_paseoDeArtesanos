@@ -649,7 +649,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 13,
     slug: 'tapado-de-lana',
-    artisan_id: 1,
+    artisan_id: 3,
     catalog_id: null,
     material_id: 2,
     name: 'Tapado de lana',
@@ -721,7 +721,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 16,
     slug: 'camino-de-mesa-lana',
-    artisan_id: 1,
+    artisan_id: 3,
     catalog_id: null,
     material_id: 2,
     name: 'Camino de mesa',
@@ -843,7 +843,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 21,
     slug: 'bolso-fibra-vegetal',
-    artisan_id: 1,
+    artisan_id: 9,
     catalog_id: null,
     material_id: 3,
     name: 'Bolso',
@@ -915,7 +915,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 24,
     slug: 'canasta-alta-fibra',
-    artisan_id: 1,
+    artisan_id: 9,
     catalog_id: null,
     material_id: 3,
     name: 'Canasta',
@@ -1139,7 +1139,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 33,
     slug: 'sillita-matera-madera',
-    artisan_id: 1,
+    artisan_id: 6,
     catalog_id: null,
     material_id: 5,
     name: 'Mate Lechuza',
@@ -1211,7 +1211,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 36,
     slug: 'perchero-aves-madera',
-    artisan_id: 1,
+    artisan_id: 6,
     catalog_id: null,
     material_id: 5,
     name: 'Camino de mesa',
@@ -1333,7 +1333,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 41,
     slug: 'chifle-asta-labrada',
-    artisan_id: 1,
+    artisan_id: 5,
     catalog_id: null,
     material_id: 6,
     name: 'Chifle',
@@ -1405,7 +1405,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 44,
     slug: 'objeto-decorativo-asta-2',
-    artisan_id: 1,
+    artisan_id: 5,
     catalog_id: null,
     material_id: 6,
     name: 'Objeto decorativo',
@@ -1527,7 +1527,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 49,
     slug: 'vasija-doble-arcilla',
-    artisan_id: 1,
+    artisan_id: 9,
     catalog_id: null,
     material_id: 7,
     name: 'Mate Lechuza',
@@ -1599,7 +1599,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 52,
     slug: 'plato-puma-arcilla',
-    artisan_id: 1,
+    artisan_id: 9,
     catalog_id: null,
     material_id: 7,
     name: 'Plato puma',

@@ -17,21 +17,8 @@ export const ArtisanProfilePage: React.FC = () => {
   }, [artisans, slug]);
 
   const artisanProducts = useMemo(() => {
-    const sameMat = products.filter((p) => p.material_id === (artisan.material_id || 1));
-    if (sameMat.length >= 8) {
-      if ((artisan.material_id || 1) === 1) {
-        const mLechuza = products.find((p) => p.slug === 'mate-lechuza') || sameMat[0];
-        const bCarp =
-          products.find((p) => p.slug === 'billetera-de-carpincho') || sameMat[1];
-        const mFam =
-          products.find((p) => p.slug === 'mate-familia-de-carpinchos') || sameMat[2];
-        const bill = products.find((p) => p.slug === 'billetera-cincelada') || sameMat[3];
-        return [mLechuza, bCarp, mFam, bill, ...sameMat.slice(4, 8)];
-      }
-      return sameMat.slice(0, 8);
-    }
-    return products.slice(0, 8);
-  }, [products, artisan]);
+    return products.filter((p) => p.artisan_id === artisan.id);
+  }, [products, artisan.id]);
 
   return (
     <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-6 md:px-16">
@@ -80,11 +67,8 @@ export const ArtisanProfilePage: React.FC = () => {
               <h2 className="font-bold text-lg md:text-xl text-[#4A170E] mb-3">
                 Un poco sobre mí...
               </h2>
-              <p className="text-base md:text-[17px] text-[#33130C] leading-relaxed">
-                Hola! soy {artisan.full_name.split(' ')[0]}, Desde hace más de diez años me
-                dedico a trabajar con {artisan.materials_text.toLowerCase()}.. Mi
-                especialidad es la elaboración de billeteras, mates y accesorios
-                artesanales, piezas que realizo cuidando cada detalle.
+              <p className="text-base md:text-[17px] text-[#33130C] leading-relaxed whitespace-pre-line">
+                {artisan.short_bio}
               </p>
             </div>
 
