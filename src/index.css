@@ -4,13 +4,13 @@
 
 @layer base {
   body {
-    font-family: "Sitka Text", Sitka, "Lora", Georgia, serif;
+    font-family: "sitka-text", "Sitka Text", Sitka, "Lora", Georgia, serif;
     color: #33130C;
     background-color: #D5BCA0;
   }
 
   h1, h2, h3, .font-display-serif {
-    font-family: "Broadsheet", "Playfair Display", "Cormorant Garamond", Georgia, serif;
+    font-family: "broadsheet", "Broadsheet", "Playfair Display", "Cormorant Garamond", Georgia, serif;
   }
 }
 

@@ -7,8 +7,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Broadsheet"', '"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
-        serif: ['"Sitka Text"', 'Sitka', '"Lora"', 'Georgia', 'serif'],
+        display: ['"broadsheet"', '"Broadsheet"', '"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        serif: ['"sitka-text"', '"Sitka Text"', 'Sitka', '"Lora"', 'Georgia', 'serif'],
+        brand: ['"kit-sans"', '"KitSans-Light"', '"Kit Sans"', '"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       colors: {
         brand: {

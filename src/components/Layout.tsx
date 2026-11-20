@@ -17,7 +17,7 @@ export const BrandLogo: React.FC<{ className?: string; size?: 'sm' | 'md' | 'lg'
   return (
     <div
       className={`inline-flex flex-col leading-none select-none text-[#EFE2D0] ${className}`}
-      style={{ fontFamily: '"KitSans-Light", "Cormorant Garamond", Georgia, serif' }}
+      style={{ fontFamily: '"kit-sans", "KitSans-Light", "Kit Sans", "Cormorant Garamond", Georgia, serif' }}
     >
       <div className={`tracking-[0.14em] uppercase font-light ${scaleClass} flex items-center`}>
         <span>C</span>
@@ -32,7 +32,7 @@ export const BrandLogo: React.FC<{ className?: string; size?: 'sm' | 'md' | 'lg'
       <div className={`tracking-[0.12em] uppercase font-light ${scaleClass} -mt-1 flex items-baseline`}>
         <span
           className="inline-block mr-[1px] text-[1.28em] leading-none"
-          style={{ fontFamily: '"Broadsheet", "Playfair Display", serif' }}
+          style={{ fontFamily: '"broadsheet", "Broadsheet", "Playfair Display", serif' }}
         >
           A
         </span>
