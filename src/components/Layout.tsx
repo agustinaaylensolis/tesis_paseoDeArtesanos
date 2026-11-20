@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, AtSign, Instagram, MapPin } from 'lucide-react';
+import { Phone, AtSign, Instagram, MapPin, User } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 export const BrandLogo: React.FC<{ className?: string; size?: 'sm' | 'md' | 'lg' }> = ({
   className = '',
@@ -43,11 +44,30 @@ export const BrandLogo: React.FC<{ className?: string; size?: 'sm' | 'md' | 'lg'
 
 export const Header: React.FC = () => {
   const location = useLocation();
+  const { userRole } = useApp();
+
+  // Según el rol activo, el icono de Mi Perfil dirige a la página de Cliente (/mi-perfil) o al panel CRUD de Artesano (/mi-perfil-artesano)
+  const profilePath =
+    userRole === 'artesano'
+      ? '/mi-perfil-artesano'
+      : userRole === 'cliente'
+      ? '/mi-perfil'
+      : '/crear-cuenta';
+
+  // En las pantallas de registro/crear cuenta (o cuando el usuario es guest) se muestra "Crear cuenta"; cuando está logueado como cliente o artesano se muestra el icono de perfil tal como en las capturas
+  const isAuthFormPage =
+    location.pathname === '/crear-cuenta' ||
+    location.pathname === '/registro-artesano' ||
+    location.pathname === '/gracias-registro';
 
   return (
     <header className="bg-[#340E07] text-[#E6CEAC] sticky top-0 z-50 shadow-md border-b border-[#4C1910]">
       <div className="max-w-[1360px] mx-auto px-6 md:px-14 h-20 flex items-center justify-between">
-        <Link to="/" className="hover:opacity-90 transition-opacity" aria-label="Inicio Corriente Artesanal">
+        <Link
+          to="/"
+          className="hover:opacity-90 transition-opacity"
+          aria-label="Inicio Corriente Artesanal"
+        >
           <BrandLogo size="md" />
         </Link>
 
@@ -55,36 +75,55 @@ export const Header: React.FC = () => {
           <Link
             to="/puntos-fisicos"
             className={`hover:text-white transition-colors ${
-              location.pathname === '/puntos-fisicos' ? 'underline underline-offset-8 decoration-[#D8923E]' : ''
+              location.pathname === '/puntos-fisicos'
+                ? 'underline underline-offset-8 decoration-[#D8923E]'
+                : ''
             }`}
           >
             Puntos físicos
           </Link>
+
           <Link
             to="/catalogo"
             className={`hover:text-white transition-colors ${
-              location.pathname.startsWith('/catalogo') || location.pathname.startsWith('/producto')
+              location.pathname.startsWith('/catalogo') ||
+              location.pathname.startsWith('/producto')
                 ? 'underline underline-offset-8 decoration-[#D8923E]'
                 : ''
             }`}
           >
             Catálogo
           </Link>
-          <Link
-            to="/crear-cuenta"
-            className={`hover:text-white transition-colors ${
-              location.pathname === '/crear-cuenta' ? 'underline underline-offset-8 decoration-[#D8923E]' : ''
-            }`}
-          >
-            Crear cuenta
-          </Link>
-          <Link
-            to="/mi-perfil-artesano"
-            className="hidden sm:inline-flex text-sm md:text-base px-3 py-1 rounded border border-[#E6CEAC]/35 text-[#F4E6D4] hover:bg-[#4E180E] transition-colors font-serif"
-            title="Panel de autogestión del artesano y Curso de Comunicación"
-          >
-            Mi Vidriera / Curso
-          </Link>
+
+          {userRole === 'guest' || isAuthFormPage ? (
+            <Link
+              to="/crear-cuenta"
+              className={`hover:text-white transition-colors ${
+                location.pathname === '/crear-cuenta'
+                  ? 'underline underline-offset-8 decoration-[#D8923E]'
+                  : ''
+              }`}
+            >
+              Crear cuenta
+            </Link>
+          ) : (
+            <Link
+              to={profilePath}
+              className={`p-1.5 rounded-full hover:bg-[#4E180E] transition-colors flex items-center justify-center ${
+                location.pathname === '/mi-perfil' ||
+                location.pathname === '/mi-perfil-artesano'
+                  ? 'text-white ring-2 ring-[#D8923E]'
+                  : 'text-[#DFC4A6]'
+              }`}
+              title={
+                userRole === 'artesano'
+                  ? 'Mi Perfil de Artesano (Catálogo y Curso)'
+                  : 'Mi Perfil de Cliente (Compras y Favoritos)'
+              }
+            >
+              <User className="w-6 h-6 fill-current" />
+            </Link>
+          )}
         </nav>
       </div>
     </header>
@@ -93,20 +132,16 @@ export const Header: React.FC = () => {
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-transparent pt-14 overflow-hidden">
-      {/* Curva superior orgánica tal como en todos los PDFs */}
+    <footer className="relative bg-transparent pt-10 overflow-hidden">
       <div className="relative w-full overflow-hidden leading-none -mb-1">
         <svg
           viewBox="0 0 1440 96"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-12 md:h-20 preserve-3d"
+          className="w-full h-12 md:h-20"
           preserveAspectRatio="none"
         >
-          <path
-            d="M0 68C380 12 960 -12 1440 52V96H0V68Z"
-            fill="#340E07"
-          />
+          <path d="M0 68C380 12 960 -12 1440 52V96H0V68Z" fill="#340E07" />
         </svg>
       </div>
 
@@ -118,9 +153,7 @@ export const Footer: React.FC = () => {
         }}
       >
         <div className="max-w-[1180px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-          {/* Logos Institucionales (MAT, Corriente Artesanal, Cultura, Gobierno Provincial) */}
           <div className="md:col-span-5 grid grid-cols-2 gap-6 items-center justify-items-center md:justify-items-start">
-            {/* MAT Logo */}
             <Link to="/puntos-fisicos" className="text-center group">
               <div className="text-white font-display-serif text-3xl md:text-4xl font-bold tracking-wider leading-none">
                 MAT
@@ -130,12 +163,10 @@ export const Footer: React.FC = () => {
               </div>
             </Link>
 
-            {/* Corriente Artesanal Logo */}
-            <Link to="/">
+            <Link to="/conocenos" title="Conocé sobre Corriente Artesanal">
               <BrandLogo size="sm" />
             </Link>
 
-            {/* Instituto de Cultura */}
             <div className="flex flex-col items-center">
               <img
                 src="/assets/ui/logo-cultura.png"
@@ -149,7 +180,6 @@ export const Footer: React.FC = () => {
               </span>
             </div>
 
-            {/* Gobierno Provincial Corrientes */}
             <div className="flex flex-col items-center">
               <img
                 src="/assets/ui/logo-gobierno.png"
@@ -165,7 +195,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Datos de contacto a la derecha */}
           <div className="md:col-span-7 flex flex-col gap-3.5 text-base md:text-lg text-[#EAD5B8] md:pl-12">
             <a
               href="https://wa.me/5493794880175"
@@ -208,4 +237,3 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
-

@@ -12,18 +12,22 @@ export const CatalogPage: React.FC = () => {
   const initialMat = searchParams.get('material')
     ? Number(searchParams.get('material'))
     : null;
+  const initialExclusivos = searchParams.get('exclusivos') === '1';
 
-  const [categoryType, setCategoryType] = useState<'utilitario' | 'decorativo' | 'todos'>(
+  const [categoryType, setCategoryType] = useState<'utilitario' | 'decorativo'>(
     initialType || 'utilitario'
   );
+  const [onlyExclusive, setOnlyExclusive] = useState<boolean>(initialExclusivos);
   const [selectedMaterialId, setSelectedMaterialId] = useState<number | null>(initialMat);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const t = searchParams.get('tipo') as 'utilitario' | 'decorativo' | null;
     const m = searchParams.get('material') ? Number(searchParams.get('material')) : null;
+    const exc = searchParams.get('exclusivos') === '1';
     if (t) setCategoryType(t);
-    if (m) setSelectedMaterialId(m);
+    setSelectedMaterialId(m);
+    setOnlyExclusive(exc);
   }, [searchParams]);
 
   const artisanMap = useMemo(() => {
@@ -32,17 +36,22 @@ export const CatalogPage: React.FC = () => {
     return map;
   }, [artisans]);
 
+  const selectedMaterial = useMemo(() => {
+    if (selectedMaterialId === null) return null;
+    return materials.find((m) => m.id === selectedMaterialId) || null;
+  }, [materials, selectedMaterialId]);
+
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
-      if (categoryType !== 'todos' && p.category_type !== categoryType && searchQuery === '' && selectedMaterialId === null) {
-        // Show the 12 catalog pieces by default when Utilitario is selected just like the PDF mockup,
-        // or filter strictly when user toggles Decorativo
-        if (categoryType === 'decorativo') return p.category_type === 'decorativo';
-      } else if (categoryType !== 'todos' && p.category_type !== categoryType && selectedMaterialId !== null) {
+      if (selectedMaterialId !== null && p.material_id !== selectedMaterialId) {
         return false;
       }
 
-      if (selectedMaterialId !== null && p.material_id !== selectedMaterialId) {
+      if (onlyExclusive && !p.is_featured) {
+        return false;
+      }
+
+      if (categoryType === 'decorativo' && p.category_type !== 'decorativo' && selectedMaterialId === null) {
         return false;
       }
 
@@ -57,31 +66,30 @@ export const CatalogPage: React.FC = () => {
 
       return true;
     });
-  }, [products, categoryType, selectedMaterialId, searchQuery, artisanMap]);
+  }, [products, categoryType, onlyExclusive, selectedMaterialId, searchQuery, artisanMap]);
 
-  // En el PDF (sitio web 2.pdf pág. 3) se muestran 12 tarjetas en grilla 4x3
+  // En catalogo completito .pdf páginas 2 a 8, cuando se elige un material se muestran 16 tarjetas (las 8 del material repetidas en 2 bloques 4x2)
   const displayProducts = useMemo(() => {
     if (
-      categoryType === 'utilitario' &&
-      selectedMaterialId === null &&
+      selectedMaterialId !== null &&
+      !onlyExclusive &&
       searchQuery.trim() === '' &&
-      filteredProducts.length >= 10
+      filteredProducts.length === 8
     ) {
-      // Exact 12-card layout from PDF Page 3 when unfiltered
-      const base10 = filteredProducts.slice(0, 10);
-      const extra2 = filteredProducts.slice(4, 6);
-      return [...base10, ...extra2].slice(0, 12);
+      return [...filteredProducts, ...filteredProducts];
     }
     return filteredProducts;
-  }, [filteredProducts, categoryType, selectedMaterialId, searchQuery]);
+  }, [filteredProducts, selectedMaterialId, onlyExclusive, searchQuery]);
 
   return (
     <div className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16">
       <div className="max-w-[1080px] mx-auto">
         {/* Cabecera: Título + Buscador */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-          <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[42px] font-bold text-[#3D120A]">
-            Catálogo de Artesanías Tradicionales
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+          <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[40px] font-bold text-[#4A170E]">
+            {selectedMaterial
+              ? 'Catálogo de Artesanías Tradicionales'
+              : '¡Conocé las artesanías tradicionales!'}
           </h1>
 
           <div className="flex items-center h-9 w-full md:w-64 shadow-sm">
@@ -98,35 +106,49 @@ export const CatalogPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Selector tipo píldora Utilitario / Decorativo */}
-        <div className="inline-flex items-center bg-[#DCC7AE] rounded-full p-0.5 shadow-inner mb-4">
+        {/* Selector tipo píldora Utilitario / Decorativo + Píldora Diseños Exclusivos */}
+        <div className="flex flex-wrap items-center gap-4 mb-4">
+          <div className="inline-flex items-center bg-[#DCC7AE] rounded-full p-0.5 shadow-inner">
+            <button
+              type="button"
+              onClick={() => {
+                setCategoryType('utilitario');
+                setOnlyExclusive(false);
+              }}
+              className={`px-6 py-1.5 rounded-full text-base md:text-lg font-semibold transition-colors ${
+                categoryType === 'utilitario' && !onlyExclusive
+                  ? 'bg-[#5E2822] text-[#F4E6D4] shadow'
+                  : 'text-[#3D120A] hover:text-[#741712]'
+              }`}
+            >
+              Utilitario
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCategoryType('decorativo');
+                setOnlyExclusive(false);
+              }}
+              className={`px-6 py-1.5 rounded-full text-base md:text-lg font-semibold transition-colors ${
+                categoryType === 'decorativo' && !onlyExclusive
+                  ? 'bg-[#5E2822] text-[#F4E6D4] shadow'
+                  : 'text-[#3D120A] hover:text-[#741712]'
+              }`}
+            >
+              Decorativo
+            </button>
+          </div>
+
           <button
             type="button"
-            onClick={() => {
-              setCategoryType('utilitario');
-              setSearchParams({});
-            }}
-            className={`px-7 py-1.5 rounded-full text-base md:text-lg font-semibold transition-colors ${
-              categoryType === 'utilitario'
-                ? 'bg-[#5E2822] text-[#F4E6D4] shadow'
-                : 'text-[#3D120A] hover:text-[#741712]'
+            onClick={() => setOnlyExclusive((prev) => !prev)}
+            className={`px-6 py-1.5 rounded-full text-base md:text-lg font-semibold transition-all shadow-sm ${
+              onlyExclusive
+                ? 'bg-[#741712] text-[#F4E6D4] ring-2 ring-[#E59838]'
+                : 'bg-[#5E2822] text-[#F4E6D4] hover:brightness-110'
             }`}
           >
-            Utilitario
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setCategoryType('decorativo');
-              setSearchParams({ tipo: 'decorativo' });
-            }}
-            className={`px-7 py-1.5 rounded-full text-base md:text-lg font-semibold transition-colors ${
-              categoryType === 'decorativo'
-                ? 'bg-[#5E2822] text-[#F4E6D4] shadow'
-                : 'text-[#3D120A] hover:text-[#741712]'
-            }`}
-          >
-            Decorativo
+            Diseños Exclusivos
           </button>
         </div>
 
@@ -134,26 +156,65 @@ export const CatalogPage: React.FC = () => {
         <MaterialTimeline
           materials={materials}
           selectedMaterialId={selectedMaterialId}
-          onSelect={(id) => setSelectedMaterialId(id)}
+          onSelect={(id) => {
+            setSelectedMaterialId(id);
+            if (id) {
+              setSearchParams({ material: String(id) });
+            } else {
+              setSearchParams({});
+            }
+          }}
         />
 
-        {selectedMaterialId !== null && (
-          <div className="flex items-center justify-between bg-[#DFCBB2]/80 px-4 py-2 rounded mb-6 text-sm">
-            <span>
-              Filtrando por material:{' '}
-              <strong>
-                {materials.find((m) => m.id === selectedMaterialId)?.name}
-              </strong>
-            </span>
-            <button
-              type="button"
-              onClick={() => setSelectedMaterialId(null)}
-              className="text-[#741712] font-bold hover:underline"
-            >
-              Ver todos los materiales
-            </button>
-          </div>
-        )}
+        {/* Tarjeta informativa contextual debajo de la línea 1..7 (catalogo completito .pdf págs. 1 a 8) */}
+        <div className="max-w-[680px] mx-auto my-7 bg-[#C5A98C]/75 rounded-lg px-7 py-5 shadow-sm flex items-center gap-6">
+          {selectedMaterial ? (
+            <>
+              <div className="w-20 h-20 rounded-full overflow-hidden shrink-0 shadow border border-[#8C6245]/40 bg-[#4A170E]">
+                <img
+                  src={selectedMaterial.image_url}
+                  alt={selectedMaterial.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h2 className="font-display-serif text-xl md:text-2xl font-bold text-[#4A170E]">
+                    {selectedMaterial.title}
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedMaterialId(null);
+                      setSearchParams({});
+                    }}
+                    className="text-xs font-bold text-[#741712] hover:underline"
+                  >
+                    Ver todos
+                  </button>
+                </div>
+                <p className="text-xs md:text-sm text-[#33130C] mt-1 leading-relaxed">
+                  {selectedMaterial.description}
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-16 h-16 rounded-full bg-[#5E2822] text-[#F4E6D4] flex items-center justify-center text-4xl font-bold shrink-0 shadow">
+                ?
+              </div>
+              <div>
+                <h2 className="font-display-serif text-xl md:text-2xl font-bold text-[#4A170E]">
+                  Elegí un material para conocer más
+                </h2>
+                <p className="text-xs md:text-sm text-[#33130C] mt-1 leading-relaxed">
+                  Los artesanos elaboran sus productos con diversos materiales propios de la
+                  región basandose en conocimientos tradicionales arraigados a su historia.
+                </p>
+              </div>
+            </>
+          )}
+        </div>
 
         {/* Grilla de 4 columnas */}
         {displayProducts.length === 0 ? (
@@ -166,7 +227,9 @@ export const CatalogPage: React.FC = () => {
               onClick={() => {
                 setSelectedMaterialId(null);
                 setCategoryType('utilitario');
+                setOnlyExclusive(false);
                 setSearchQuery('');
+                setSearchParams({});
               }}
               className="btn-artesanal px-6 py-2 mt-4 text-sm"
             >
@@ -180,7 +243,7 @@ export const CatalogPage: React.FC = () => {
                 key={`${product.id}-${index}`}
                 product={product}
                 artisan={artisanMap.get(product.artisan_id)}
-                highlighted={index === 0}
+                highlighted={index === 0 || (selectedMaterialId !== null && index === 8)}
                 showArtisanName={true}
               />
             ))}
@@ -190,4 +253,3 @@ export const CatalogPage: React.FC = () => {
     </div>
   );
 };
-

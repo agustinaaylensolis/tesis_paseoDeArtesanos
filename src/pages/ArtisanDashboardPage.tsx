@@ -1,552 +1,834 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useApp, NewProductDraft } from '../context/AppContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useApp, PieceFormInput } from '../context/AppContext';
 import { uploadMediaFile } from '../lib/supabase';
-import { CarouselArrow, ProductCard } from '../components/ui';
+import { Product } from '../types/database';
+import { ProductCard } from '../components/ui';
 
-/* PANEL DE AUTOGESTIÓN DEL ARTESANO (sitio web 2.pdf pág. 6) */
+/* PANEL EXCLUSIVO DEL ROL ARTESANO: CRUD DE CATÁLOGO Y ACCESO AL CURSO (paginas.pdf págs. 5 y 6, Parte de la web Andrés pág. 3) */
 export const ArtisanDashboardPage: React.FC = () => {
+  const navigate = useNavigate();
   const {
     artisans,
     products,
     activeArtisanId,
-    setActiveArtisanId,
     updateArtisanProfile,
-    publishCatalogProducts,
+    savePiece,
+    deletePiece,
+    logout,
   } = useApp();
+
+  // Estado del formulario CRUD de Pieza (Crear, Editar, Eliminar)
+  const [editingMode, setEditingMode] = useState<'none' | 'create' | 'edit'>('none');
+  const [pieceForm, setPieceForm] = useState<PieceFormInput>({
+    name: '',
+    dimensions: '',
+    price: null,
+    stock: 2,
+    work_hours: '',
+    material_label: '',
+    material_id: 1,
+    technique: '',
+    short_description: '',
+    category_type: 'utilitario',
+    is_featured: false,
+    image_url: '',
+  });
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [savingPiece, setSavingPiece] = useState(false);
 
   const artisan = useMemo(() => {
     return (
       artisans.find((a) => a.id === activeArtisanId) ||
-      artisans.find((a) => a.slug === 'silvia-balbuena') ||
+      artisans.find((a) => a.slug === 'ariel-morales') ||
       artisans[0]
     );
   }, [artisans, activeArtisanId]);
 
+  const [isEditingBio, setIsEditingBio] = useState(false);
+  const [isEditingHistory, setIsEditingHistory] = useState(false);
   const [phone, setPhone] = useState(artisan.phone);
-  const [instagram, setInstagram] = useState(artisan.instagram || 'Artesanales_Silvia');
+  const [instagram, setInstagram] = useState(artisan.instagram || 'Artesanales_Eltimbo');
   const [address, setAddress] = useState(artisan.address || 'Taller 9 de Julio 111');
   const [shortBio, setShortBio] = useState(artisan.short_bio);
-  const [materialsText, setMaterialsText] = useState(artisan.materials_text);
-  const [techniques, setTechniques] = useState(artisan.techniques || '');
   const [historyText, setHistoryText] = useState(artisan.history_text);
-
-  const [savingBio, setSavingBio] = useState(false);
-  const [savingHistory, setSavingHistory] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
+
+  const [openShared, setOpenShared] = useState(true);
+  const [openSold, setOpenSold] = useState(true);
+  const [openBought, setOpenBought] = useState(true);
 
   useEffect(() => {
     setPhone(artisan.phone);
-    setInstagram(artisan.instagram || 'Artesanales_Silvia');
+    setInstagram(artisan.instagram || 'Artesanales_Eltimbo');
     setAddress(artisan.address || 'Taller 9 de Julio 111');
     setShortBio(artisan.short_bio);
-    setMaterialsText(artisan.materials_text);
-    setTechniques(artisan.techniques || '');
     setHistoryText(artisan.history_text);
   }, [artisan]);
 
-  // Estado para "Crear Catálogo de Productos" (3 tarjetas iniciales con + igual que en el PDF)
-  const [catalogTitle, setCatalogTitle] = useState('');
-  const [slots, setSlots] = useState<NewProductDraft[]>([
-    {
-      name: '',
-      dimensions: '',
-      price: 12000,
-      stock: 2,
-      work_hours: '8 horas',
-      material_label: 'Plata',
-      material_id: 4,
-      technique: 'Cincelado',
-      short_description: '',
-      category_type: 'utilitario',
-      piece_type: 'fija',
-      image_url: '',
-    },
-    {
-      name: '',
-      dimensions: '',
-      price: 15000,
-      stock: 2,
-      work_hours: '10 horas',
-      material_label: 'Plata',
-      material_id: 4,
-      technique: 'Cincelado',
-      short_description: '',
-      category_type: 'utilitario',
-      piece_type: 'fija',
-      image_url: '',
-    },
-    {
-      name: '',
-      dimensions: '',
-      price: 18000,
-      stock: 1,
-      work_hours: '12 horas',
-      material_label: 'Plata',
-      material_id: 4,
-      technique: 'Cincelado',
-      short_description: '',
-      category_type: 'utilitario',
-      piece_type: 'fija',
-      image_url: '',
-    },
-  ]);
-  const [uploadingSlot, setUploadingSlot] = useState<number | null>(null);
-  const [publishing, setPublishing] = useState(false);
-
-  const handleSaveBio = async () => {
-    setSavingBio(true);
-    setFeedbackMsg(null);
-    try {
-      await updateArtisanProfile(artisan.id, {
-        phone,
-        instagram,
-        address,
-        short_bio: shortBio,
-        materials_text: materialsText,
-        techniques,
-      });
-      setFeedbackMsg('Cambios del perfil guardados en Supabase.');
-    } finally {
-      setSavingBio(false);
+  const sharedProducts = useMemo(() => {
+    const sameMat = products.filter((p) => p.material_id === (artisan.material_id || 1));
+    if (sameMat.length >= 8) {
+      const mLechuza = products.find((p) => p.slug === 'mate-lechuza') || sameMat[0];
+      const bCarp =
+        products.find((p) => p.slug === 'billetera-de-carpincho') || sameMat[1];
+      const mFam =
+        products.find((p) => p.slug === 'mate-familia-de-carpinchos') || sameMat[2];
+      const bill = products.find((p) => p.slug === 'billetera-cincelada') || sameMat[3];
+      return [mLechuza, bCarp, mFam, bill, ...sameMat.slice(4, 8)];
     }
+    return products.slice(0, 8);
+  }, [products, artisan]);
+
+  const openCreateForm = () => {
+    setPieceForm({
+      name: '',
+      dimensions: '',
+      price: null,
+      stock: 2,
+      work_hours: '',
+      material_label: 'Cuero',
+      material_id: artisan.material_id || 1,
+      technique: '',
+      short_description: '',
+      category_type: 'utilitario',
+      is_featured: false,
+      image_url: '',
+    });
+    setEditingMode('create');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSaveHistory = async () => {
-    setSavingHistory(true);
-    setFeedbackMsg(null);
-    try {
-      await updateArtisanProfile(artisan.id, {
-        history_text: historyText,
-      });
-      setFeedbackMsg('Historia actualizada en Supabase.');
-    } finally {
-      setSavingHistory(false);
-    }
+  const openEditForm = (prod: Product) => {
+    setPieceForm({
+      id: prod.id,
+      name: prod.name,
+      dimensions:
+        prod.dimensions === '11 cm x 7 cm' ? '11 x 7 centímetros' : prod.dimensions,
+      price: prod.price ?? 15000,
+      stock: prod.stock,
+      work_hours: prod.work_hours.replace(/\D/g, '') || '8',
+      material_label: prod.material_label,
+      material_id: prod.material_id,
+      technique: prod.technique,
+      short_description: prod.short_description,
+      category_type: prod.category_type,
+      is_featured: prod.is_featured,
+      image_url: prod.main_image_url,
+    });
+    setEditingMode('edit');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSlotImageUpload = async (idx: number, file?: File | null) => {
+  const handlePhotoUpload = async (file?: File | null) => {
     if (!file) return;
-    setUploadingSlot(idx);
+    setUploadingPhoto(true);
     try {
       const url = await uploadMediaFile(file, 'productos');
-      setSlots((prev) =>
-        prev.map((s, i) => (i === idx ? { ...s, image_url: url } : s))
-      );
+      setPieceForm((prev) => ({ ...prev, image_url: url }));
     } finally {
-      setUploadingSlot(null);
+      setUploadingPhoto(false);
     }
   };
 
-  const handleAddSlot = () => {
-    setSlots((prev) => [
-      ...prev,
-      {
-        name: '',
-        dimensions: '',
-        price: 14000,
-        stock: 2,
-        work_hours: '8 horas',
-        material_label: 'Plata',
-        material_id: 4,
-        technique: 'Cincelado',
-        short_description: '',
-        category_type: 'utilitario',
-        piece_type: 'fija',
-        image_url: '',
-      },
-    ]);
-  };
-
-  const handlePublishCatalog = async () => {
-    const validDrafts = slots.filter((s) => s.name.trim() !== '' || s.image_url !== '');
-    if (validDrafts.length === 0) {
-      setFeedbackMsg(
-        'Completá al menos el Nombre o subí una foto en una de las tarjetas antes de publicar.'
-      );
-      return;
-    }
-
-    setPublishing(true);
-    setFeedbackMsg(null);
+  const handleSavePiece = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingPiece(true);
     try {
-      const normalized = validDrafts.map((d, i) => ({
-        ...d,
-        name: d.name.trim() || `Pieza artesanal ${i + 1}`,
-        dimensions: d.dimensions.trim() || '20 cm',
-        image_url: d.image_url || '/assets/products/bombilla-corazon.png',
-      }));
-
-      await publishCatalogProducts(
-        artisan.id,
-        catalogTitle.trim() || 'Accesorios',
-        normalized
-      );
-
-      setCatalogTitle('');
-      setSlots((prev) =>
-        prev.map((s) => ({ ...s, name: '', dimensions: '', image_url: '' }))
-      );
+      await savePiece(artisan.id, pieceForm);
       setFeedbackMsg(
-        '¡Catálogo y piezas publicados en Supabase! Ya están visibles en Mis catálogos y en el Catálogo general.'
+        editingMode === 'create'
+          ? '¡Nueva pieza publicada en tu catálogo!'
+          : '¡Cambios de la pieza guardados en tu catálogo!'
       );
+      setEditingMode('none');
     } finally {
-      setPublishing(false);
+      setSavingPiece(false);
     }
   };
 
-  const artisanMap = useMemo(() => {
-    const map = new Map<number, (typeof artisans)[0]>();
-    artisans.forEach((a) => map.set(a.id, a));
-    return map;
-  }, [artisans]);
+  const handleDeletePiece = async () => {
+    if (!pieceForm.id) return;
+    setSavingPiece(true);
+    try {
+      await deletePiece(pieceForm.id);
+      setFeedbackMsg('Pieza eliminada del catálogo.');
+      setEditingMode('none');
+    } finally {
+      setSavingPiece(false);
+    }
+  };
 
-  const myCatalogProducts = useMemo(() => {
-    const own = products.filter((p) => p.artisan_id === artisan.id);
-    if (own.length >= 4) return own;
-    return [...own, ...products.slice(0, 4)].slice(0, 4);
-  }, [products, artisan]);
+  /* ================= PANTALLA CRUD DE ALTA / EDICIÓN / ELIMINACIÓN DE PIEZA ================= */
+  if (editingMode !== 'none') {
+    return (
+      <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-6 md:px-16">
+        <div className="max-w-[900px] mx-auto bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-12 shadow-md">
+          <form onSubmit={handleSavePiece}>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+              <div className="md:col-span-6 space-y-4 text-sm md:text-[15.5px] text-[#2B0F08]">
+                <div className="flex items-baseline gap-2">
+                  <label className="font-medium shrink-0">Nombre de la pieza:</label>
+                  <input
+                    type="text"
+                    required
+                    value={pieceForm.name}
+                    onChange={(e) =>
+                      setPieceForm((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    placeholder="Billetera"
+                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5 font-medium"
+                  />
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <label className="font-medium shrink-0">Medidas:</label>
+                  <input
+                    type="text"
+                    value={pieceForm.dimensions}
+                    onChange={(e) =>
+                      setPieceForm((prev) => ({ ...prev, dimensions: e.target.value }))
+                    }
+                    placeholder="11 x 7 centímetros"
+                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block font-medium">
+                    Precio (si se omite queda como consultable):
+                  </label>
+                  <div className="flex items-center gap-1">
+                    <span>$</span>
+                    <input
+                      type="number"
+                      value={pieceForm.price ?? ''}
+                      onChange={(e) =>
+                        setPieceForm((prev) => ({
+                          ...prev,
+                          price: e.target.value ? Number(e.target.value) : null,
+                        }))
+                      }
+                      placeholder="15.000"
+                      className="w-40 bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <label className="font-medium shrink-0">
+                    Stock (si contas con existencias):
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={pieceForm.stock}
+                    onChange={(e) =>
+                      setPieceForm((prev) => ({
+                        ...prev,
+                        stock: Number(e.target.value),
+                      }))
+                    }
+                    className="w-20 bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                  />
+                </div>
+
+                <div className="flex items-baseline gap-2 pt-2">
+                  <label className="font-medium shrink-0">Horas de trabajo:</label>
+                  <input
+                    type="text"
+                    value={pieceForm.work_hours}
+                    onChange={(e) =>
+                      setPieceForm((prev) => ({ ...prev, work_hours: e.target.value }))
+                    }
+                    placeholder="8"
+                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                  />
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <label className="font-medium shrink-0">Material/es:</label>
+                  <input
+                    type="text"
+                    value={pieceForm.material_label}
+                    onChange={(e) =>
+                      setPieceForm((prev) => ({
+                        ...prev,
+                        material_label: e.target.value,
+                      }))
+                    }
+                    placeholder="Cuero"
+                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                  />
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <label className="font-medium shrink-0">Técnica/s:</label>
+                  <input
+                    type="text"
+                    value={pieceForm.technique}
+                    onChange={(e) =>
+                      setPieceForm((prev) => ({ ...prev, technique: e.target.value }))
+                    }
+                    placeholder="Cincelado"
+                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                  />
+                </div>
+
+                {editingMode === 'create' && (
+                  <div className="space-y-1 pt-1">
+                    <label className="block font-medium">Descripción:</label>
+                    <textarea
+                      rows={2}
+                      value={pieceForm.short_description}
+                      onChange={(e) =>
+                        setPieceForm((prev) => ({
+                          ...prev,
+                          short_description: e.target.value,
+                        }))
+                      }
+                      placeholder="Historia y proceso de elaboración de la pieza..."
+                      className="w-full bg-[#DFCCB6]/60 rounded p-2 text-sm focus:outline-none"
+                    />
+                  </div>
+                )}
+
+                <div className="pt-3 space-y-2">
+                  <p className="font-medium">Categoría</p>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="cat_type"
+                      checked={pieceForm.category_type === 'decorativo'}
+                      onChange={() =>
+                        setPieceForm((prev) => ({
+                          ...prev,
+                          category_type: 'decorativo',
+                        }))
+                      }
+                      className="sr-only"
+                    />
+                    <span
+                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
+                        pieceForm.category_type === 'decorativo'
+                          ? 'bg-[#D8923E]'
+                          : 'bg-transparent'
+                      }`}
+                    />
+                    <span>Decorativo</span>
+                  </label>
+
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="cat_type"
+                      checked={pieceForm.category_type === 'utilitario'}
+                      onChange={() =>
+                        setPieceForm((prev) => ({
+                          ...prev,
+                          category_type: 'utilitario',
+                        }))
+                      }
+                      className="sr-only"
+                    />
+                    <span
+                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
+                        pieceForm.category_type === 'utilitario'
+                          ? 'bg-[#D8923E]'
+                          : 'bg-transparent'
+                      }`}
+                    />
+                    <span>Utilitario</span>
+                  </label>
+                </div>
+
+                <div className="pt-3 space-y-2">
+                  <p className="font-medium">¿Es un diseño de autor exclusivo?</p>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="exclusive"
+                      checked={pieceForm.is_featured === true}
+                      onChange={() =>
+                        setPieceForm((prev) => ({ ...prev, is_featured: true }))
+                      }
+                      className="sr-only"
+                    />
+                    <span
+                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
+                        pieceForm.is_featured ? 'bg-[#D8923E]' : 'bg-transparent'
+                      }`}
+                    />
+                    <span>Si</span>
+                  </label>
+
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="exclusive"
+                      checked={pieceForm.is_featured === false}
+                      onChange={() =>
+                        setPieceForm((prev) => ({ ...prev, is_featured: false }))
+                      }
+                      className="sr-only"
+                    />
+                    <span
+                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
+                        !pieceForm.is_featured ? 'bg-[#D8923E]' : 'bg-transparent'
+                      }`}
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Columna derecha: Añadir fotografías (3:4) */}
+              <div className="md:col-span-6 space-y-3">
+                <p className="text-sm md:text-[15.5px] text-[#2B0F08] font-medium">
+                  Añadir fotografías
+                </p>
+
+                <label className="block w-full aspect-[3/3.8] bg-black cursor-pointer relative overflow-hidden shadow-md group">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={(e) => handlePhotoUpload(e.target.files?.[0])}
+                  />
+                  {pieceForm.image_url ? (
+                    <img
+                      src={pieceForm.image_url}
+                      alt={pieceForm.name || 'Fotografía de la pieza'}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-7xl font-bold text-[#B8A18A] group-hover:scale-110 transition-transform select-none">
+                        +
+                      </span>
+                    </div>
+                  )}
+                  {uploadingPhoto && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-sm font-semibold">
+                      Subiendo fotografía...
+                    </div>
+                  )}
+                </label>
+              </div>
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+              {editingMode === 'create' ? (
+                <div className="w-full flex justify-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setEditingMode('none')}
+                    className="px-6 py-2 text-sm font-semibold text-[#4A170E] hover:underline"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={savingPiece}
+                    className="btn-artesanal-dark px-14 py-2 text-lg"
+                    style={{ transform: 'rotate(0deg)' }}
+                  >
+                    {savingPiece ? 'Publicando...' : 'Publicar'}
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    type="submit"
+                    disabled={savingPiece}
+                    className="btn-artesanal-dark px-10 py-2 text-base md:text-lg"
+                    style={{ transform: 'rotate(0deg)' }}
+                  >
+                    {savingPiece ? 'Guardando...' : 'Guardar cambios'}
+                  </button>
+
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setEditingMode('none')}
+                      className="text-sm font-semibold text-[#4A170E] hover:underline"
+                    >
+                      Volver
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleDeletePiece}
+                      disabled={savingPiece}
+                      className="btn-artesanal-dark px-12 py-2 text-base md:text-lg"
+                      style={{ transform: 'rotate(0deg)' }}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16">
       <div className="max-w-[960px] mx-auto space-y-10">
-        {/* Selector sutil de artesano activo para pruebas de defensa */}
-        <div className="flex flex-wrap items-center justify-between gap-3 bg-[#DFCBB2]/70 px-4 py-2 rounded text-xs md:text-sm">
-          <span>
-            Gestionando vidriera de: <strong>{artisan.brand_name}</strong>
-          </span>
-          <div className="flex items-center gap-2">
-            <label htmlFor="select-artisan" className="opacity-80">
-              Cambiar artesano:
-            </label>
-            <select
-              id="select-artisan"
-              value={artisan.id}
-              onChange={(e) => setActiveArtisanId(Number(e.target.value))}
-              className="bg-[#C8AE93] text-[#2B0F08] px-2 py-1 rounded font-semibold"
-            >
-              {artisans.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.brand_name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* 1. ACCESO AL CURSO DE COMUNICACIÓN PARA ARTESANOS */}
-        <div className="space-y-4">
-          <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[38px] font-bold text-[#4A170E]">
-            Curso de Comunicación para artesanos
-          </h1>
-          <div className="flex justify-center pt-1">
-            <Link
-              to="/curso"
-              className="btn-artesanal-dark px-12 py-2 text-base md:text-lg"
-              style={{ transform: 'rotate(0deg)' }}
-            >
-              Ver Curso
-            </Link>
-          </div>
-        </div>
-
         {feedbackMsg && (
           <div className="bg-[#4E120B] text-[#F4E6D4] px-5 py-3 rounded-lg text-sm font-medium shadow">
             {feedbackMsg}
           </div>
         )}
 
-        {/* 2. BLOQUE SUPERIOR EDITABLE DE PERFIL (2 COLUMNAS) */}
+        {/* 1. BLOQUE SUPERIOR DE PERFIL (2 COLUMNAS) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch pt-8">
-          {/* Columna izquierda marrón */}
           <div className="md:col-span-5 relative bg-[#865D4E] text-[#F5E9D9] rounded-xl px-7 pt-16 pb-8 shadow-md flex flex-col justify-between">
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-black shadow-lg border-2 border-[#865D4E]">
-              <img
-                src={artisan.avatar_url}
-                alt={artisan.brand_name}
-                className="w-full h-full object-cover"
-              />
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-[#5B2220] shadow-lg flex items-center justify-center text-5xl font-bold text-[#C8A796]">
+              +
             </div>
 
             <div className="text-center mt-2">
-              <h2 className="italic font-bold text-2xl md:text-[26px] text-[#E6CEB5] leading-tight">
-                {artisan.brand_name.includes('Silvia') ? (
+              <h1 className="italic font-bold text-2xl md:text-[26px] text-[#E6CEB5] leading-tight">
+                {artisan.brand_name.includes('Ariel') ? (
                   <>
                     Artesanales
                     <br />
-                    Silvia Balbuena
+                    Ariel Morales
                   </>
                 ) : (
                   artisan.brand_name
                 )}
-              </h2>
+              </h1>
             </div>
 
-            <div className="mt-6 space-y-2.5 text-sm md:text-[15px] text-[#F5E9D9]">
+            <div className="mt-6 space-y-2 text-sm md:text-[15px] text-[#F5E9D9]">
               <p className="font-semibold">Datos de contacto:</p>
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-transparent border-b border-[#E6CEB5]/40 focus:border-white focus:outline-none py-0.5"
-              />
-              <input
-                type="text"
-                value={instagram}
-                onChange={(e) => setInstagram(e.target.value)}
-                className="w-full bg-transparent border-b border-[#E6CEB5]/40 focus:border-white focus:outline-none py-0.5"
-              />
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full bg-transparent border-b border-[#E6CEB5]/40 focus:border-white focus:outline-none py-0.5"
-              />
+              {isEditingBio ? (
+                <>
+                  <input
+                    type="text"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    value={instagram}
+                    onChange={(e) => setInstagram(e.target.value)}
+                    className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
+                  />
+                </>
+              ) : (
+                <>
+                  <p>{phone}</p>
+                  <p>{instagram}</p>
+                  <p>{address}</p>
+                </>
+              )}
             </div>
           </div>
 
-          {/* Columna derecha beige con Guardar Cambios */}
-          <div className="md:col-span-7 bg-[#D6BFA6]/85 rounded-xl p-7 md:p-9 shadow-sm flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <h3 className="font-bold text-lg text-[#4A170E]">Un poco sobre mí...</h3>
-              <textarea
-                rows={3}
-                value={shortBio}
-                onChange={(e) => setShortBio(e.target.value)}
-                className="w-full bg-[#DFCCB6]/70 p-2.5 rounded text-sm md:text-[15px] text-[#2E1008] focus:outline-none focus:ring-1 focus:ring-[#741712]"
-              />
-
-              <div>
-                <label className="block text-sm font-semibold text-[#3B170E]">
-                  Materiales que trabaja*
-                </label>
-                <input
-                  type="text"
-                  value={materialsText}
-                  onChange={(e) => setMaterialsText(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#6A4535]/50 py-1 text-sm text-[#2E1008] focus:outline-none"
+          <div className="md:col-span-7 bg-[#D6BFA6]/85 rounded-xl p-7 md:p-9 shadow-sm flex flex-col justify-between">
+            <div>
+              <h2 className="font-bold text-lg md:text-xl text-[#4A170E] mb-3">
+                Un poco sobre mí...
+              </h2>
+              {isEditingBio ? (
+                <textarea
+                  rows={4}
+                  value={shortBio}
+                  onChange={(e) => setShortBio(e.target.value)}
+                  className="w-full bg-[#DFCCB6] p-3 rounded text-sm md:text-base text-[#33130C] focus:outline-none"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-[#3B170E]">
-                  Técnicas que utilizás
-                </label>
-                <input
-                  type="text"
-                  value={techniques}
-                  onChange={(e) => setTechniques(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#6A4535]/50 py-1 text-sm text-[#2E1008] focus:outline-none"
-                />
-              </div>
+              ) : (
+                <p className="text-base md:text-[17px] text-[#33130C] leading-relaxed">
+                  Hola! soy {artisan.full_name.split(' ')[0]}, Desde hace más de diez años me
+                  dedico a trabajar con cuero crudo.. Mi especialidad es la elaboración de
+                  billeteras, mates y accesorios artesanales, piezas que realizo cuidando cada
+                  detalle.
+                </p>
+              )}
             </div>
 
-            <div className="pt-2">
+            <div className="mt-6 flex items-center justify-center gap-4">
+              {isEditingBio ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await updateArtisanProfile(artisan.id, {
+                        phone,
+                        instagram,
+                        address,
+                        short_bio: shortBio,
+                      });
+                      setIsEditingBio(false);
+                      setFeedbackMsg('Perfil actualizado en Supabase.');
+                    }}
+                    className="btn-artesanal-dark px-8 py-1.5 text-sm md:text-base"
+                  >
+                    Guardar mi perfil
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      navigate('/crear-cuenta');
+                    }}
+                    className="text-xs text-[#741712] font-semibold underline"
+                  >
+                    Cerrar sesión
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIsEditingBio(true)}
+                  className="btn-artesanal-dark px-8 py-1.5 text-sm md:text-base"
+                >
+                  Editar mi perfil
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* 2. CONTÁ TU HISTORIA */}
+        <div className="bg-[#D6BFA6]/85 rounded-xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-12 items-stretch">
+          <div className="md:col-span-7 p-7 md:p-9">
+            <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E] mb-3">
+              Contá tu historia
+            </h2>
+            {isEditingHistory ? (
+              <textarea
+                rows={4}
+                value={historyText}
+                onChange={(e) => setHistoryText(e.target.value)}
+                className="w-full bg-[#DFCCB6] p-3 rounded text-sm text-[#3B170E] focus:outline-none"
+              />
+            ) : (
+              <p className="text-sm md:text-[15px] text-[#3B170E] leading-relaxed">
+                {historyText}
+              </p>
+            )}
+          </div>
+
+          <div className="md:col-span-5 bg-[#865D4E] md:rounded-l-[120px] p-6 flex flex-col items-center justify-center gap-3">
+            <span className="text-6xl font-bold text-[#C8A796] select-none">+</span>
+            {isEditingHistory ? (
               <button
                 type="button"
-                onClick={handleSaveBio}
-                disabled={savingBio}
-                className="btn-artesanal-dark px-6 py-1.5 text-sm md:text-base"
+                onClick={async () => {
+                  await updateArtisanProfile(artisan.id, {
+                    history_text: historyText,
+                  });
+                  setIsEditingHistory(false);
+                  setFeedbackMsg('Historia guardada en Supabase.');
+                }}
+                className="btn-artesanal-dark px-6 py-1.5 text-sm"
               >
-                {savingBio ? 'Guardando...' : 'Guardar Cambios'}
+                Guardar descripción
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsEditingHistory(true)}
+                className="btn-artesanal-dark px-6 py-1.5 text-sm"
+              >
+                Editar descripción
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* 3. OPTIMIZÁ TU VIDRIERA DIGITAL */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-2">
+          <div className="max-w-lg">
+            <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E]">
+              Optimizá tu vidriera digital
+            </h2>
+            <p className="text-xs md:text-sm text-[#3B170E] mt-1.5 leading-relaxed">
+              ¿Querés aprender a promocionar tus piezas de forma práctica y eficiente para
+              comunicar su valor cultural? accedé a un curso corto y aprendé esto y mucho
+              más.
+            </p>
+          </div>
+
+          <Link
+            to="/curso"
+            className="btn-artesanal px-10 py-2 text-base md:text-lg shrink-0 text-center"
+          >
+            Ver Curso
+          </Link>
+        </div>
+
+        {/* 4. COMPARTÍ UNA NUEVA PIEZA */}
+        <section className="space-y-4">
+          <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E]">
+            Compartí una nueva pieza
+          </h2>
+
+          <div
+            onClick={openCreateForm}
+            className="w-44 sm:w-48 cursor-pointer flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1"
+          >
+            <div className="bg-[#865D4E] w-full aspect-[3/3.3] flex items-center justify-center">
+              <span className="text-6xl font-bold text-[#C8A796] select-none">+</span>
+            </div>
+            <div className="product-card-footer bg-[#DCC7AE] px-4 pt-2 pb-4 flex justify-center">
+              <button
+                type="button"
+                className="relative z-10 btn-artesanal-dark px-7 py-1 text-sm"
+                style={{ transform: 'rotate(0deg)' }}
+              >
+                Añadir
               </button>
             </div>
           </div>
-        </div>
-
-        {/* 3. UN POCO DE MI HISTORIA (EDITABLE) */}
-        <div className="space-y-3 max-w-2xl">
-          <h2 className="font-display-serif text-3xl md:text-[34px] font-bold text-[#4A170E]">
-            Un poco de mi historia
-          </h2>
-          <textarea
-            rows={4}
-            value={historyText}
-            onChange={(e) => setHistoryText(e.target.value)}
-            className="w-full bg-transparent border border-[#8E6754]/50 rounded p-3 text-sm md:text-[15px] text-[#33130C] leading-relaxed focus:bg-[#DFCCB6]/50 focus:outline-none"
-          />
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={handleSaveHistory}
-              disabled={savingHistory}
-              className="btn-artesanal-dark px-6 py-1.5 text-sm md:text-base"
-            >
-              {savingHistory ? 'Guardando...' : 'Guardar Cambios'}
-            </button>
-          </div>
-        </div>
-
-        {/* 4. CREAR CATÁLOGO DE PRODUCTOS */}
-        <section className="space-y-6 pt-2">
-          <h2 className="font-display-serif text-3xl md:text-[36px] font-bold text-[#4A170E]">
-            Crear Catálogo de Productos
-          </h2>
-
-          <div className="flex flex-wrap items-center justify-between gap-4 max-w-2xl">
-            <div className="flex items-center gap-3 flex-1 min-w-[240px]">
-              <label
-                htmlFor="cat-title"
-                className="font-display-serif text-2xl md:text-[28px] text-[#4A170E]"
-              >
-                Título
-              </label>
-              <input
-                id="cat-title"
-                type="text"
-                value={catalogTitle}
-                onChange={(e) => setCatalogTitle(e.target.value)}
-                placeholder="Ej: Accesorios / Bombillas"
-                className="bg-[#DFCCB6]/80 border-b-2 border-[#54140E] px-3 py-1.5 text-base text-[#2E1008] focus:outline-none flex-1"
-              />
-            </div>
-
-            <button
-              type="button"
-              onClick={handlePublishCatalog}
-              disabled={publishing}
-              className="btn-artesanal-dark px-12 py-1.5 text-base md:text-lg"
-              style={{ transform: 'rotate(0deg)' }}
-            >
-              {publishing ? 'Publicando...' : 'Publicar'}
-            </button>
-          </div>
-
-          {/* Grilla de tarjetas de carga (+) + botón cuadrado + a la derecha */}
-          <div className="flex flex-wrap items-start gap-5">
-            {slots.map((slot, idx) => (
-              <div
-                key={idx}
-                className="w-44 sm:w-48 flex flex-col rounded-b-[22px] overflow-hidden shadow-md"
-              >
-                {/* Recuadro negro 3:4 con signo + para subir foto */}
-                <label className="bg-black w-full aspect-[3/4] flex items-center justify-center cursor-pointer relative overflow-hidden group">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="sr-only"
-                    onChange={(e) => handleSlotImageUpload(idx, e.target.files?.[0])}
-                  />
-                  {slot.image_url ? (
-                    <img
-                      src={slot.image_url}
-                      alt={slot.name || 'Nueva pieza'}
-                      className="w-full h-full object-contain p-3"
-                    />
-                  ) : uploadingSlot === idx ? (
-                    <span className="text-xs text-[#DFCCB6]">Subiendo...</span>
-                  ) : (
-                    <span className="text-6xl font-bold text-[#C8B29B] group-hover:scale-110 transition-transform select-none">
-                      +
-                    </span>
-                  )}
-                </label>
-
-                {/* Zócalo curvo convexo editable con Nombre, Tamaño y Precio */}
-                <div className="product-card-footer bg-[#DCC7AE] px-3 pt-2 pb-3 space-y-1">
-                  <input
-                    type="text"
-                    value={slot.name}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      setSlots((prev) =>
-                        prev.map((s, i) => (i === idx ? { ...s, name: val } : s))
-                      );
-                    }}
-                    placeholder="Nombre"
-                    className="relative z-10 w-full bg-transparent text-xs md:text-[13px] font-bold text-[#2F110A] placeholder-[#2F110A] focus:outline-none border-b border-transparent focus:border-[#4A170E]"
-                  />
-                  <input
-                    type="text"
-                    value={slot.dimensions}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      setSlots((prev) =>
-                        prev.map((s, i) => (i === idx ? { ...s, dimensions: val } : s))
-                      );
-                    }}
-                    placeholder="Tamaño"
-                    className="relative z-10 w-full bg-transparent text-[11px] md:text-xs text-[#2F110A]/90 placeholder-[#2F110A]/80 focus:outline-none border-b border-transparent focus:border-[#4A170E]"
-                  />
-                  <div className="relative z-10 flex items-center justify-between pt-0.5 text-[11px] text-[#4A170E]">
-                    <span>$</span>
-                    <input
-                      type="number"
-                      value={slot.price}
-                      onChange={(e) => {
-                        const val = Number(e.target.value);
-                        setSlots((prev) =>
-                          prev.map((s, i) => (i === idx ? { ...s, price: val } : s))
-                        );
-                      }}
-                      className="w-20 bg-transparent font-semibold focus:outline-none"
-                      title="Precio en pesos"
-                    />
-                    <span>Stock:</span>
-                    <input
-                      type="number"
-                      min={0}
-                      value={slot.stock}
-                      onChange={(e) => {
-                        const val = Number(e.target.value);
-                        setSlots((prev) =>
-                          prev.map((s, i) => (i === idx ? { ...s, stock: val } : s))
-                        );
-                      }}
-                      className="w-8 bg-transparent font-semibold text-right focus:outline-none"
-                      title="Stock inicial"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* Botón cuadrado negro + lateral derecho tal cual el mockup */}
-            <button
-              type="button"
-              onClick={handleAddSlot}
-              title="Añadir otra pieza al catálogo"
-              className="w-16 h-16 bg-black text-[#C8B29B] text-4xl font-bold flex items-center justify-center shadow hover:scale-105 transition-transform"
-            >
-              +
-            </button>
-          </div>
         </section>
 
-        {/* 5. MIS CATÁLOGOS */}
-        <section className="space-y-4 pt-6">
-          <h2 className="font-display-serif text-3xl md:text-[36px] font-bold text-[#4A170E]">
-            Mis catálogos
-          </h2>
-          <h3 className="font-display-serif text-2xl md:text-[28px] font-semibold text-[#4A170E]">
-            Accesorios
-          </h3>
+        {/* 5. LOS PRODUCTOS QUE COMPARTISTE ▼ */}
+        <section className="space-y-4">
+          <button
+            type="button"
+            onClick={() => setOpenShared((v) => !v)}
+            className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
+          >
+            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+              Los productos que compartiste
+            </span>
+            <span className="text-[#4A170E] text-xl">{openShared ? '▼' : '▶'}</span>
+          </button>
 
-          <div className="relative">
-            <CarouselArrow
-              direction="left"
-              onClick={() => {}}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {myCatalogProducts.map((prod, idx) => (
-                <ProductCard
-                  key={`mycat-${prod.id}-${idx}`}
-                  product={prod}
-                  artisan={artisanMap.get(prod.artisan_id) || artisan}
-                  showArtisanName={true}
-                />
-              ))}
+          {openShared && (
+            <div className="space-y-4">
+              <p className="text-xs md:text-sm text-[#3B170E] px-1">
+                Selecciona un producto para eliminarlo o editar su información.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                {sharedProducts.map((prod, idx) => (
+                  <ProductCard
+                    key={`shared-${prod.id}-${idx}`}
+                    product={prod}
+                    artisan={artisan}
+                    highlighted={idx === 0}
+                    showArtisanName={false}
+                    onClickOverride={(p) => openEditForm(p)}
+                  />
+                ))}
+              </div>
             </div>
-            <CarouselArrow
-              direction="right"
-              onClick={() => {}}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20"
-            />
-          </div>
+          )}
+        </section>
+
+        {/* 6. LOS PRODUCTOS QUE VENDISTE ▼ */}
+        <section className="space-y-4">
+          <button
+            type="button"
+            onClick={() => setOpenSold((v) => !v)}
+            className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
+          >
+            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+              Los productos que vendiste
+            </span>
+            <span className="text-[#4A170E] text-xl">{openSold ? '▼' : '▶'}</span>
+          </button>
+
+          {openSold && (
+            <div className="bg-[#D6BFA6]/80 rounded-2xl p-6 md:p-8 shadow-sm overflow-x-auto">
+              <table className="w-full text-left text-sm md:text-[15px] text-[#2B0F08]">
+                <thead>
+                  <tr className="border-b border-[#8C6E58]/50 font-bold">
+                    <th className="pb-3 pr-4">Fecha</th>
+                    <th className="pb-3 pr-4">Producto</th>
+                    <th className="pb-3 pr-4">Importe</th>
+                    <th className="pb-3">Estado</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#8C6E58]/30">
+                  <tr>
+                    <td className="py-3 pr-4">17 Dic 2026</td>
+                    <td className="py-3 pr-4 italic font-bold">Mate Yaguareté</td>
+                    <td className="py-3 pr-4">$ 60.000</td>
+                    <td className="py-3">Por retirar</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4">15 Dic 2026</td>
+                    <td className="py-3 pr-4 italic font-bold">Mate Flor</td>
+                    <td className="py-3 pr-4">$ 50.000</td>
+                    <td className="py-3">Retirado</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4">14 Dic 2026</td>
+                    <td className="py-3 pr-4 italic font-bold">Termera mediana</td>
+                    <td className="py-3 pr-4">$ 90.000</td>
+                    <td className="py-3">Retirado</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4">13 Dic 2026</td>
+                    <td className="py-3 pr-4 italic font-bold">Billetera Sol</td>
+                    <td className="py-3 pr-4">$ 15.000</td>
+                    <td className="py-3">Retirado</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4">13 Dic 2026</td>
+                    <td className="py-3 pr-4 italic font-bold">Billetera Fileteada</td>
+                    <td className="py-3 pr-4">$ 15.000</td>
+                    <td className="py-3">Retirado</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+
+        {/* 7. LOS PRODUCTOS QUE COMPRASTE ▼ */}
+        <section className="space-y-4">
+          <button
+            type="button"
+            onClick={() => setOpenBought((v) => !v)}
+            className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
+          >
+            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+              Los productos que compraste
+            </span>
+            <span className="text-[#4A170E] text-xl">{openBought ? '▼' : '▶'}</span>
+          </button>
+
+          {openBought && (
+            <div className="bg-[#D6BFA6]/80 rounded-2xl p-6 md:p-8 shadow-sm overflow-x-auto">
+              <table className="w-full text-left text-sm md:text-[15px] text-[#2B0F08]">
+                <thead>
+                  <tr className="border-b border-[#8C6E58]/50 font-bold">
+                    <th className="pb-3 pr-4">Fecha</th>
+                    <th className="pb-3 pr-4">Producto</th>
+                    <th className="pb-3 pr-4">Importe</th>
+                    <th className="pb-3">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="pt-3 pr-4">13 Dic 2026</td>
+                    <td className="pt-3 pr-4 italic font-bold">Taza de cerámica</td>
+                    <td className="pt-3 pr-4">$ 10.000</td>
+                    <td className="pt-3">Por retirar</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
       </div>
     </div>
   );
 };
-

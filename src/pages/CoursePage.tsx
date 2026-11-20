@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/* CURSO DE COMUNICACIÓN PARA ARTESANOS — ÍNDICE + 4 UNIDADES (curso de comunicación.pdf págs. 3 a 7) */
+/* CURSO DE COMUNICACIÓN PARA ARTESANOS — ÍNDICE + 4 UNIDADES ACTUALIZADAS (curso de comunicación.pdf y Parte de la web Andrés págs. 9 y 10) */
 export const CoursePage: React.FC = () => {
   const [unit, setUnit] = useState<0 | 1 | 2 | 3 | 4>(0);
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export const CoursePage: React.FC = () => {
       <div className="max-w-[1080px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         {/* COLUMNA PRINCIPAL (8 cols) */}
         <div className="lg:col-span-8">
-          {/* ================= VISTA 0: ÍNDICE DEL CURSO (Pág. 3) ================= */}
+          {/* ================= VISTA 0: ÍNDICE DEL CURSO ================= */}
           {unit === 0 && (
             <div className="space-y-7">
               <h1 className="font-serif text-3xl sm:text-4xl md:text-[38px] font-bold text-[#23120B]">
@@ -82,9 +82,8 @@ export const CoursePage: React.FC = () => {
                     Como fotografiar tus piezas | Duración 25 min.
                   </p>
                   <p>Usar el celular para fotos y vídeos</p>
-                  <p>Fondos</p>
-                  <p>Sobre la pieza a fotografíar</p>
-                  <p>Conceptos básicos de fotografía (ángulos, encuadres, etc)</p>
+                  <p>5 Reglas de la fotografía con celular</p>
+                  <p>Fondos, formatos y ángulos</p>
                 </div>
               </div>
 
@@ -105,10 +104,9 @@ export const CoursePage: React.FC = () => {
                   <p className="font-bold">
                     Tu vidriera digital lista | Duración 15 minutos
                   </p>
-                  <p>Conocé el perfil para artesanos</p>
-                  <p>Redacción de copys</p>
-                  <p>Carga de stock</p>
-                  <p>Personalización</p>
+                  <p>Completar tu perfil</p>
+                  <p>Categorías de piezas</p>
+                  <p>Descripciones de piezas y ficha técnica</p>
                 </div>
               </div>
 
@@ -140,7 +138,7 @@ export const CoursePage: React.FC = () => {
             </div>
           )}
 
-          {/* ================= VISTA 1: UNIDAD 1 - PRESENTACIÓN (Pág. 4) ================= */}
+          {/* ================= VISTA 1: UNIDAD 1 - PRESENTACIÓN ================= */}
           {unit === 1 && (
             <div className="space-y-8">
               <h1 className="font-serif text-3xl md:text-4xl font-bold">Presentación</h1>
@@ -250,7 +248,7 @@ export const CoursePage: React.FC = () => {
             </div>
           )}
 
-          {/* ================= VISTA 2: UNIDAD 2 - COMUNICACIÓN EFECTIVA (Pág. 5) ================= */}
+          {/* ================= VISTA 2: UNIDAD 2 - COMUNICACIÓN EFECTIVA ================= */}
           {unit === 2 && (
             <div className="space-y-8">
               <div className="space-y-3">
@@ -296,7 +294,6 @@ export const CoursePage: React.FC = () => {
                   ámbitos de la comunicación.
                 </p>
 
-                {/* Esquema sobre papel rasgado tal cual el PDF */}
                 <div className="bg-[#DFD5C6] border border-[#BFB29F] rounded-xl p-6 my-4 text-center shadow-sm space-y-3">
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium">
                     <span>
@@ -456,7 +453,7 @@ export const CoursePage: React.FC = () => {
             </div>
           )}
 
-          {/* ================= VISTA 3: UNIDAD 3 - FOTOGRAFÍA (Pág. 6) ================= */}
+          {/* ================= VISTA 3: UNIDAD 3 - FOTOGRAFÍA (Parte de la web Andrés pág. 9) ================= */}
           {unit === 3 && (
             <div className="space-y-8 text-sm md:text-[15px] leading-relaxed">
               <div className="space-y-3">
@@ -511,6 +508,70 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
+              {/* NUEVA SECCIÓN: 5 Reglas de la fotografía con celular (Parte de la web Andrés pág. 9) */}
+              <div className="space-y-4">
+                <h2 className="text-lg md:text-xl font-bold">
+                  5 Reglas de la fotografía con celular
+                </h2>
+
+                <div className="space-y-2">
+                  <h3 className="font-bold">#1 Usá ambas manos</h3>
+                  <p>
+                    Si se sujeta el teléfono como si fuera una cámara, con ambas manos resulta
+                    mejor para tomar las fotografías, no todos tenemos un pulso de cirujano,
+                    por lo que sostenerlo así ayudará a que tus fotos salgan más nítidas.
+                  </p>
+                  <div className="py-2">
+                    <img
+                      src="/assets/course/reglas-celular-checks.jpg"
+                      alt="Cómo sujetar el celular con ambas manos"
+                      className="w-full max-w-lg rounded shadow-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="font-bold">#2 En lo posible no usar zoom</h3>
+                  <p>
+                    La mayoría de los teléfonos móviles tienen un zoom digital que no acerca la
+                    imagen, sino que la amplía y la recorta, haciendo que tu foto tenga
+                    (notablemente) menos calidad.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="font-bold">#3 Apagá el flash</h3>
+                  <p>
+                    El flash de los celulares es mucho peor que el de una cámara, si bien en
+                    algunas ocasiones, cuando haya poca luz, puede ser necesario, la luz que
+                    genera es demasiado dura y generalmente el resultado final es malo.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="font-bold">#4 Ajustá el enfoque</h3>
+                  <p>
+                    Por defecto, el celular automáticamente elige los puntos de enfoque, y
+                    generalmente enfocan el objeto que esté más cerca de la cámara pero,
+                    ¿sabías que podés ser vos el que elija donde debería estar? Para hacerlo
+                    solo tenés que tocar con el dedo en el punto donde querés que esté el
+                    enfoque y que esté más nítido.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="font-bold">#5 Iluminación</h3>
+                  <p>
+                    Ajustar la iluminación de tu foto es fundamental para que la luz se esté
+                    usando a tu favor, para ajustarla podés elegir el punto donde se medirá la
+                    luz simplemente tocando con el dedo algún punto de la escena. Otra función
+                    que tienen los teléfonos es que te permiten hacer una compensación de la
+                    luz solo con tocar un punto de la pantalla y mantener presionado mientras
+                    deslizas hacia arriba o hacia abajo para dar o quitar luz a la foto.
+                  </p>
+                </div>
+              </div>
+
               <div className="space-y-4">
                 <h2 className="text-lg md:text-xl font-bold">Definir el fondo</h2>
                 <p>
@@ -563,7 +624,6 @@ export const CoursePage: React.FC = () => {
                   escena vas a capturar en una fotografía.
                 </p>
 
-                {/* Diagrama de proporciones 1:1, 9:16, 16:9, 3:4 */}
                 <div className="flex flex-wrap items-end justify-around gap-6 py-4">
                   <div className="flex flex-col items-center gap-2">
                     <span className="font-bold">1:1</span>
@@ -598,7 +658,6 @@ export const CoursePage: React.FC = () => {
                   se clasifican en:
                 </p>
 
-                {/* Esquema de ángulos sobre cesto */}
                 <div className="bg-[#D5C9B8] rounded-xl p-6 flex flex-col sm:flex-row items-center justify-around gap-6">
                   <img
                     src="/assets/course/cesto-angulos.jpg"
@@ -606,18 +665,13 @@ export const CoursePage: React.FC = () => {
                     className="w-36 h-36 object-contain rounded"
                   />
                   <ul className="space-y-2 text-xs md:text-sm font-semibold">
-                    <li>• Ángulo cenital (90° desde arriba)</li>
-                    <li>• Ángulo picado (45° diagonal superior)</li>
-                    <li>• Ángulo normal (frente al objeto)</li>
-                    <li>• Ángulo contrapicado (diagonal inferior)</li>
-                    <li>• Ángulo nadir (desde abajo)</li>
+                    <li>• Ángulo cenital</li>
+                    <li>• Ángulo picado</li>
+                    <li>• Ángulo normal</li>
+                    <li>• Ángulo contrapicado</li>
+                    <li>• Ángulo nadir</li>
                   </ul>
                 </div>
-
-                <p className="text-xs md:text-sm">
-                  Conocerlos nos ayuda a ver las opciones con las que contamos al momento de
-                  fotografiar para encontrar el ángulo que más le favorezca.
-                </p>
 
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
@@ -690,7 +744,7 @@ export const CoursePage: React.FC = () => {
             </div>
           )}
 
-          {/* ================= VISTA 4: UNIDAD 4 - OPTIMIZAR TU VIDRIERA DIGITAL (Pág. 7) ================= */}
+          {/* ================= VISTA 4: UNIDAD 4 - OPTIMIZAR TU VIDRIERA DIGITAL (Parte de la web Andrés pág. 10) ================= */}
           {unit === 4 && (
             <div className="space-y-8 text-sm md:text-[15px] leading-relaxed">
               <div className="space-y-4">
@@ -734,56 +788,86 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
+              {/* Completar tu perfil (Parte de la web Andrés pág. 10) */}
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Categorías de piezas</h2>
+                <h2 className="text-lg md:text-xl font-bold">Completar tu perfil</h2>
                 <p>
-                  Al momento de cargar un producto en tu catálogo vas a encontrar una
-                  clasificación entre piezas fijas y variables
+                  Para iniciar con la personalización de tu perfil tenés la opción de subir una
+                  foto tocando en el círculo negro, también dispones de un espacio para contar
+                  brevemente sobre tu trabajo a modo de ficha técnica, este perfil es el que
+                  será mostrado en la pestaña de perfiles, junto con el resto de artesanos
+                  registrados.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-[#D5C9B8] rounded-lg p-5 space-y-2">
-                    <h3 className="font-bold text-center mb-2">Piezas fijas</h3>
-                    <p className="flex items-start gap-2 text-xs md:text-sm">
-                      <span className="text-[#741712]">✵</span>
-                      <span>Tienen un stock definido</span>
-                    </p>
-                    <p className="flex items-start gap-2 text-xs md:text-sm">
-                      <span className="text-[#741712]">✵</span>
-                      <span>El precio es visible</span>
-                    </p>
-                    <p className="flex items-start gap-2 text-xs md:text-sm">
-                      <span className="text-[#741712]">✵</span>
-                      <span>Se pueden almacenar en el MAT</span>
-                    </p>
-                  </div>
+                <img
+                  src="/assets/course/u4-completar-perfil.jpg"
+                  alt="Ejemplo de cómo completar tu perfil"
+                  className="w-full max-w-xl rounded shadow-sm"
+                />
 
-                  <div className="bg-[#D5C9B8] rounded-lg p-5 space-y-2">
-                    <h3 className="font-bold text-center mb-2">Piezas variables</h3>
-                    <p className="flex items-start gap-2 text-xs md:text-sm">
-                      <span className="text-[#741712]">✵</span>
-                      <span>Pueden no estar en stock pero se puede realizar un pedido</span>
-                    </p>
-                    <p className="flex items-start gap-2 text-xs md:text-sm">
-                      <span className="text-[#741712]">✵</span>
-                      <span>En vez de precio se menciona que es consultable</span>
-                    </p>
-                    <p className="flex items-start gap-2 text-xs md:text-sm">
-                      <span className="text-[#741712]">✵</span>
-                      <span>Cuentan con posibilidad de hacerse personalizaciones</span>
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-xs md:text-sm">
-                  Al cargar los productos con precios fijos también se deberá indicar el stock
-                  con el que se cuenta, la web automáticamente registrará los cambios en las
-                  existencias tras las ventas. Para que la información se mantenga actualizada
-                  con cada nueva tanda de producción conviene renovar los datos del stock en la
-                  web.
+                <p>
+                  Otra sección es la de tu historia personal, a diferencia del perfil que es
+                  más sintético, acá podés contar un poco más sobre tus inicios, experiencias,
+                  deseos, motivaciones entre otros, básicamente contar sobre tu relación con el
+                  oficio.
                 </p>
+
+                <img
+                  src="/assets/course/u4-historia-personal.jpg"
+                  alt="Ejemplo de sección Un poco de mi historia"
+                  className="w-full max-w-xl rounded shadow-sm"
+                />
               </div>
 
+              {/* Categorías de piezas actualizada */}
+              <div className="space-y-3">
+                <h2 className="text-lg md:text-xl font-bold">Categorías de piezas</h2>
+                <p>
+                  Al momento de cargar un producto en tu catálogo vas a encontrar algunas
+                  categorías para definir mejor tu producto, que son:
+                </p>
+
+                <ul className="space-y-3 pl-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#741712] mt-0.5">✵</span>
+                    <span>
+                      <strong>Utilitario / decorativo:</strong> para diferenciar si son
+                      solamente estéticas o pensadas para el uso, también pueden corresponder a
+                      ambas, con piezas que se pueden utilizar pero también coleccionar.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#741712] mt-0.5">✵</span>
+                    <span>
+                      <strong>Diseño de autor exclusivo:</strong> piezas que por ciertas
+                      características como las técnicas, procesos, detalles, diseños u otros
+                      son muy difíciles de llegar a replicar, por lo que quedarán destacadas con
+                      una estrella.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#741712] mt-0.5">✵</span>
+                    <span>
+                      <strong>Stock:</strong> si contás con una cantidad de piezas en
+                      existencia, aclararlo es muy beneficioso ya que posibilita una entrega
+                      inmediata. En cambio las piezas que figuren como “sin stock” van a tener
+                      la opción de realizar un pedido consultando sobre los detalles de la
+                      realización.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#741712] mt-0.5">✵</span>
+                    <span>
+                      <strong>Precio:</strong> puede ser un precio fijo, cuando el modelo es
+                      regular o estándar, o indefinido para que los interesados consulten ya sea
+                      por variaciones en las materias primas, posibilidades de personalización u
+                      otras razones.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Descripciones de piezas con diagrama */}
               <div className="space-y-4">
                 <h2 className="text-lg md:text-xl font-bold">Descripciones de piezas</h2>
                 <p>
@@ -800,8 +884,8 @@ export const CoursePage: React.FC = () => {
                     <p className="font-bold">Datos genéricos</p>
                     <p>Nombre</p>
                     <p>Medidas</p>
-                    <p>Peso (si corresponde)</p>
-                    <p>Precio (si corresponde)</p>
+                    <p>Precio (o si es consultable)</p>
+                    <p>Stock (para entrega inmediata)</p>
                   </div>
                   <div className="space-y-1.5">
                     <p className="font-bold">Datos específicos</p>
@@ -812,10 +896,18 @@ export const CoursePage: React.FC = () => {
                   </div>
                 </div>
 
+                <img
+                  src="/assets/course/u4-ficha-tecnica-diagrama.jpg"
+                  alt="Esquema del formulario de carga de pieza"
+                  className="w-full max-w-xl rounded shadow-sm"
+                />
+
                 <p>
                   Es justamente en el apartado de breve descripción donde tenemos el espacio
-                  para aplicar lo que aprendimos de comunicación cultural y estratégica,
-                  podemos realizar una narrativa que integre la historia que hay detrás de la
+                  para aplicar lo que aprendimos de comunicación cultural y estratégica.
+                </p>
+                <p>
+                  Se puede realizar una narrativa que integre la historia que hay detrás de la
                   pieza, el valor tradicional, de qué cultura o época deriva, el aspecto
                   estético, las técnicas que se implementaron, cómo se obtuvo o procesó la
                   materia prima, cuanto tiempo tomó tanto el objeto en sí como cada instancia
@@ -881,4 +973,3 @@ export const CoursePage: React.FC = () => {
     </div>
   );
 };
-

@@ -1,21 +1,82 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
-/* PASO 1 DE COMPRA: FORMA DE ENTREGA (sitio web 2.pdf pág. 7) */
+/* COMPONENTE DE CONFIRMACIÓN: ¡GRACIAS POR TU COMPRA! (Parte de la web Andrés pág. 8) */
+const PurchaseThanksCard: React.FC<{ productName: string }> = ({ productName }) => (
+  <div className="bg-kraft-texture min-h-[75vh] py-16 px-6 flex items-center justify-center">
+    <div className="bg-[#D6BFA6]/85 rounded-2xl p-10 md:p-12 max-w-[520px] w-full shadow-md space-y-6">
+      <h1 className="font-display-serif text-3xl md:text-[36px] font-bold text-[#5C1912] text-center">
+        ¡Gracias por tu compra!
+      </h1>
+
+      <div className="space-y-4 text-base md:text-[17.5px] text-[#23110B] leading-relaxed">
+        <p>
+          Tu {productName.toLowerCase()} te está esperando en el mercado del Museo de
+          artesanías tradicionales
+        </p>
+        <p>Podés retirarlo de 9:00 a 20:00 hs</p>
+        <p>
+          Con tu compra ayudas a sostener
+          <br />
+          la tradición correntina
+        </p>
+      </div>
+
+      <div className="pt-3 flex justify-center">
+        <Link
+          to="/"
+          className="btn-artesanal-dark px-12 py-2.5 text-base md:text-lg"
+          style={{ transform: 'rotate(0deg)' }}
+        >
+          Volver al inicio
+        </Link>
+      </div>
+    </div>
+  </div>
+);
+
+/* PASO 1 DE COMPRA: FORMA DE ENTREGA (Parte de la web Andrés pág. 5) */
 export const DeliveryCheckoutPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { products, selectedDeliveryMethod, setSelectedDeliveryMethod } = useApp();
+  const {
+    products,
+    selectedDeliveryMethod,
+    setSelectedDeliveryMethod,
+    currentBuyerName,
+    completePurchase,
+  } = useApp();
+
+  const [cashDone, setCashDone] = useState(false);
+  const [processingCash, setProcessingCash] = useState(false);
 
   const product = useMemo(() => {
     return (
       products.find((p) => p.slug === slug) ||
-      products.find((p) => p.slug === 'bombilla-corazon') ||
+      products.find((p) => p.slug === 'billetera-cincelada') ||
       products[0]
     );
   }, [products, slug]);
+
+  const handleCashPayment = async () => {
+    setProcessingCash(true);
+    try {
+      await completePurchase(
+        product.id,
+        currentBuyerName || 'Andrés Navarro',
+        selectedDeliveryMethod,
+        'EFEC'
+      );
+      setCashDone(true);
+    } finally {
+      setProcessingCash(false);
+    }
+  };
+
+  if (cashDone) {
+    return <PurchaseThanksCard productName={product.name} />;
+  }
 
   return (
     <div className="bg-kraft-texture min-h-[78vh] py-14 md:py-20 px-6 md:px-16 flex items-center">
@@ -23,28 +84,16 @@ export const DeliveryCheckoutPage: React.FC = () => {
         {/* Columna izquierda: Forma de entrega */}
         <div className="md:col-span-6 bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-10 shadow-sm flex flex-col justify-between">
           <div>
-            <h1 className="font-display-serif text-3xl md:text-[34px] font-bold text-[#3D120A] mb-7">
+            <h1 className="font-display-serif text-3xl md:text-[34px] font-bold text-[#2E1008] mb-7">
               Forma de entrega
             </h1>
 
-            {/* Píldora segmentada de 3 opciones */}
-            <div className="bg-[#DFCCB6] rounded-full p-1 grid grid-cols-3 items-center text-center shadow-inner">
-              <button
-                type="button"
-                onClick={() => setSelectedDeliveryMethod('envio')}
-                className={`py-2.5 px-3 rounded-full text-base md:text-lg transition-all ${
-                  selectedDeliveryMethod === 'envio'
-                    ? 'bg-[#E9DAC6] font-semibold text-[#2E1008] shadow'
-                    : 'text-[#3D120A]/80 hover:text-[#2E1008]'
-                }`}
-              >
-                Envío
-              </button>
-
+            {/* Píldora segmentada (Retiro a 800 mts | Acordar Retiro) tal como en Parte de la web Andrés pág. 5 */}
+            <div className="bg-[#DFCCB6] rounded-full p-1 grid grid-cols-2 max-w-[340px] items-center text-center shadow-inner">
               <button
                 type="button"
                 onClick={() => setSelectedDeliveryMethod('retiro_mat')}
-                className={`py-1.5 px-3 rounded-full text-base md:text-lg leading-tight transition-all ${
+                className={`py-2 px-4 rounded-full text-base md:text-lg leading-tight transition-all ${
                   selectedDeliveryMethod === 'retiro_mat'
                     ? 'bg-[#E9DAC6] font-semibold text-[#2E1008] shadow'
                     : 'text-[#3D120A]/80 hover:text-[#2E1008]'
@@ -58,7 +107,7 @@ export const DeliveryCheckoutPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedDeliveryMethod('acordar_retiro')}
-                className={`py-1.5 px-3 rounded-full text-base md:text-lg leading-tight transition-all ${
+                className={`py-2 px-4 rounded-full text-base md:text-lg leading-tight transition-all ${
                   selectedDeliveryMethod === 'acordar_retiro'
                     ? 'bg-[#E9DAC6] font-semibold text-[#2E1008] shadow'
                     : 'text-[#3D120A]/80 hover:text-[#2E1008]'
@@ -70,63 +119,63 @@ export const DeliveryCheckoutPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Descripción dinámica según el método elegido */}
             <div className="mt-8 text-sm md:text-[15.5px] text-[#2E1008] leading-relaxed">
-              {selectedDeliveryMethod === 'retiro_mat' && (
+              {selectedDeliveryMethod === 'acordar_retiro' ? (
+                <p>
+                  Acordás el punto de retiro directamente con el artesano por su taller o
+                  en la Feria Ita Berá.
+                </p>
+              ) : (
                 <p>
                   Centro de Retiro: Museo de Artesanías Tradicionales, Fray José de la
                   Quintana 905 a 800 mts
-                </p>
-              )}
-              {selectedDeliveryMethod === 'envio' && (
-                <p>
-                  Envío a domicilio dentro de Corrientes Capital y todo el país mediante
-                  correo con seguimiento.
-                </p>
-              )}
-              {selectedDeliveryMethod === 'acordar_retiro' && (
-                <p>
-                  Acordás el retiro directamente con el taller del artesano o en el stand de
-                  Feria Ita Berá.
                 </p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Columna derecha: Resumen de compra */}
+        {/* Columna derecha: Resumen de compra + Transferir / Pagar en efectivo */}
         <div className="md:col-span-5 bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-10 shadow-sm flex flex-col justify-between">
           <div>
-            <h2 className="font-display-serif text-3xl md:text-[32px] font-bold text-[#3D120A] mb-6">
+            <h2 className="font-display-serif text-3xl md:text-[32px] font-bold text-[#2E1008] mb-6">
               Resumen de compra
             </h2>
 
             <div className="flex items-start gap-5">
-              <div className="w-24 h-28 bg-black p-2 flex items-center justify-center shrink-0">
+              <div className="w-24 h-28 bg-black overflow-hidden flex items-center justify-center shrink-0">
                 <img
                   src={product.main_image_url}
                   alt={product.name}
-                  className="max-h-full max-w-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="space-y-2 text-[#2E1008]">
                 <h3 className="text-lg md:text-xl font-medium">{product.name}</h3>
-                <p className="text-base md:text-lg">{product.subtitle || 'de Plata'}</p>
+                <p className="text-base md:text-lg">{product.subtitle || 'de Cuero'}</p>
                 <p className="text-lg md:text-xl pt-1">
-                  Total: ${(product.price || 12000).toLocaleString('es-AR')}
+                  Total: ${(product.price || 15000).toLocaleString('es-AR')}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex flex-col items-center gap-3">
             <button
               type="button"
               onClick={() => navigate(`/checkout/pago/${product.slug}`)}
-              className="btn-artesanal-dark w-full py-2.5 px-6 text-lg md:text-xl"
+              className="btn-artesanal-dark w-56 py-2 px-6 text-base md:text-lg"
             >
-              Añadir método de pago
+              Transferir
+            </button>
+            <button
+              type="button"
+              onClick={handleCashPayment}
+              disabled={processingCash}
+              className="btn-artesanal-dark w-56 py-2 px-6 text-base md:text-lg"
+            >
+              {processingCash ? 'Registrando...' : 'Pagar en efectivo'}
             </button>
           </div>
         </div>
@@ -135,7 +184,7 @@ export const DeliveryCheckoutPage: React.FC = () => {
   );
 };
 
-/* PASO 2 DE COMPRA: FORMA DE PAGO (segunda parte de la web .pdf pág. 3) */
+/* PASO 2 DE COMPRA: FORMA DE PAGO (Parte de la web Andrés pág. 6 y pág. 8) */
 export const PaymentCheckoutPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const {
@@ -148,7 +197,7 @@ export const PaymentCheckoutPage: React.FC = () => {
   const product = useMemo(() => {
     return (
       products.find((p) => p.slug === slug) ||
-      products.find((p) => p.slug === 'bombilla-corazon') ||
+      products.find((p) => p.slug === 'billetera-cincelada') ||
       products[0]
     );
   }, [products, slug]);
@@ -158,10 +207,7 @@ export const PaymentCheckoutPage: React.FC = () => {
   const [cvv, setCvv] = useState('');
   const [holderName, setHolderName] = useState(currentBuyerName || '');
   const [submitting, setSubmitting] = useState(false);
-  const [orderCompleted, setOrderCompleted] = useState<{
-    order_id: number;
-    new_stock: number;
-  } | null>(null);
+  const [orderCompleted, setOrderCompleted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handlePay = async (e: React.FormEvent) => {
@@ -175,13 +221,13 @@ export const PaymentCheckoutPage: React.FC = () => {
     setSubmitting(true);
     try {
       const last4 = cardNumber.replace(/\D/g, '').slice(-4) || '4242';
-      const res = await completePurchase(
+      await completePurchase(
         product.id,
         holderName.trim(),
         selectedDeliveryMethod,
         last4
       );
-      setOrderCompleted(res);
+      setOrderCompleted(true);
     } catch (err: any) {
       setErrorMsg(err?.message || 'Ocurrió un error al procesar el pago.');
     } finally {
@@ -190,32 +236,7 @@ export const PaymentCheckoutPage: React.FC = () => {
   };
 
   if (orderCompleted) {
-    return (
-      <div className="bg-kraft-texture min-h-[75vh] py-16 px-6 flex items-center justify-center">
-        <div className="bg-[#D6BFA6] rounded-2xl p-10 max-w-lg w-full shadow-lg text-center space-y-5">
-          <CheckCircle2 className="w-16 h-16 text-[#741712] mx-auto" />
-          <h1 className="font-display-serif text-3xl md:text-4xl font-bold text-[#4A170E]">
-            ¡Compra confirmada!
-          </h1>
-          <p className="text-base text-[#33130C]">
-            Tu pedido de <strong>{product.name}</strong> fue registrado en Supabase (Orden #
-            {orderCompleted.order_id}). El stock de la pieza se actualizó automáticamente a{' '}
-            <strong>{orderCompleted.new_stock}</strong> unidades disponibles.
-          </p>
-          <div className="pt-4 flex flex-wrap justify-center gap-4">
-            <Link
-              to={`/producto/${product.slug}`}
-              className="btn-artesanal px-6 py-2 text-base"
-            >
-              Ver ficha actualizada
-            </Link>
-            <Link to="/catalogo" className="btn-artesanal-dark px-6 py-2 text-base">
-              Volver al catálogo
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    return <PurchaseThanksCard productName={product.name} />;
   }
 
   return (
@@ -224,7 +245,7 @@ export const PaymentCheckoutPage: React.FC = () => {
         onSubmit={handlePay}
         className="max-w-[960px] mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start"
       >
-        {/* Columna izquierda: Forma de Pago */}
+        {/* Columna izquierda: Forma de Pago (Parte de la web Andrés pág. 6) */}
         <div className="md:col-span-6 bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-10 shadow-sm space-y-5">
           <h1 className="font-display-serif text-3xl md:text-[34px] font-bold text-[#4A170E] mb-2">
             Forma de Pago
@@ -273,9 +294,19 @@ export const PaymentCheckoutPage: React.FC = () => {
           {errorMsg && (
             <p className="text-sm font-semibold text-[#741712] pt-1">{errorMsg}</p>
           )}
+
+          <div className="pt-3 flex justify-center">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-artesanal-dark px-10 py-2 text-base md:text-lg"
+            >
+              {submitting ? 'Procesando...' : 'Añadir medio de pago'}
+            </button>
+          </div>
         </div>
 
-        {/* Columna derecha: Resumen de compra + Pagar y finalizar */}
+        {/* Columna derecha: Resumen de compra */}
         <div className="md:col-span-5 bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-10 shadow-sm flex flex-col justify-between">
           <div>
             <h2 className="font-display-serif text-3xl md:text-[32px] font-bold text-[#4A170E] mb-6">
@@ -283,19 +314,19 @@ export const PaymentCheckoutPage: React.FC = () => {
             </h2>
 
             <div className="flex items-start gap-5">
-              <div className="w-24 h-28 bg-black p-2 flex items-center justify-center shrink-0">
+              <div className="w-24 h-28 bg-black overflow-hidden flex items-center justify-center shrink-0">
                 <img
                   src={product.main_image_url}
                   alt={product.name}
-                  className="max-h-full max-w-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="space-y-2 text-[#2E1008]">
                 <h3 className="text-lg md:text-xl font-medium">{product.name}</h3>
-                <p className="text-base md:text-lg">{product.subtitle || 'de Plata'}</p>
+                <p className="text-base md:text-lg">{product.subtitle || 'de Cuero'}</p>
                 <p className="text-lg md:text-xl pt-1">
-                  Total: ${(product.price || 12000).toLocaleString('es-AR')}
+                  Total: ${(product.price || 15000).toLocaleString('es-AR')}
                 </p>
               </div>
             </div>
@@ -315,4 +346,3 @@ export const PaymentCheckoutPage: React.FC = () => {
     </div>
   );
 };
-

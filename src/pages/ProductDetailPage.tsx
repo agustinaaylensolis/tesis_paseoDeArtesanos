@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { CarouselArrow, ProductCard } from '../components/ui';
@@ -11,7 +11,7 @@ export const ProductDetailPage: React.FC = () => {
   const product = useMemo(() => {
     return (
       products.find((p) => p.slug === slug) ||
-      products.find((p) => p.slug === 'bombilla-corazon') ||
+      products.find((p) => p.slug === 'billetera-cincelada') ||
       products[0]
     );
   }, [products, slug]);
@@ -19,17 +19,39 @@ export const ProductDetailPage: React.FC = () => {
   const artisan = useMemo(() => {
     return (
       artisans.find((a) => a.id === product?.artisan_id) ||
-      artisans.find((a) => a.slug === 'silvia-balbuena') ||
+      artisans.find((a) => a.slug === 'ariel-morales') ||
       artisans[0]
     );
   }, [artisans, product]);
 
-  const gallery = useMemo(() => {
-    const imgs = [product.main_image_url, ...(product.gallery_urls || [])];
-    return imgs;
+  const defaultThumbs = useMemo(() => {
+    if (product.material_id === 4) {
+      return [
+        '/assets/products/bombilla-detail-1.jpg',
+        '/assets/products/bombilla-detail-2.jpg',
+        '/assets/products/bombilla-detail-3.jpg',
+      ];
+    }
+    return [
+      '/assets/products/billetera-detail-1.jpg',
+      '/assets/products/billetera-detail-2.jpg',
+      '/assets/products/billetera-detail-3.jpg',
+    ];
   }, [product]);
 
+  const gallery = useMemo(() => {
+    const urls =
+      product.gallery_urls && product.gallery_urls.length > 0
+        ? product.gallery_urls
+        : defaultThumbs;
+    return [product.main_image_url, ...urls];
+  }, [product, defaultThumbs]);
+
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
+
+  useEffect(() => {
+    setSelectedImageIdx(0);
+  }, [product.id]);
 
   const artisanMap = useMemo(() => {
     const map = new Map<number, (typeof artisans)[0]>();
@@ -37,14 +59,28 @@ export const ProductDetailPage: React.FC = () => {
     return map;
   }, [artisans]);
 
-  // Las 4 piezas mostradas en "Más productos del Artesano" y "Productos similares" en segunda parte de la web .pdf pág. 1
-  const relatedFour = useMemo(() => {
-    const cabo = products.find((p) => p.slug.includes('cabo-de-rebenque')) || products[0];
-    const b22 = products.find((p) => p.slug.includes('bombilla-22cm')) || products[0];
-    const b20 = products.find((p) => p.slug.includes('bombilla-20cm')) || products[0];
-    const mate = products.find((p) => p.slug.includes('mate-de-tres-patas')) || products[0];
-    return [cabo, b22, b20, mate];
-  }, [products]);
+  // "Más productos del Artesano" (paginas.pdf pág. 2: Mate Lechuza, Billetera de Carpincho, Mate familia de carpinchos, Billetera)
+  const moreFromArtisan = useMemo(() => {
+    const sameMat = products.filter((p) => p.material_id === product.material_id);
+    if (product.material_id === 1 && sameMat.length >= 4) {
+      const mLechuza = products.find((p) => p.slug === 'mate-lechuza') || sameMat[0];
+      const bCarp = products.find((p) => p.slug === 'billetera-de-carpincho') || sameMat[1];
+      const mFam =
+        products.find((p) => p.slug === 'mate-familia-de-carpinchos') || sameMat[2];
+      const bill = products.find((p) => p.slug === 'billetera-cincelada') || sameMat[3];
+      return [mLechuza, bCarp, mFam, bill];
+    }
+    return sameMat.slice(0, 4);
+  }, [products, product]);
+
+  // "Productos similares" (paginas.pdf pág. 2: Mate de flor, Llavero de dorado, Termera pequeña, Billetera temática de animales)
+  const similarProducts = useMemo(() => {
+    const sameMat = products.filter((p) => p.material_id === product.material_id);
+    if (product.material_id === 1 && sameMat.length >= 8) {
+      return sameMat.slice(4, 8);
+    }
+    return sameMat.slice(0, 4);
+  }, [products, product]);
 
   const formatPrice = (val?: number | null) => {
     if (!val) return 'Consultable';
@@ -64,7 +100,9 @@ export const ProductDetailPage: React.FC = () => {
 
             <p className="text-base md:text-[17px]">
               Medidas:{' '}
-              {product.dimensions === '22 cm' ? '22 centímetros' : product.dimensions}
+              {product.dimensions === '11 cm x 7 cm'
+                ? '11 x 7 centímetros'
+                : product.dimensions}
             </p>
             <p className="text-base md:text-[17px]">
               Horas de Trabajo: {product.work_hours}
@@ -106,9 +144,9 @@ export const ProductDetailPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Columna derecha: Imagen principal en fondo negro + flechas + 3 miniaturas */}
+          {/* Columna derecha: Imagen principal + flechas + 3 miniaturas */}
           <div className="md:col-span-6 space-y-4">
-            <div className="relative bg-black aspect-[4/4.3] flex items-center justify-center p-6 shadow-md">
+            <div className="relative bg-[#363F45] aspect-[4/4.3] flex items-center justify-center overflow-hidden shadow-md">
               <CarouselArrow
                 direction="left"
                 onClick={() =>
@@ -120,7 +158,7 @@ export const ProductDetailPage: React.FC = () => {
               <img
                 src={gallery[selectedImageIdx] || product.main_image_url}
                 alt={product.name}
-                className="max-h-full max-w-full object-contain transition-all duration-300"
+                className="w-full h-full object-cover transition-all duration-300"
               />
 
               <CarouselArrow
@@ -132,13 +170,9 @@ export const ProductDetailPage: React.FC = () => {
               />
             </div>
 
-            {/* 3 miniaturas inferiores tal como en el PDF */}
+            {/* 3 miniaturas inferiores tal como en paginas.pdf pág. 2 */}
             <div className="grid grid-cols-3 gap-3">
-              {[
-                '/assets/products/bombilla-detail-1.jpg',
-                '/assets/products/bombilla-detail-2.jpg',
-                '/assets/products/bombilla-detail-3.jpg',
-              ].map((thumbUrl, idx) => (
+              {defaultThumbs.map((thumbUrl, idx) => (
                 <button
                   key={idx}
                   type="button"
@@ -200,11 +234,12 @@ export const ProductDetailPage: React.FC = () => {
               className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {relatedFour.map((item, idx) => (
+              {moreFromArtisan.map((item, idx) => (
                 <ProductCard
                   key={`more-${item.id}-${idx}`}
                   product={item}
                   artisan={artisan}
+                  highlighted={idx === 0}
                   showArtisanName={false}
                 />
               ))}
@@ -230,11 +265,11 @@ export const ProductDetailPage: React.FC = () => {
               className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {relatedFour.map((item, idx) => (
+              {similarProducts.map((item, idx) => (
                 <ProductCard
                   key={`sim-${item.id}-${idx}`}
                   product={item}
-                  artisan={artisanMap.get(item.artisan_id)}
+                  artisan={artisanMap.get(item.artisan_id) || artisan}
                   showArtisanName={true}
                 />
               ))}
@@ -250,4 +285,3 @@ export const ProductDetailPage: React.FC = () => {
     </div>
   );
 };
-

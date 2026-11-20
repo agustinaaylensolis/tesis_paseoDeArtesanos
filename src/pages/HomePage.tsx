@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { User, ShoppingBag, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { CarouselArrow, MaterialTimeline } from '../components/ui';
 
 /* Guarda escalonada tradicional correntina/guaraní para el Hero */
 const GuaraniPatternStrip: React.FC<{ className?: string }> = ({ className = '' }) => (
@@ -14,13 +13,11 @@ const GuaraniPatternStrip: React.FC<{ className?: string }> = ({ className = '' 
         className="w-24 md:w-36 h-24 md:h-36 -my-2"
         fill="none"
       >
-        {/* Rombo escalonado exterior rojo terracota */}
         <path
           d="M60 0 H80 V20 H100 V40 H120 V80 H100 V100 H80 V120 H40 V100 H20 V80 H0 V40 H20 V20 H40 V0 Z"
           fill="#9E2113"
           fillOpacity="0.88"
         />
-        {/* Centro cruciforme oscuro */}
         <path
           d="M52 28 H68 V48 H88 V72 H68 V92 H52 V72 H32 V48 H52 Z"
           fill="#3E0C06"
@@ -32,37 +29,23 @@ const GuaraniPatternStrip: React.FC<{ className?: string }> = ({ className = '' 
 
 export const HomePage: React.FC = () => {
   const { materials } = useApp();
-  const navigate = useNavigate();
-  const [activeMatIndex, setActiveMatIndex] = useState(0);
-  const [showMoreMatInfo, setShowMoreMatInfo] = useState(false);
-
-  const currentMaterial = materials[activeMatIndex] || materials[0];
-
-  const handlePrevMat = () => {
-    setActiveMatIndex((prev) => (prev === 0 ? materials.length - 1 : prev - 1));
-  };
-
-  const handleNextMat = () => {
-    setActiveMatIndex((prev) => (prev === materials.length - 1 ? 0 : prev + 1));
-  };
 
   return (
-    <div className="w-full overflow-x-hidden">
-      {/* 1. HERO SECTION OSCURO CON GUARDA GUARANÍ */}
-      <section
-        className="relative bg-[#431008] text-[#E6A34B] pt-12 pb-28 md:pb-36 px-6 md:px-16 overflow-hidden"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 26% 28%, rgba(138, 45, 18, 0.55) 0%, rgba(67, 16, 8, 0.96) 55%, #2D0904 100%)',
-        }}
-      >
-        {/* Guarda geométrica derecha */}
+    <div
+      className="w-full overflow-x-hidden bg-no-repeat bg-top"
+      style={{
+        backgroundImage: "url('/assets/ui/fondo-landing-unido.webp')",
+        backgroundSize: '100% 100%',
+      }}
+    >
+      {/* 1. HERO SECTION (SOBRE LA PARTE ROJA DEL FONDO UNIDO) */}
+      <section className="relative text-[#E6A34B] pt-14 md:pt-20 pb-24 md:pb-36 px-6 md:px-16 overflow-hidden">
         <div className="absolute top-0 right-4 md:right-16 bottom-0 opacity-90 hidden sm:flex items-start">
           <GuaraniPatternStrip />
         </div>
 
         <div className="max-w-[1060px] mx-auto relative z-10">
-          <h1 className="font-display-serif text-5xl sm:text-6xl md:text-[72px] font-bold text-[#DF9B43] leading-[1.06] tracking-wide max-w-xl">
+          <h1 className="font-display-serif text-5xl sm:text-6xl md:text-[72px] font-bold text-[#DF9B43] leading-[1.06] tracking-wide max-w-xl uppercase">
             Paseo de
             <br />
             artesanos
@@ -70,12 +53,12 @@ export const HomePage: React.FC = () => {
             digital
           </h1>
 
-          <div className="mt-10 md:mt-14 max-w-lg">
-            <p className="italic text-2xl md:text-[28px] text-[#DF9B43] mb-5">
+          <div className="mt-12 md:mt-16 max-w-lg">
+            <p className="italic text-2xl md:text-[28px] text-[#DF9B43] mb-6">
               Una plataforma para :
             </p>
 
-            <ul className="space-y-4 text-xl md:text-[25px] italic text-[#E5A956]">
+            <ul className="space-y-5 text-xl md:text-[25px] italic text-[#E5A956]">
               <li className="flex items-start gap-3">
                 <span className="text-[#B82918] text-2xl leading-none mt-1">✵</span>
                 <span>Conocer a los artesanos</span>
@@ -95,39 +78,16 @@ export const HomePage: React.FC = () => {
             </ul>
           </div>
 
-          <p className="mt-12 md:mt-16 font-display-serif italic text-2xl sm:text-3xl md:text-[36px] text-[#F1DEC4] leading-snug max-w-lg">
-            Revaloricemos juntos
+          <p className="mt-16 md:mt-24 font-display-serif italic text-2xl sm:text-3xl md:text-[36px] text-[#F1DEC4] leading-snug max-w-lg">
+            Revaloricemos juntos la
             <br />
-            la producción
-            <br />
-            tradicional correntina
+            producción tradicional correntina
           </p>
-        </div>
-
-        {/* Corte curvo inferior hacia la sección mostaza */}
-        <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none">
-          <svg
-            viewBox="0 0 1440 130"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-16 md:h-28"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 90C460 145 980 85 1440 0V130H0V90Z"
-              fill="#D8923E"
-            />
-          </svg>
         </div>
       </section>
 
-      {/* 2. FRANJA MOSTAZA: ¿SOS ARTESANO TRADICIONAL? + FLECHA MANUSCRITA + ¡REGISTRATE! */}
-      <section className="relative bg-mustard-texture pt-4 pb-20 md:pb-24 px-6 md:px-16 overflow-hidden">
-        {/* Detalle de guarda lateral izquierda suave */}
-        <div className="absolute left-0 top-6 bottom-6 w-8 md:w-12 opacity-35 pointer-events-none flex flex-col justify-center">
-          <div className="w-full h-40 bg-[#F3CBA0]/40" />
-        </div>
-
+      {/* 2. FRANJA MOSTAZA: ¿SOS ARTESANO TRADICIONAL? */}
+      <section className="relative pt-8 md:pt-12 pb-12 md:pb-16 px-6 md:px-16">
         <div className="max-w-[1060px] mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="max-w-xl">
             <h2 className="font-display-serif text-2xl sm:text-3xl md:text-[34px] font-bold text-[#47140C]">
@@ -137,14 +97,12 @@ export const HomePage: React.FC = () => {
               Tu oficio forma parte de la cultura correntina.
             </p>
             <p className="text-sm md:text-base text-[#3A120A] mt-3 leading-relaxed max-w-md">
-              Registrá tu perfil para mostrar tu trabajo, contar tu historia
-              <br className="hidden sm:inline" /> y sumate a la Corriente Artesanal.
+              Registrá tu perfil para mostrar tu trabajo, contar tu
+              <br className="hidden sm:inline" /> historia y sumate a la Corriente Artesanal.
             </p>
           </div>
 
-          {/* Contenedor de flecha con rulo y botón ¡REGISTRATE! */}
-          <div className="relative flex flex-col items-center md:items-end pr-4 md:pr-16 pt-6 md:pt-10">
-            {/* SVG Flecha manuscrita con rulo idéntica al PDF */}
+          <div className="relative flex flex-col items-center md:items-end pr-4 md:pr-16 pt-2">
             <svg
               viewBox="0 0 260 130"
               className="w-48 md:w-60 h-24 md:h-28 -mb-3 md:-mr-10 text-[#23110B]"
@@ -173,136 +131,86 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
         </div>
+      </section>
 
-        {/* Corte curvo inferior hacia la textura de papel Kraft */}
-        <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-10 md:h-16"
-            preserveAspectRatio="none"
+      {/* 3. FRANJA CURVA MARRÓN OSCURO CON LOS 3 CONTADORES (+80, +50, +600) */}
+      <section className="relative py-6 md:py-10 px-6 md:px-16">
+        <div className="max-w-[920px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 items-center justify-items-center text-[#F3E3CE]">
+          <Link
+            to="/artesanos"
+            className="flex items-center gap-4 hover:scale-105 transition-transform"
           >
-            <path
-              d="M0 35C480 -15 980 -10 1440 55V80H0V35Z"
-              fill="#D3B99C"
-            />
-          </svg>
+            <User className="w-11 h-11 text-[#DFC4A6] fill-[#DFC4A6] shrink-0" />
+            <div>
+              <div className="font-display-serif text-3xl md:text-4xl font-bold text-[#E59849]">
+                +80
+              </div>
+              <div className="italic text-lg md:text-xl">Artesanos</div>
+            </div>
+          </Link>
+
+          <Link
+            to="/catalogo?exclusivos=1"
+            className="flex items-center gap-4 hover:scale-105 transition-transform"
+          >
+            <Star className="w-11 h-11 text-[#DFC4A6] fill-[#DFC4A6] shrink-0" />
+            <div>
+              <div className="font-display-serif text-3xl md:text-4xl font-bold text-[#E59849]">
+                +50
+              </div>
+              <div className="italic text-sm md:text-base leading-tight">
+                Diseños
+                <br />
+                exclusivos
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            to="/catalogo"
+            className="flex items-center gap-4 hover:scale-105 transition-transform"
+          >
+            <ShoppingBag className="w-11 h-11 text-[#DFC4A6] fill-[#DFC4A6] shrink-0" />
+            <div>
+              <div className="font-display-serif text-3xl md:text-4xl font-bold text-[#E59849]">
+                +600
+              </div>
+              <div className="italic text-lg md:text-xl">Productos</div>
+            </div>
+          </Link>
         </div>
       </section>
 
-      {/* 3. CUERPO PRINCIPAL SOBRE TEXTURA DE PAPEL KRAFT */}
-      <div className="bg-kraft-texture pt-8 pb-16 px-6 md:px-16 space-y-20">
-        {/* 3.1 ¿Qué vas a encontrar? */}
-        <section className="max-w-[1020px] mx-auto">
-          <h2 className="font-display-serif text-3xl md:text-[38px] font-bold text-[#4A170E] mb-8">
-            ¿Qué vas a encontrar?
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-10">
-            {/* Badge +80 Artesanos */}
-            <Link
-              to="/artesanos"
-              className="bg-[#4E120B] text-[#F3E3CE] px-6 py-7 flex items-center justify-center gap-5 shadow-lg hover:scale-[1.02] transition-transform"
-              style={{
-                borderRadius: '50% 50% 12% 12% / 18% 18% 0% 0%',
-              }}
-            >
-              <User className="w-12 h-12 text-[#DFC4A6] fill-[#DFC4A6] shrink-0" />
-              <div>
-                <div className="font-display-serif text-3xl md:text-4xl font-bold text-[#E59849]">
-                  +80
-                </div>
-                <div className="italic text-lg md:text-xl">Artesanos</div>
-              </div>
-            </Link>
-
-            {/* Badge +600 Productos */}
-            <Link
-              to="/catalogo"
-              className="bg-[#4E120B] text-[#F3E3CE] px-6 py-7 flex items-center justify-center gap-5 shadow-lg hover:scale-[1.02] transition-transform"
-              style={{
-                borderRadius: '50% 50% 12% 12% / 18% 18% 0% 0%',
-              }}
-            >
-              <ShoppingBag className="w-12 h-12 text-[#DFC4A6] fill-[#DFC4A6] shrink-0" />
-              <div>
-                <div className="font-display-serif text-3xl md:text-4xl font-bold text-[#E59849]">
-                  +600
-                </div>
-                <div className="italic text-lg md:text-xl">Productos</div>
-              </div>
-            </Link>
-
-            {/* Badge +50 Productos únicos */}
-            <Link
-              to="/catalogo"
-              className="bg-[#4E120B] text-[#F3E3CE] px-6 py-7 flex items-center justify-center gap-5 shadow-lg hover:scale-[1.02] transition-transform"
-              style={{
-                borderRadius: '50% 50% 12% 12% / 18% 18% 0% 0%',
-              }}
-            >
-              <Star className="w-12 h-12 text-[#DFC4A6] fill-[#DFC4A6] shrink-0" />
-              <div>
-                <div className="font-display-serif text-3xl md:text-4xl font-bold text-[#E59849]">
-                  +50
-                </div>
-                <div className="italic text-sm md:text-base leading-tight">
-                  Productos
-                  <br />
-                  únicos
-                </div>
-              </div>
-            </Link>
+      {/* 4. CUERPO BEIGE: DESCUBRÍ QUE TIENE PARA CONTARTE CADA PIEZA (Pantalla principal de la web final .pdf) */}
+      <div className="pt-12 md:pt-16 pb-20 px-6 md:px-16 space-y-20">
+        <section className="max-w-[980px] mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="font-display-serif text-3xl sm:text-4xl md:text-[42px] font-bold text-[#4A170E] uppercase leading-tight">
+              Descubrí que tiene
+              <br />
+              para contarte cada pieza
+            </h2>
+            <p className="text-sm md:text-base text-[#3D1B12] mt-3 leading-relaxed">
+              Explorá una selección exclusiva de productos cuyos materiales provienen
+              directamente del <strong>entorno natural</strong> correntino y de nuestros{' '}
+              <strong>conocimientos tradicionales.</strong>
+            </p>
           </div>
-        </section>
 
-        {/* 3.2 ¡Conocé nuestros productos! (Utilitarias vs Decorativas) */}
-        <section className="max-w-[1020px] mx-auto">
-          <h2 className="font-display-serif text-3xl md:text-[38px] font-bold text-[#4A170E]">
-            ¡Conocé nuestros productos!
-          </h2>
-          <p className="text-sm md:text-base text-[#4A251B] mt-1 mb-8 max-w-lg leading-snug">
-            Explorá una selección exclusiva de productos que
-            <br />
-            representan la riqueza natural y las técnicas tradicionales
-            <br />
-            de nuestra región
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {/* Utilitarias */}
-            <div className="relative group overflow-hidden shadow-lg aspect-[4/3.6] bg-[#3A1B14]">
-              <img
-                src="/assets/places/home-utilitarias.jpg"
-                alt="Artesanías utilitarias"
-                className="w-full h-full object-cover sepia-[0.25] contrast-105 group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-              <div className="absolute bottom-7 left-0 right-0 flex justify-center">
-                <Link
-                  to="/catalogo?tipo=utilitario"
-                  className="btn-artesanal px-7 py-2.5 text-base md:text-lg text-center leading-tight"
-                >
-                  Ver artesanías
-                  <br />
-                  utilitarias
-                </Link>
-              </div>
-            </div>
-
+          {/* 2 grandes fotografías superiores (Decorativas a la izquierda, Utilitarias a la derecha) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Decorativas */}
-            <div className="relative group overflow-hidden shadow-lg aspect-[4/3.6] bg-[#3A1B14]">
+            <div className="relative group overflow-hidden shadow-lg aspect-[4/4.2] bg-[#3A1B14]">
               <img
-                src="/assets/places/home-decorativas.jpg"
+                src="/assets/places/home-decorativas-new.jpg"
                 alt="Artesanías decorativas"
-                className="w-full h-full object-cover sepia-[0.25] contrast-105 group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-              <div className="absolute bottom-7 left-0 right-0 flex justify-center">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center">
                 <Link
                   to="/catalogo?tipo=decorativo"
-                  className="btn-artesanal px-7 py-2.5 text-base md:text-lg text-center leading-tight"
+                  className="btn-artesanal px-7 py-2 text-base md:text-lg text-center leading-tight"
                 >
                   Ver artesanías
                   <br />
@@ -310,162 +218,107 @@ export const HomePage: React.FC = () => {
                 </Link>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* 3.3 Materiales utilizados + Carrusel + Línea 1..7 */}
-        <section className="max-w-[1020px] mx-auto">
-          <h2 className="font-display-serif text-3xl md:text-[38px] font-bold text-[#4A170E]">
-            Materiales utilizados
-          </h2>
-          <p className="text-sm md:text-base text-[#4A251B] mt-1 mb-6 max-w-lg leading-snug">
-            Provienen directamente del entorno natural correntino
-            <br />
-            y constituyen la base de sus tradiciones ¡Conocé la
-            <br />
-            clasificación de artesanías según el material que
-            <br />
-            ofrece el catálogo!
-          </p>
-
-          {/* Tarjeta destacada del material activo con flechas laterales */}
-          <div className="relative bg-[#C5A98C]/85 rounded-md p-6 md:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-12">
-            <CarouselArrow
-              direction="left"
-              onClick={handlePrevMat}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
-            />
-
-            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-md shrink-0 border-2 border-[#8C6245]/40">
+            {/* Utilitarias */}
+            <div className="relative group overflow-hidden shadow-lg aspect-[4/4.2] bg-[#3A1B14]">
               <img
-                src={currentMaterial.image_url}
-                alt={currentMaterial.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="flex-1 text-center md:text-left">
-              <h3 className="font-serif font-bold text-xl md:text-2xl text-[#4A170E]">
-                {currentMaterial.title}
-              </h3>
-              <p className="text-sm md:text-base text-[#3D1B12] mt-2 max-w-xl leading-relaxed">
-                {currentMaterial.description}
-              </p>
-
-              {showMoreMatInfo && (
-                <p className="text-xs md:text-sm text-[#4A170E] bg-[#DFCBB2]/70 p-3 rounded mt-3">
-                  En el Paseo de Artesanos Digital podés filtrar tanto el Catálogo de piezas como
-                  el Directorio de Maestros Artesanos por{' '}
-                  <strong>{currentMaterial.name}</strong>.
-                </p>
-              )}
-
-              <div className="mt-5 flex flex-wrap items-center justify-center md:justify-start gap-4">
-                <button
-                  type="button"
-                  onClick={() => navigate(`/catalogo?material=${currentMaterial.id}`)}
-                  className="btn-artesanal px-5 py-1.5 text-sm md:text-base"
-                >
-                  Ver catálogo
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowMoreMatInfo((v) => !v)}
-                  className="btn-artesanal-dark px-5 py-1.5 text-sm md:text-base"
-                >
-                  {showMoreMatInfo ? 'Ocultar info' : 'Más información'}
-                </button>
-              </div>
-            </div>
-
-            <CarouselArrow
-              direction="right"
-              onClick={handleNextMat}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20"
-            />
-          </div>
-
-          {/* Línea de tiempo numerada 1 al 7 */}
-          <MaterialTimeline
-            materials={materials}
-            selectedMaterialId={currentMaterial.id}
-            allowToggleAll={false}
-            onSelect={(id) => {
-              if (id) {
-                const idx = materials.findIndex((m) => m.id === id);
-                if (idx >= 0) setActiveMatIndex(idx);
-              }
-            }}
-          />
-        </section>
-
-        {/* 3.4 Los maestros detrás de las piezas & Puntos físicos donde encontrarlos */}
-        <section className="max-w-[1020px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 pt-4">
-          {/* Los maestros detrás de las piezas */}
-          <div className="flex flex-col justify-between">
-            <div>
-              <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E] leading-tight">
-                Los maestros detrás
-                <br />
-                de las piezas
-              </h2>
-              <p className="text-sm md:text-base text-[#4A251B] mt-2 mb-5">
-                Cada artesanía cuenta la historia del maestro
-                <br />
-                artesano que la realizo.
-              </p>
-            </div>
-
-            <div className="relative group overflow-hidden shadow-lg aspect-[16/10] bg-[#3A1B14]">
-              <img
-                src="/assets/places/home-artesanos.jpg"
-                alt="Conocer a los artesanos"
-                className="w-full h-full object-cover sepia-[0.25] group-hover:scale-105 transition-transform duration-500"
+                src="/assets/places/home-utilitarias-new.jpg"
+                alt="Artesanías utilitarias"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-0 right-0 flex justify-center">
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center">
                 <Link
-                  to="/artesanos"
+                  to="/catalogo?tipo=utilitario"
                   className="btn-artesanal px-7 py-2 text-base md:text-lg text-center leading-tight"
                 >
-                  Conocer a
+                  Ver artesanías
                   <br />
-                  los artesanos
+                  utilitarias
                 </Link>
               </div>
             </div>
           </div>
 
-          {/* Puntos físicos donde encontrarlos */}
-          <div className="flex flex-col justify-between">
-            <div>
+          {/* 7 Columnas Verticales de Materiales conectadas debajo de las 2 fotos tal como en Pantalla principal de la web final .pdf */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-1.5 mt-2">
+            {materials.map((mat, idx) => (
+              <Link
+                key={mat.id}
+                to={`/catalogo?material=${mat.id}`}
+                className="group relative overflow-hidden bg-[#5B221D] aspect-[1/2.25] flex flex-col justify-end shadow hover:brightness-110 transition-all"
+              >
+                <img
+                  src={`/assets/ui/home-mat-col-${idx + 1}.jpg`}
+                  alt={mat.name}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* 5. BLOQUES ALTERNADOS CON BORDE CURVO: LOS MAESTROS DETRÁS DE LAS PIEZAS & PUNTOS FÍSICOS */}
+        <section className="max-w-[980px] mx-auto space-y-6">
+          {/* Fila 1: Texto a la izquierda + Foto con curva izquierda a la derecha */}
+          <div className="grid grid-cols-1 md:grid-cols-12 items-center bg-[#D6BFA6]/45 rounded-xl overflow-hidden shadow-sm">
+            <div className="md:col-span-6 p-8 md:p-12 space-y-4">
+              <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E] leading-tight">
+                Los maestros detrás
+                <br />
+                de las piezas
+              </h2>
+              <p className="text-sm md:text-[15.5px] text-[#3D1B12] leading-relaxed max-w-sm">
+                Te invitamos a conocer de cerca a quienes mantienen vivos los oficios más
+                auténticos de nuestra región.
+              </p>
+              <div className="pt-2">
+                <Link
+                  to="/artesanos"
+                  className="btn-artesanal-dark px-6 py-2 text-sm md:text-base"
+                  style={{ transform: 'rotate(0deg)' }}
+                >
+                  Conocer a los artesanos
+                </Link>
+              </div>
+            </div>
+
+            <div className="md:col-span-6 h-64 md:h-72 relative overflow-hidden">
+              <img
+                src="/assets/places/home-artesanos.jpg"
+                alt="Conocer a los artesanos"
+                className="w-full h-full object-cover md:rounded-l-[140px]"
+              />
+            </div>
+          </div>
+
+          {/* Fila 2: Foto con curva derecha a la izquierda + Texto a la derecha */}
+          <div className="grid grid-cols-1 md:grid-cols-12 items-center bg-[#D6BFA6]/45 rounded-xl overflow-hidden shadow-sm">
+            <div className="md:col-span-6 h-64 md:h-72 relative overflow-hidden order-2 md:order-1">
+              <img
+                src="/assets/places/museo-mat.jpg"
+                alt="Museo de Artesanías Tradicionales"
+                className="w-full h-full object-cover md:rounded-r-[140px]"
+              />
+            </div>
+
+            <div className="md:col-span-6 p-8 md:p-12 space-y-4 order-1 md:order-2">
               <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E] leading-tight">
                 Puntos físicos
                 <br />
                 donde encontrarlos
               </h2>
-              <p className="text-sm md:text-base text-[#4A251B] mt-2 mb-5">
-                Si deseas conocerlos personalmente o encontralos en
-                <br />
-                ferias tenés que conocer estos luugares.
+              <p className="text-sm md:text-[15.5px] text-[#3D1B12] leading-relaxed max-w-sm">
+                Si deseas conocerlos personalmente o encontralos en ferias tenés que conocer
+                estos luugares.
               </p>
-            </div>
-
-            <div className="relative group overflow-hidden shadow-lg aspect-[16/10] bg-[#3A1B14]">
-              <img
-                src="/assets/places/museo-mat.jpg"
-                alt="Ver puntos físicos"
-                className="w-full h-full object-cover sepia-[0.25] group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-0 right-0 flex justify-center">
+              <div className="pt-2">
                 <Link
                   to="/puntos-fisicos"
-                  className="btn-artesanal px-7 py-2 text-base md:text-lg text-center leading-tight"
+                  className="btn-artesanal-dark px-7 py-2 text-sm md:text-base"
+                  style={{ transform: 'rotate(0deg)' }}
                 >
-                  Ver puntos
-                  <br />
-                  físicos
+                  Ver puntos físicos
                 </Link>
               </div>
             </div>
@@ -475,4 +328,3 @@ export const HomePage: React.FC = () => {
     </div>
   );
 };
-

@@ -6,4 +6,6 @@ tsconfig.tsbuildinfo
 
 # Ignorar PDFs pesados en la raíz del proyecto
 /*.pdf
+assets_cliente
+
 
