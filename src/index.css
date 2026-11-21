@@ -14,14 +14,12 @@
   }
 }
 
-/* Textura de papel Kraft / Pergamino Arrugado (Vistas principales) */
+/* Textura de papel Kraft / Pergamino Arrugado (Vistas principales — fondo -04.webp) */
 .bg-kraft-texture {
-  background-color: #D3B99C;
-  background-image:
-    linear-gradient(rgba(211, 185, 156, 0.76), rgba(203, 174, 142, 0.78)),
-    url('/assets/ui/texture-paper.jpg');
-  background-size: 600px auto;
-  background-repeat: repeat;
+  background-color: #C9B69E;
+  background-image: url('/assets/ui/fondo-beige-textura.webp');
+  background-size: 100% auto;
+  background-repeat: repeat-y;
 }
 
 /* Textura de papel Mostaza / Ocre cálido (Formularios y franja de registro en Home) */

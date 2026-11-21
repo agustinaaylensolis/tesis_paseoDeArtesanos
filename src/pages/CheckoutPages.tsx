@@ -240,12 +240,18 @@ export const PaymentCheckoutPage: React.FC = () => {
   }
 
   return (
-    <div className="bg-kraft-texture min-h-[78vh] py-14 md:py-20 px-6 md:px-16 flex items-center">
+    <div
+      className="min-h-[78vh] py-14 md:py-20 px-6 md:px-16 flex items-center bg-cover bg-center"
+      style={{
+        backgroundColor: '#C9B69E',
+        backgroundImage: "url('/assets/ui/pago-fondo-panel.webp')",
+      }}
+    >
       <form
         onSubmit={handlePay}
         className="max-w-[960px] mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start"
       >
-        {/* Columna izquierda: Forma de Pago (Parte de la web Andrés pág. 6) */}
+        {/* Columna izquierda: Forma de Pago (5 Añadir método de pago — recursos-01.webp y recursos-02.webp) */}
         <div className="md:col-span-6 bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-10 shadow-sm space-y-5">
           <h1 className="font-display-serif text-3xl md:text-[34px] font-bold text-[#4A170E] mb-2">
             Forma de Pago
@@ -257,7 +263,7 @@ export const PaymentCheckoutPage: React.FC = () => {
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
               placeholder="Número de tarjeta"
-              className="w-full bg-[#DF9F57] text-[#2B0F08] placeholder-[#2B0F08] px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
+              className="w-full bg-[#925818] text-[#F4E6D4] placeholder-[#F4E6D4]/90 px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
             />
           </div>
 
@@ -267,7 +273,7 @@ export const PaymentCheckoutPage: React.FC = () => {
               value={expiry}
               onChange={(e) => setExpiry(e.target.value)}
               placeholder="MM/AA"
-              className="w-full bg-[#DF9F57] text-[#2B0F08] placeholder-[#2B0F08] px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
+              className="w-full bg-[#925818] text-[#F4E6D4] placeholder-[#F4E6D4]/90 px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
             />
           </div>
 
@@ -277,7 +283,7 @@ export const PaymentCheckoutPage: React.FC = () => {
               value={cvv}
               onChange={(e) => setCvv(e.target.value)}
               placeholder="CVV"
-              className="w-full bg-[#DF9F57] text-[#2B0F08] placeholder-[#2B0F08] px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
+              className="w-full bg-[#925818] text-[#F4E6D4] placeholder-[#F4E6D4]/90 px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
             />
           </div>
 
@@ -287,7 +293,7 @@ export const PaymentCheckoutPage: React.FC = () => {
               value={holderName}
               onChange={(e) => setHolderName(e.target.value)}
               placeholder="Nombre del titular"
-              className="w-full bg-[#DF9F57] text-[#2B0F08] placeholder-[#2B0F08] px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
+              className="w-full bg-[#925818] text-[#F4E6D4] placeholder-[#F4E6D4]/90 px-4 py-3 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#741712]"
             />
           </div>
 

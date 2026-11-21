@@ -1,51 +1,63 @@
 import React from 'react';
 import { MapPin, Clock, Phone, AtSign, Instagram } from 'lucide-react';
 
-/* PUNTOS FÍSICOS — DISEÑO EDITORIAL ZIG-ZAG CON FOTOS CURVAS (paginas.pdf pág. 1) */
+/* PUNTOS FÍSICOS — DISEÑO EDITORIAL ZIG-ZAG CON LOS 8 RECURSOS .WEBP OFICIALES (3 Pantalla puntos físicos_) */
 export const PhysicalPointsPage: React.FC = () => {
   return (
-    <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-6 md:px-16">
-      <div className="max-w-[960px] mx-auto space-y-0">
+    <div
+      className="min-h-screen py-12 md:py-16 px-6 md:px-16 bg-cover bg-center"
+      style={{
+        backgroundColor: '#D3B99C',
+        backgroundImage: "url('/assets/ui/fondo-beige-textura.webp')",
+        backgroundSize: '100% auto',
+        fontFamily: '"sitka-text", Georgia, serif',
+      }}
+    >
+      {/* space-y-0 en desktop para que los vértices de las fotos curvas se toquen */}
+      <div className="max-w-[980px] mx-auto space-y-6 md:space-y-0">
         {/* ================= 1. MUSEO DE ARTESANÍAS TRADICIONALES ================= */}
 
-        {/* Bloque 1: Título + Historia 1889/1981 (Izq) | Foto histórica B&N con curva izq (Der) */}
+        {/* Bloque 1: Título + Historia 1889/1981 (Izq) | pf-museo-1 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
           <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-4">
-            <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[38px] font-bold text-[#4A170E] uppercase leading-tight">
+            <h1
+              className="text-4xl sm:text-5xl md:text-[52px] font-normal text-[#5E2A22] leading-[1.08] tracking-wide"
+              style={{ fontFamily: '"lubaline", Georgia, serif' }}
+            >
               Museo de Artesanías
               <br />
               Tradicionales
             </h1>
-            <p className="text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
               El MAT fue inaugurado el 11 de agosto de 1981, depende del Instituto de Cultura
               de la provincia.
             </p>
-            <p className="text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
               El edificio tiene una historia compleja que data de 1889, pasando por varios
               propietarios hasta que fue adquirido por el Estado en 1977.
             </p>
           </div>
 
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden">
+          <div className="md:col-span-6 flex items-center justify-center">
             <img
-              src="/assets/places/mat-historico.jpg"
+              src="/assets/places/pf-museo-1-crop.png"
               alt="Edificio histórico del MAT"
-              className="w-full h-full object-cover md:rounded-l-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
         </div>
 
-        {/* Bloque 2: Foto patio de noche con curva der (Izq) | Monumento Histórico 1989 (Der) */}
+        {/* Bloque 2: pf-museo-2 (Izq) | Monumento Histórico 1989 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden order-2 md:order-1">
+          <div className="md:col-span-6 flex items-center justify-center order-2 md:order-1">
             <img
-              src="/assets/places/mat-patio-noche.jpg"
+              src="/assets/places/pf-museo-2-crop.png"
               alt="Patio colonial del MAT"
-              className="w-full h-full object-cover md:rounded-r-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
 
-          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-3 text-sm md:text-[15px] text-[#33130C] leading-relaxed order-1 md:order-2">
+          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-3 text-sm md:text-[20px] text-[#33130C] leading-relaxed order-1 md:order-2">
             <p>
               Declarado <strong>Monumento Histórico</strong> en 1989, es uno de los pocos
               ejemplos arquitectónicos coloniales de la ciudad. La casa, construida en 1806
@@ -59,9 +71,9 @@ export const PhysicalPointsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Bloque 3: Actividades y talleres (Izq) | Foto vitrina ñandutí/encajes con curva izq (Der) */}
+        {/* Bloque 3: Actividades y talleres (Izq) | pf-museo-3 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-3 text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-3 text-sm md:text-[20px] text-[#33130C] leading-relaxed">
             <p>
               • Posee exhibiciones permanentes y temporales de artesanías tradicionales
             </p>
@@ -77,27 +89,33 @@ export const PhysicalPointsPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden">
+          <div className="md:col-span-6 flex items-center justify-center">
             <img
-              src="/assets/places/mat-vitrina-encaje.jpg"
+              src="/assets/places/pf-museo-3-crop.png"
               alt="Vitrina de tejidos tradicionales"
-              className="w-full h-full object-cover md:rounded-l-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
         </div>
 
-        {/* Bloque 4: Foto sala del museo con curva der (Izq) | Frase de misión en cursiva roja (Der) */}
+        {/* Bloque 4: pf-museo-4 (Izq) | Frase de misión en cursiva roja (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden order-2 md:order-1">
+          <div className="md:col-span-6 flex items-center justify-center order-2 md:order-1">
             <img
-              src="/assets/places/museo-mat.jpg"
+              src="/assets/places/pf-museo-4-crop.png"
               alt="Sala de exposición del MAT"
-              className="w-full h-full object-cover md:rounded-r-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
 
-          <div className="md:col-span-6 pl-0 md:pl-10 py-8 order-1 md:order-2">
-            <p className="font-display-serif italic font-bold text-2xl sm:text-3xl md:text-[32px] text-[#7C1B15] leading-snug">
+          <div className="md:col-span-6 pl-0 md:pl-7 py-8 order-1 md:order-2">
+            <p
+              className="italic font-normal text-2xl sm:text-3xl md:text-[43px] text-[#8A1912] tracking-[0.02em]"
+              style={{
+                fontFamily: '"broadsheet", Georgia, serif',
+                lineHeight: 1.65
+              }}
+            >
               Su misión es mantener
               <br />
               vivas estas expresiones
@@ -109,9 +127,9 @@ export const PhysicalPointsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Bloque 5: Datos de contacto y horarios del MAT (Izq) | Foto vitrina sombreros y cestería con curva izq (Der) */}
+        {/* Bloque 5: Datos de contacto y horarios del MAT (Izq) | pf-museo-5 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm md:text-[15px] text-[#33130C]">
+          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm md:text-[20px] text-[#33130C]">
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#4A170E] mt-1 shrink-0" />
               <div>
@@ -148,45 +166,48 @@ export const PhysicalPointsPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden">
+          <div className="md:col-span-6 flex items-center justify-center">
             <img
-              src="/assets/places/mat-vitrina-sombreros.jpg"
+              src="/assets/places/pf-museo-5-crop.png"
               alt="Cestería y sombreros en el MAT"
-              className="w-full h-full object-cover md:rounded-l-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
         </div>
 
         {/* ================= 2. FERIA ITA BERA ================= */}
 
-        {/* Bloque 6: Foto costanera con curva der (Izq) | Título FERIA ITA BERA y descripción (Der) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden order-2 md:order-1">
+        {/* Bloque 6: pf-feria-1 (Izq) | Título Feria Ita Bera y descripción (Der) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 items-center pt-4 md:pt-8">
+          <div className="md:col-span-6 flex items-center justify-center order-2 md:order-1">
             <img
-              src="/assets/places/feria-costanera.jpg"
+              src="/assets/places/pf-feria-1-crop.png"
               alt="Paseo Feria Ita Bera en Costanera"
-              className="w-full h-full object-cover md:rounded-r-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
 
           <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-4 order-1 md:order-2">
-            <h2 className="font-display-serif text-3xl sm:text-4xl md:text-[38px] font-bold text-[#4A170E] uppercase">
+            <h2
+              className="text-4xl sm:text-5xl md:text-[52px] font-normal text-[#5E2A22] leading-[1.08] tracking-wide"
+              style={{ fontFamily: '"lubaline", Georgia, serif' }}
+            >
               Feria Ita Bera
             </h2>
-            <p className="text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
               La feria conocida como Espacio Itá Berá es un paseo de artesanos y
               emprendedores correntinos.
             </p>
-            <p className="text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
               El proyecto nació como un colectivo multimarca liderado por mujeres
               emprendedoras para promover el diseño local, la sustentabilidad y el turismo.
             </p>
           </div>
         </div>
 
-        {/* Bloque 7: ¿Qué vas a encontrar? (Izq) | Foto stand frente al río con curva izq (Der) */}
+        {/* Bloque 7: ¿Qué vas a encontrar? (Izq) | pf-feria-2 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm md:text-[20px] text-[#33130C] leading-relaxed">
             <p className="font-semibold">¿Qué vas a encontrar?</p>
             <p>• Productos artesanales y regionales de Corrientes.</p>
             <p>• Souvenirs, regalería personalizada y decoración.</p>
@@ -196,26 +217,26 @@ export const PhysicalPointsPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden">
+          <div className="md:col-span-6 flex items-center justify-center">
             <img
-              src="/assets/places/feria-stand-rio.jpg"
+              src="/assets/places/pf-feria-2-crop.png"
               alt="Stand de artesanías frente al río Paraná"
-              className="w-full h-full object-cover md:rounded-l-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
         </div>
 
-        {/* Bloque 8: Foto paseo con cintas rojas y curva der (Izq) | Dirección y horarios de Feria Ita Bera (Der) */}
+        {/* Bloque 8: pf-feria-3 (Izq) | Dirección y horarios de Feria Ita Bera (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 h-60 md:h-64 overflow-hidden order-2 md:order-1">
+          <div className="md:col-span-6 flex items-center justify-center order-2 md:order-1">
             <img
-              src="/assets/places/feria-cintas-rojas.jpg"
+              src="/assets/places/pf-feria-3-crop.png"
               alt="Feria Ita Bera en Punta Tacuara"
-              className="w-full h-full object-cover md:rounded-r-[140px] shadow-sm"
+              className="w-full h-auto block object-contain"
             />
           </div>
 
-          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-2.5 text-sm md:text-[15px] text-[#33130C] order-1 md:order-2">
+          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-2.5 text-sm md:text-[20px] text-[#33130C] order-1 md:order-2">
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#4A170E] mt-1 shrink-0" />
               <div>

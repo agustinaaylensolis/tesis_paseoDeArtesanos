@@ -4,8 +4,14 @@ dist
 .DS_Store
 tsconfig.tsbuildinfo
 
-# Ignorar PDFs pesados en la raíz del proyecto
+# Ignorar PDFs pesados y carpetas crudas de recursos en la raíz del proyecto
 /*.pdf
 assets_cliente
+1 Pantalla principal
+2 Página Corriente artesanal_
+3 Pantalla puntos físicos_
+4 Página crear cuenta - usuarios_
+5 Añadir método de pago
 
-
+# Archivo pesado (>100MB) no utilizado, reemplazado por foooooter.webp
+public/assets/ui/footer.svg

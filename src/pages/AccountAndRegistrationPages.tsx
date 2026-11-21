@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { uploadMediaFile } from '../lib/supabase';
+import { BrandLogo } from '../components/Layout';
 
 const BurgundyBackdropStyle: React.CSSProperties = {
   backgroundColor: '#5B2B29',
-  backgroundImage:
-    'linear-gradient(135deg, rgba(78, 32, 30, 0.90) 0%, rgba(102, 48, 44, 0.86) 50%, rgba(68, 25, 23, 0.94) 100%), url("/assets/ui/texture-paper.jpg")',
+  backgroundImage: 'url("/assets/ui/fondo-bordo-textura.webp")',
   backgroundSize: 'cover',
+  backgroundPosition: 'center',
 };
 
 /* 1. CREAR UNA CUENTA — CLIENTE / COMPRADOR (Parte de la web Andrés pág. 7) */
@@ -571,34 +572,29 @@ export const RegistrationThanksPage: React.FC = () => {
   );
 };
 
-/* 4. PÁGINA INSTITUCIONAL CORRIENTE ARTESANAL (Parte de la web Andrés pág. 11) */
+/* 4. PÁGINA INSTITUCIONAL CORRIENTE ARTESANAL (2 Página Corriente artesanal_) */
 export const AboutPage: React.FC = () => {
   return (
-    <div className="bg-[#C9B69E] min-h-[78vh] py-16 md:py-20 px-6 md:px-16 flex items-center justify-center">
-      <div className="max-w-[740px] mx-auto text-center space-y-8 text-[#2B0F08]">
-        <div
-          className="inline-flex flex-col leading-none select-none text-[#360E07] mx-auto"
-          style={{ fontFamily: '"KitSans-Light", "Cormorant Garamond", Georgia, serif' }}
-        >
-          <div className="tracking-[0.14em] uppercase font-light text-5xl sm:text-6xl md:text-7xl flex items-center justify-center">
-            <span>C</span>
-            <span className="relative inline-block mx-1">
-              O
-              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[0.5em] leading-none">
-                ~
-              </span>
-            </span>
-            <span>RRIENTE</span>
-          </div>
-          <div className="tracking-[0.12em] uppercase font-light text-5xl sm:text-6xl md:text-7xl -mt-1 flex items-baseline justify-center">
-            <span
-              className="inline-block mr-1 text-[1.28em] leading-none"
-              style={{ fontFamily: '"Broadsheet", "Playfair Display", serif' }}
-            >
-              A
-            </span>
-            <span>RTESANAL</span>
-          </div>
+    <div
+      className="min-h-[82vh] pb-16 md:pb-24 flex flex-col items-center justify-between bg-cover bg-center"
+      style={{
+        backgroundColor: '#C9B69E',
+        backgroundImage: "url('/assets/ui/fondo-beige-textura.webp')",
+      }}
+    >
+      {/* Guarda horizontal superior de cruz andina/guaraní (Recursos web -01.svg) */}
+      <div className="w-full overflow-hidden pt-4 md:pt-6 select-none pointer-events-none">
+        <img
+          src="/assets/ui/guarda-cruz-horizontal.svg"
+          alt="Guarda Corriente Artesanal"
+          className="w-full h-16 md:h-24 object-cover object-center"
+        />
+      </div>
+
+      <div className="max-w-[740px] mx-auto px-6 md:px-16 py-8 text-center space-y-8 text-[#2B0F08]">
+        {/* Logo vectorial oficial (Recursos web -02.svg) */}
+        <div className="flex justify-center">
+          <BrandLogo size="lg" className="!text-[#360E07] !h-24 md:!h-32" />
         </div>
 
         <h1 className="font-display-serif italic font-bold text-2xl sm:text-3xl md:text-[34px] text-[#360E07] leading-snug">
@@ -626,6 +622,15 @@ export const AboutPage: React.FC = () => {
           </p>
           <p>Te invitamos a descubrir, conectar y valorar lo nuestro.</p>
         </div>
+      </div>
+
+      {/* Guarda horizontal inferior de cruz andina/guaraní (Recursos web -01.svg) */}
+      <div className="w-full overflow-hidden pt-4 select-none pointer-events-none">
+        <img
+          src="/assets/ui/guarda-cruz-horizontal.svg"
+          alt="Guarda Corriente Artesanal"
+          className="w-full h-16 md:h-24 object-cover object-center"
+        />
       </div>
     </div>
   );

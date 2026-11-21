@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Star } from 'lucide-react';
 import { Artisan, Material, Product } from '../types/database';
 import { useApp } from '../context/AppContext';
 
@@ -34,30 +33,28 @@ export const MaterialTimeline: React.FC<{
               className="relative z-10 flex flex-col items-center group focus:outline-none w-24 md:w-28"
             >
               <span
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-sm ${
-                  isSelected
-                    ? 'bg-[#5E2822] text-[#F4E6D4] ring-4 ring-[#741712]/30 scale-110'
-                    : 'bg-[#BC9E82] text-[#3B170E] group-hover:bg-[#8E6754] group-hover:text-white'
-                }`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-sm ${isSelected
+                  ? 'bg-[#5E2822] text-[#F4E6D4] ring-4 ring-[#741712]/30 scale-110'
+                  : 'bg-[#BC9E82] text-[#3B170E] group-hover:bg-[#8E6754] group-hover:text-white'
+                  }`}
               >
                 {mat.id}
               </span>
               <span
-                className={`mt-2.5 text-center text-xs md:text-[15px] leading-tight whitespace-pre-line transition-colors ${
-                  isSelected
-                    ? 'font-bold text-[#741712] underline underline-offset-4'
-                    : 'font-semibold text-[#3B170E] group-hover:text-[#741712]'
-                }`}
+                className={`mt-2.5 text-center text-xs md:text-[15px] leading-tight whitespace-pre-line transition-colors ${isSelected
+                  ? 'font-bold text-[#741712] underline underline-offset-4'
+                  : 'font-semibold text-[#3B170E] group-hover:text-[#741712]'
+                  }`}
               >
                 {mat.name === 'Cuero o suela'
                   ? 'Cuero\no suela'
                   : mat.name === 'Lana y algodón'
-                  ? 'Lana y\nalgodón'
-                  : mat.name === 'Fibra Vegetal'
-                  ? 'Fibra\nVegetal'
-                  : mat.name === 'Plata y minerales'
-                  ? 'Plata y\nminerales'
-                  : mat.name}
+                    ? 'Lana y\nalgodón'
+                    : mat.name === 'Fibra Vegetal'
+                      ? 'Fibra\nVegetal'
+                      : mat.name === 'Plata y minerales'
+                        ? 'Plata y\nminerales'
+                        : mat.name}
               </span>
             </button>
           );
@@ -81,110 +78,111 @@ export const ProductCard: React.FC<{
   showArtisanName = true,
   onClickOverride,
 }) => {
-  const { favoriteProductIds, toggleFavorite } = useApp();
-  const isFav = favoriteProductIds.includes(product.id);
-  const footerBg = highlighted
-    ? 'bg-[#865D4E] text-[#F5E9D9]'
-    : 'bg-[#DCC7AE] text-[#2F110A]';
+    const { favoriteProductIds, toggleFavorite } = useApp();
+    const isFav = favoriteProductIds.includes(product.id);
+    const footerBg = highlighted
+      ? 'bg-[#865D4E] text-[#F5E9D9]'
+      : 'bg-[#BBA182] text-[#2F110A]';
 
-  const cardContent = (
-    <>
-      {/* Contenedor 3:4 de la fotografía */}
-      <div className="bg-black w-full aspect-[3/3.6] flex items-center justify-center overflow-hidden relative">
-        <img
-          src={product.main_image_url}
-          alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        {product.stock === 0 && product.piece_type === 'fija' && (
-          <span className="absolute top-2 right-2 bg-[#741712] text-[#F4E6D4] text-xs px-2 py-0.5 rounded">
-            Sin stock
-          </span>
-        )}
-      </div>
-
-      {/* Zócalo curvo convexo con icono de corazón a la izquierda y estrella dorada a la derecha */}
-      <div
-        className={`product-card-footer ${footerBg} px-3.5 pt-2 pb-4 min-h-[88px] flex items-center justify-between gap-2 transition-colors group-hover:bg-[#865D4E] group-hover:text-[#F5E9D9]`}
-      >
-        {/* Botón de corazón (Favorito) */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleFavorite(product.id);
-          }}
-          aria-label="Marcar como favorito"
-          className="relative z-10 p-1 shrink-0 hover:scale-110 transition-transform"
-        >
-          <Heart
-            className={`w-5 h-5 ${
-              isFav
-                ? 'fill-[#6C4238] text-[#6C4238] group-hover:fill-[#F5E9D9] group-hover:text-[#F5E9D9]'
-                : highlighted
-                ? 'text-[#F5E9D9]'
-                : 'text-[#6C4238] group-hover:text-[#F5E9D9]'
-            }`}
+    const cardContent = (
+      <>
+        {/* Contenedor 3:4 de la fotografía */}
+        <div className="bg-black w-full aspect-[3/3.6] flex items-center justify-center overflow-hidden relative">
+          <img
+            src={product.main_image_url}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-        </button>
-
-        {/* Información central */}
-        <div className="relative z-10 flex-1 min-w-0">
-          <h3 className="font-bold text-[14px] md:text-[15px] leading-snug line-clamp-2">
-            {product.name}
-          </h3>
-          {product.dimensions && (
-            <p className="text-[11.5px] md:text-xs opacity-90 mt-0.5">
-              {product.dimensions}
-            </p>
-          )}
-          {showArtisanName && artisan && (
-            <p
-              className={`text-xs md:text-[13px] italic font-semibold mt-0.5 truncate ${
-                highlighted
-                  ? 'text-[#F5E9D9]'
-                  : 'text-[#8C1D15] group-hover:text-[#F5E9D9]'
-              }`}
-            >
-              {artisan.full_name}
-            </p>
+          {product.stock === 0 && product.piece_type === 'fija' && (
+            <span className="absolute top-2 right-2 bg-[#741712] text-[#F4E6D4] text-xs px-2 py-0.5 rounded">
+              Sin stock
+            </span>
           )}
         </div>
 
-        {/* Estrella dorada de Diseño Exclusivo */}
-        {product.is_featured && (
-          <div
-            className="relative z-10 shrink-0"
-            title="Diseño de autor exclusivo"
+        {/* Zócalo curvo convexo con icono de corazón a la izquierda y estrella dorada a la derecha */}
+        <div
+          className={`product-card-footer ${footerBg} flex-1 px-3.5 pt-2 pb-4 min-h-[88px] flex items-center justify-between gap-2 transition-colors group-hover:bg-[#865D4E] group-hover:text-[#F5E9D9]`}
+        >
+          {/* Botón de corazón (Favorito) */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleFavorite(product.id);
+            }}
+            aria-label="Marcar como favorito"
+            className="relative z-10 p-1 shrink-0 hover:scale-110 transition-transform"
           >
-            <Star className="w-6 h-6 fill-[#E59838] text-[#E59838] drop-shadow-sm" />
-          </div>
-        )}
-      </div>
-    </>
-  );
+            <img
+              src="/assets/ui/corazon_catalogo.webp"
+              alt=""
+              aria-hidden="true"
+              className={`w-7 h-7 object-contain scale-[1.8] transition-all ${isFav ? 'opacity-100' : 'opacity-40 grayscale group-hover:opacity-70'
+                }`}
+            />
+          </button>
 
-  if (onClickOverride) {
+          {/* Información central */}
+          <div className="relative z-10 flex-1 min-w-0">
+            <h3 className="font-medium text-[14px] md:text-[15px] leading-snug line-clamp-2">
+              {product.name}
+            </h3>
+            {product.dimensions && (
+              <p className="text-[11.5px] md:text-xs opacity-90 mt-0.5">
+                {product.dimensions}
+              </p>
+            )}
+            {showArtisanName && artisan && (
+              <p
+                className={`text-xs md:text-[13px] italic font-semibold mt-0.5 truncate ${highlighted
+                  ? 'text-[#F5E9D9]'
+                  : 'text-[#8C1D15] group-hover:text-[#F5E9D9]'
+                  }`}
+              >
+                {artisan.full_name}
+              </p>
+            )}
+          </div>
+
+          {/* Estrella dorada de Diseño Exclusivo */}
+          {product.is_featured && (
+            <div
+              className="relative z-10 shrink-0"
+              title="Diseño de autor exclusivo"
+            >
+              <img
+                src="/assets/ui/estrella_catalogo.webp"
+                alt="Diseño de autor exclusivo"
+                className="w-7 h-7 object-contain scale-[1.8] drop-shadow-sm"
+              />
+            </div>
+          )}
+        </div>
+      </>
+    );
+
+    if (onClickOverride) {
+      return (
+        <div
+          onClick={() => onClickOverride(product)}
+          className="group cursor-pointer flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
+        >
+          {cardContent}
+        </div>
+      );
+    }
+
     return (
-      <div
-        onClick={() => onClickOverride(product)}
-        className="group cursor-pointer flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
+      <Link
+        to={`/producto/${product.slug}`}
+        className="group flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
       >
         {cardContent}
-      </div>
+      </Link>
     );
-  }
-
-  return (
-    <Link
-      to={`/producto/${product.slug}`}
-      className="group flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
-    >
-      {cardContent}
-    </Link>
-  );
-};
+  };
 
 /* Flecha circular de carrusel (izquierda / derecha) idéntica al PDF */
 export const CarouselArrow: React.FC<{

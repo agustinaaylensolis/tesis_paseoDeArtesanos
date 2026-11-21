@@ -82,44 +82,52 @@ export const CatalogPage: React.FC = () => {
   }, [filteredProducts, selectedMaterialId, onlyExclusive, searchQuery]);
 
   return (
-    <div className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16">
-      <div className="max-w-[1080px] mx-auto">
+    <div
+      className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16"
+      style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+    >
+      <div className="max-w-[980px] mx-auto">
         {/* Cabecera: Título + Buscador */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
-          <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[40px] font-bold text-[#4A170E]">
+          <h1
+            className="text-2xl sm:text-3xl md:text-[34px] font-medium text-[#5E2A22] tracking-tight"
+            style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+          >
             {selectedMaterial
               ? 'Catálogo de Artesanías Tradicionales'
-              : '¡Conocé las artesanías tradicionales!'}
+              : 'Catálogo de Artesanías Tradicionales'}
           </h1>
 
-          <div className="flex items-center h-9 w-full md:w-64 shadow-sm">
-            <div className="bg-[#3D1E14] text-white h-full px-2.5 flex items-center justify-center">
+          <div className="flex items-center h-8 w-full md:w-60">
+            <div className="bg-[#3D1E14] text-[#F4E6D4] h-full px-2.5 flex items-center justify-center">
               <Search className="w-4 h-4" />
             </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar pieza o artesano..."
-              className="bg-[#A8917A] text-[#2B0F08] placeholder-[#2B0F08]/60 h-full w-full px-3 text-sm border border-[#7E5A45] focus:outline-none"
+              aria-label="Buscar pieza o artesano"
+              className="bg-[#A8917A]/90 text-[#2B0F08] h-full w-full px-3 text-sm focus:outline-none"
             />
           </div>
         </div>
 
         {/* Selector tipo píldora Utilitario / Decorativo + Píldora Diseños Exclusivos */}
-        <div className="flex flex-wrap items-center gap-4 mb-4">
-          <div className="inline-flex items-center bg-[#DCC7AE] rounded-full p-0.5 shadow-inner">
+        <div
+          className="flex flex-wrap items-center gap-3.5 mb-5"
+          style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+        >
+          <div className="inline-flex items-center bg-[#C2A689] rounded-full p-0.5">
             <button
               type="button"
               onClick={() => {
                 setCategoryType('utilitario');
                 setOnlyExclusive(false);
               }}
-              className={`px-6 py-1.5 rounded-full text-base md:text-lg font-semibold transition-colors ${
-                categoryType === 'utilitario' && !onlyExclusive
-                  ? 'bg-[#5E2822] text-[#F4E6D4] shadow'
-                  : 'text-[#3D120A] hover:text-[#741712]'
-              }`}
+              className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold transition-colors ${categoryType === 'utilitario' && !onlyExclusive
+                ? 'bg-[#682E34] text-[#F4E6D4] shadow-sm'
+                : 'text-[#3D120A] hover:text-[#682E34]'
+                }`}
             >
               Utilitario
             </button>
@@ -129,11 +137,10 @@ export const CatalogPage: React.FC = () => {
                 setCategoryType('decorativo');
                 setOnlyExclusive(false);
               }}
-              className={`px-6 py-1.5 rounded-full text-base md:text-lg font-semibold transition-colors ${
-                categoryType === 'decorativo' && !onlyExclusive
-                  ? 'bg-[#5E2822] text-[#F4E6D4] shadow'
-                  : 'text-[#3D120A] hover:text-[#741712]'
-              }`}
+              className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold transition-colors ${categoryType === 'decorativo' && !onlyExclusive
+                ? 'bg-[#682E34] text-[#F4E6D4] shadow-sm'
+                : 'text-[#3D120A] hover:text-[#682E34]'
+                }`}
             >
               Decorativo
             </button>
@@ -142,11 +149,10 @@ export const CatalogPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setOnlyExclusive((prev) => !prev)}
-            className={`px-6 py-1.5 rounded-full text-base md:text-lg font-semibold transition-all shadow-sm ${
-              onlyExclusive
-                ? 'bg-[#741712] text-[#F4E6D4] ring-2 ring-[#E59838]'
-                : 'bg-[#5E2822] text-[#F4E6D4] hover:brightness-110'
-            }`}
+            className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold transition-all ${onlyExclusive
+              ? 'bg-[#741712] text-[#F4E6D4] ring-2 ring-[#E59838]'
+              : 'bg-[#682E34] text-[#F4E6D4] hover:brightness-110'
+              }`}
           >
             Diseños Exclusivos
           </button>
@@ -166,54 +172,71 @@ export const CatalogPage: React.FC = () => {
           }}
         />
 
-        {/* Tarjeta informativa contextual debajo de la línea 1..7 (catalogo completito .pdf págs. 1 a 8) */}
-        <div className="max-w-[680px] mx-auto my-7 bg-[#C5A98C]/75 rounded-lg px-7 py-5 shadow-sm flex items-center gap-6">
-          {selectedMaterial ? (
-            <>
-              <div className="w-20 h-20 rounded-full overflow-hidden shrink-0 shadow border border-[#8C6245]/40 bg-[#4A170E]">
-                <img
-                  src={selectedMaterial.image_url}
-                  alt={selectedMaterial.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-display-serif text-xl md:text-2xl font-bold text-[#4A170E]">
-                    {selectedMaterial.title}
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedMaterialId(null);
-                      setSearchParams({});
-                    }}
-                    className="text-xs font-bold text-[#741712] hover:underline"
-                  >
-                    Ver todos
-                  </button>
+        {/* Tarjeta informativa contextual con curvatura en arco */}
+        <div className="relative max-w-[660px] mx-auto my-7 px-9 py-7 flex items-center gap-6">
+          {/* Fondo curvo en arco */}
+          <svg
+            viewBox="0 0 660 120"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            aria-hidden="true"
+          >
+            <path
+              d="M0 12 Q330 -6 660 12 L660 120 Q330 102 0 120 Z"
+              fill="#B99D7E"
+              fillOpacity="0.75"
+            />
+          </svg>
+
+          {/* Contenido por encima del SVG */}
+          <div className="relative z-10 flex items-center gap-6 w-full">
+            {selectedMaterial ? (
+              <>
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow border border-[#8C6245]/40 bg-[#4A170E]">
+                  <img
+                    src={selectedMaterial.image_url}
+                    alt={selectedMaterial.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <p className="text-xs md:text-sm text-[#33130C] mt-1 leading-relaxed">
-                  {selectedMaterial.description}
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="w-16 h-16 rounded-full bg-[#5E2822] text-[#F4E6D4] flex items-center justify-center text-4xl font-bold shrink-0 shadow">
-                ?
-              </div>
-              <div>
-                <h2 className="font-display-serif text-xl md:text-2xl font-bold text-[#4A170E]">
-                  Elegí un material para conocer más
-                </h2>
-                <p className="text-xs md:text-sm text-[#33130C] mt-1 leading-relaxed">
-                  Los artesanos elaboran sus productos con diversos materiales propios de la
-                  región basandose en conocimientos tradicionales arraigados a su historia.
-                </p>
-              </div>
-            </>
-          )}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <h2 className="text-lg md:text-[20px] font-normal text-[#4A170E]">
+                      {selectedMaterial.title}
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedMaterialId(null);
+                        setSearchParams({});
+                      }}
+                      className="text-xs font-semibold text-[#682E34] hover:underline"
+                    >
+                      Ver todos
+                    </button>
+                  </div>
+                  <p className="text-xs md:text-[13.5px] text-[#33130C] mt-1 leading-snug">
+                    {selectedMaterial.description}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="w-14 h-14 rounded-full bg-[#682E34] text-[#F4E6D4] flex items-center justify-center text-3xl font-bold shrink-0">
+                  ?
+                </div>
+                <div>
+                  <h2 className="text-lg md:text-[20px] font-semibold text-[#4A170E]">
+                    Elegí un material para conocer más
+                  </h2>
+                  <p className="text-xs md:text-[13.5px] text-[#33130C] mt-1 leading-snug">
+                    Los artesanos elaboran sus productos con diversos materiales propios de la
+                    región basándose en conocimientos tradicionales arraigados a su historia.
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Grilla de 4 columnas */}
@@ -237,7 +260,7 @@ export const CatalogPage: React.FC = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-7 mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mt-8">
             {displayProducts.map((product, index) => (
               <ProductCard
                 key={`${product.id}-${index}`}
