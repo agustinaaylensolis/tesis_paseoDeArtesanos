@@ -39,7 +39,7 @@ export const ArtisansPage: React.FC = () => {
       <div className="max-w-[1080px] mx-auto">
         {/* Cabecera: Título + Buscador */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-          <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[42px] font-bold text-[#3D120A]">
+          <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[42px] font-medium text-[#3D120A]">
             Artesanos Tradicionales
           </h1>
 
@@ -83,7 +83,8 @@ export const ArtisansPage: React.FC = () => {
         )}
 
         {/* Grilla 3x3 con avatares circulares superpuestos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-16 mt-16 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-16 mt-16 pt-4"
+          style={{ fontFamily: '"sitka-text", Georgia, serif' }}>
           {displayArtisans.map((artisan) => (
             <div
               key={artisan.id}
@@ -99,7 +100,9 @@ export const ArtisansPage: React.FC = () => {
               </div>
 
               <div>
-                <h2 className="italic font-bold text-lg md:text-[19px] text-[#4A170E]">
+                <h2
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+                  className="italic font-bold text-lg md:text-[19px] text-[#4A170E]">
                   {artisan.brand_name}
                 </h2>
                 <p className="text-xs font-semibold text-[#3B170E] mt-1">

@@ -27,6 +27,8 @@ export interface BuyerProfileData {
 
 export interface PurchasedOrderItem {
   id: number;
+  product_id?: number;
+  artisan_id?: number;
   date_label: string;
   product_name: string;
   amount: number;
@@ -95,6 +97,7 @@ const DEFAULT_BUYER_PROFILE: BuyerProfileData = {
 const DEFAULT_PURCHASED_ORDERS: PurchasedOrderItem[] = [
   {
     id: 101,
+    artisan_id: 1,
     date_label: '17 Dic 2026',
     product_name: 'Mate Yaguareté',
     amount: 60000,
@@ -102,6 +105,7 @@ const DEFAULT_PURCHASED_ORDERS: PurchasedOrderItem[] = [
   },
   {
     id: 102,
+    artisan_id: 1,
     date_label: '15 Dic 2026',
     product_name: 'Mate Flor',
     amount: 50000,
@@ -109,6 +113,7 @@ const DEFAULT_PURCHASED_ORDERS: PurchasedOrderItem[] = [
   },
   {
     id: 103,
+    artisan_id: 1,
     date_label: '14 Dic 2026',
     product_name: 'Termera mediana',
     amount: 90000,
@@ -116,6 +121,7 @@ const DEFAULT_PURCHASED_ORDERS: PurchasedOrderItem[] = [
   },
   {
     id: 104,
+    artisan_id: 1,
     date_label: '13 Dic 2026',
     product_name: 'Billetera Sol',
     amount: 15000,
@@ -123,6 +129,7 @@ const DEFAULT_PURCHASED_ORDERS: PurchasedOrderItem[] = [
   },
   {
     id: 105,
+    artisan_id: 1,
     date_label: '13 Dic 2026',
     product_name: 'Billetera Fileteada',
     amount: 15000,
@@ -565,6 +572,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const newOrderItem: PurchasedOrderItem = {
       id: Date.now(),
+      product_id: target?.id,
+      artisan_id: target?.artisan_id,
       date_label: '19 Nov 2026',
       product_name: target?.name || 'Pieza artesanal',
       amount: target?.price || 15000,

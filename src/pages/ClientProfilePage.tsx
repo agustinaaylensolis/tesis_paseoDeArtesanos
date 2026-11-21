@@ -76,7 +76,10 @@ export const ClientProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-4 sm:px-6 md:px-16">
+    <div
+      className="bg-kraft-texture min-h-screen py-12 md:py-16 px-4 sm:px-6 md:px-16"
+      style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+    >
       <div className="max-w-[960px] mx-auto space-y-10">
         {/* 1. TARJETA SUPERIOR MARRÓN DEL CLIENTE (Andrés Navarro) */}
         <div className="max-w-[680px] mx-auto bg-[#865D4E] text-[#F5E9D9] rounded-xl p-6 sm:p-8 md:p-10 shadow-md flex flex-col sm:flex-row items-center justify-center gap-8">
@@ -109,13 +112,15 @@ export const ClientProfilePage: React.FC = () => {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#E6CEB5] text-2xl italic font-bold text-[#E6CEB5] focus:outline-none"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+                  className="w-full bg-transparent border-b border-[#E6CEB5] text-2xl italic font-medium text-[#E6CEB5] focus:outline-none"
                   placeholder="Nombre y apellido"
                 />
                 <input
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
                   className="w-full bg-transparent border-b border-[#E6CEB5]/60 text-sm text-[#E6CEB5] focus:outline-none"
                   placeholder="Teléfono"
                 />
@@ -123,13 +128,17 @@ export const ClientProfilePage: React.FC = () => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
                   className="w-full bg-transparent border-b border-[#E6CEB5]/60 text-sm text-[#E6CEB5] focus:outline-none"
                   placeholder="Usuario"
                 />
               </div>
             ) : (
               <>
-                <h1 className="italic font-bold text-3xl md:text-4xl text-[#E6CEB5]">
+                <h1
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+                  className="italic font-bold text-3xl md:text-4xl text-[#E6CEB5]"
+                >
                   {buyerProfile.full_name}
                 </h1>
                 <div className="flex items-center justify-center sm:justify-start gap-2 text-sm text-[#E6CEB5]/90">
@@ -184,7 +193,7 @@ export const ClientProfilePage: React.FC = () => {
             onClick={() => setOpenBought((v) => !v)}
             className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
           >
-            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+            <span className="font-display-serif text-2xl md:text-[30px] font-medium text-[#4A170E]">
               Los productos que compraste
             </span>
             <span className="text-[#4A170E] text-xl">{openBought ? '▼' : '▶'}</span>
@@ -225,7 +234,7 @@ export const ClientProfilePage: React.FC = () => {
             onClick={() => setOpenFavorites((v) => !v)}
             className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
           >
-            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+            <span className="font-display-serif text-2xl md:text-[30px] font-medium text-[#4A170E]">
               Productos favoritos
             </span>
             <span className="text-[#4A170E] text-xl">

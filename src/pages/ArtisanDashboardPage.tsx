@@ -11,6 +11,7 @@ export const ArtisanDashboardPage: React.FC = () => {
   const {
     artisans,
     products,
+    purchasedOrders,
     activeArtisanId,
     updateArtisanProfile,
     savePiece,
@@ -95,6 +96,24 @@ export const ArtisanDashboardPage: React.FC = () => {
   const sharedProducts = useMemo(() => {
     return products.filter((p) => p.artisan_id === artisan.id);
   }, [products, artisan.id]);
+
+  // Mostrar ÚNICAMENTE las ventas de productos asociados al artesano logueado
+  const soldProducts = useMemo(() => {
+    return purchasedOrders.filter((order) => {
+      if (order.artisan_id !== undefined) {
+        return order.artisan_id === artisan.id;
+      }
+      const matchedProduct = products.find(
+        (p) =>
+          (order.product_id !== undefined && p.id === order.product_id) ||
+          p.name.toLowerCase() === order.product_name.toLowerCase()
+      );
+      if (matchedProduct) {
+        return matchedProduct.artisan_id === artisan.id;
+      }
+      return order.id >= 101 && order.id <= 105 && artisan.id === 1;
+    });
+  }, [purchasedOrders, products, artisan.id]);
 
   const openCreateForm = () => {
     setPieceForm({
@@ -846,48 +865,36 @@ export const ArtisanDashboardPage: React.FC = () => {
 
           {openSold && (
             <div className="bg-[#D8C5AE]/65 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm overflow-x-auto">
-              <table className="w-full min-w-[520px] text-left text-sm md:text-[15px] text-[#2B0F08]">
-                <thead>
-                  <tr className="border-b border-[#8C6E58]/50 font-bold">
-                    <th className="pb-3 pr-4">Fecha</th>
-                    <th className="pb-3 pr-4">Producto</th>
-                    <th className="pb-3 pr-4">Importe</th>
-                    <th className="pb-3">Estado</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#8C6E58]/30">
-                  <tr>
-                    <td className="py-3 pr-4">17 Dic 2026</td>
-                    <td className="py-3 pr-4 italic font-bold">Mate Yaguareté</td>
-                    <td className="py-3 pr-4">$ 60.000</td>
-                    <td className="py-3">Por retirar</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 pr-4">15 Dic 2026</td>
-                    <td className="py-3 pr-4 italic font-bold">Mate Flor</td>
-                    <td className="py-3 pr-4">$ 50.000</td>
-                    <td className="py-3">Retirado</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 pr-4">14 Dic 2026</td>
-                    <td className="py-3 pr-4 italic font-bold">Termera mediana</td>
-                    <td className="py-3 pr-4">$ 90.000</td>
-                    <td className="py-3">Retirado</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 pr-4">13 Dic 2026</td>
-                    <td className="py-3 pr-4 italic font-bold">Billetera Sol</td>
-                    <td className="py-3 pr-4">$ 15.000</td>
-                    <td className="py-3">Retirado</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 pr-4">13 Dic 2026</td>
-                    <td className="py-3 pr-4 italic font-bold">Billetera Fileteada</td>
-                    <td className="py-3 pr-4">$ 15.000</td>
-                    <td className="py-3">Retirado</td>
-                  </tr>
-                </tbody>
-              </table>
+              {soldProducts.length === 0 ? (
+                <p className="text-center text-sm md:text-base text-[#5C2014] py-4">
+                  Todavía no registrás ventas de tus productos.
+                </p>
+              ) : (
+                <table className="w-full min-w-[520px] text-left text-sm md:text-[15px] text-[#2B0F08]">
+                  <thead>
+                    <tr className="border-b border-[#8C6E58]/50 font-bold">
+                      <th className="pb-3 pr-4">Fecha</th>
+                      <th className="pb-3 pr-4">Producto</th>
+                      <th className="pb-3 pr-4">Importe</th>
+                      <th className="pb-3">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#8C6E58]/30">
+                    {soldProducts.map((order) => (
+                      <tr key={`sold-${order.id}`}>
+                        <td className="py-3 pr-4">{order.date_label}</td>
+                        <td className="py-3 pr-4 italic font-bold">
+                          {order.product_name}
+                        </td>
+                        <td className="py-3 pr-4">
+                          $ {order.amount.toLocaleString('es-AR')}
+                        </td>
+                        <td className="py-3">{order.status_label}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           )}
         </section>
