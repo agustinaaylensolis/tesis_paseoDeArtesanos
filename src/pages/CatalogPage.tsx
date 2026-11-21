@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
@@ -90,16 +91,16 @@ export const CatalogPage: React.FC = () => {
         {/* Cabecera: Título + Buscador */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
           <h1
-            className="text-2xl sm:text-3xl md:text-[34px] font-medium text-[#5E2A22] tracking-tight"
+            className="text-2xl sm:text-3xl md:text-[34px] font-medium text-[#732714] tracking-tight"
             style={{ fontFamily: '"broadsheet", Georgia, serif' }}
           >
             {selectedMaterial
               ? 'Catálogo de Artesanías Tradicionales'
-              : 'Catálogo de Artesanías Tradicionales'}
+              : '¡Conocé las artesanías tradicionales!'}
           </h1>
 
           <div className="flex items-center h-8 w-full md:w-60">
-            <div className="bg-[#3D1E14] text-[#F4E6D4] h-full px-2.5 flex items-center justify-center">
+            <div className="bg-[#3D1E14] text-[#CFAD82] h-full px-2.5 flex items-center justify-center">
               <Search className="w-4 h-4" />
             </div>
             <input
@@ -107,7 +108,7 @@ export const CatalogPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Buscar pieza o artesano"
-              className="bg-[#A8917A]/90 text-[#2B0F08] h-full w-full px-3 text-sm focus:outline-none"
+              className="bg-[#A8917A]/90 text-[#4A0A03] h-full w-full px-3 text-sm focus:outline-none"
             />
           </div>
         </div>
@@ -117,16 +118,16 @@ export const CatalogPage: React.FC = () => {
           className="flex flex-wrap items-center gap-3.5 mb-5"
           style={{ fontFamily: '"sitka-text", Georgia, serif' }}
         >
-          <div className="inline-flex items-center bg-[#C2A689] rounded-full p-0.5">
+          <div className="inline-flex items-center bg-[#CBB79F] rounded-full overflow-hidden">
             <button
               type="button"
               onClick={() => {
                 setCategoryType('utilitario');
                 setOnlyExclusive(false);
               }}
-              className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold transition-colors ${categoryType === 'utilitario' && !onlyExclusive
-                ? 'bg-[#682E34] text-[#F4E6D4] shadow-sm'
-                : 'text-[#3D120A] hover:text-[#682E34]'
+              className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold cursor-pointer transition-all ${categoryType === 'utilitario' && !onlyExclusive
+                  ? 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
+                  : 'text-[#4A0A03] hover:bg-[#5F2D31]/15 hover:text-[#5F2D31]'
                 }`}
             >
               Utilitario
@@ -137,9 +138,9 @@ export const CatalogPage: React.FC = () => {
                 setCategoryType('decorativo');
                 setOnlyExclusive(false);
               }}
-              className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold transition-colors ${categoryType === 'decorativo' && !onlyExclusive
-                ? 'bg-[#682E34] text-[#F4E6D4] shadow-sm'
-                : 'text-[#3D120A] hover:text-[#682E34]'
+              className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold cursor-pointer transition-all ${categoryType === 'decorativo' && !onlyExclusive
+                  ? 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
+                  : 'text-[#4A0A03] hover:bg-[#5F2D31]/15 hover:text-[#5F2D31]'
                 }`}
             >
               Decorativo
@@ -149,9 +150,9 @@ export const CatalogPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setOnlyExclusive((prev) => !prev)}
-            className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold transition-all ${onlyExclusive
-              ? 'bg-[#741712] text-[#F4E6D4] ring-2 ring-[#E59838]'
-              : 'bg-[#682E34] text-[#F4E6D4] hover:brightness-110'
+            className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold cursor-pointer transition-all ${onlyExclusive
+                ? 'bg-[#732714] text-[#CFAD82] ring-2 ring-[#E59838]'
+                : 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
               }`}
           >
             Diseños Exclusivos
@@ -192,7 +193,7 @@ export const CatalogPage: React.FC = () => {
           <div className="relative z-10 flex items-center gap-6 w-full">
             {selectedMaterial ? (
               <>
-                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow border border-[#8C6245]/40 bg-[#4A170E]">
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow border border-[#8C6245]/40 bg-[#4A0A03]">
                   <img
                     src={selectedMaterial.image_url}
                     alt={selectedMaterial.title}
@@ -201,7 +202,7 @@ export const CatalogPage: React.FC = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <h2 className="text-lg md:text-[20px] font-normal text-[#4A170E]">
+                    <h2 className="text-lg md:text-[20px] font-normal text-[#732714]">
                       {selectedMaterial.title}
                     </h2>
                     <button
@@ -210,26 +211,26 @@ export const CatalogPage: React.FC = () => {
                         setSelectedMaterialId(null);
                         setSearchParams({});
                       }}
-                      className="text-xs font-semibold text-[#682E34] hover:underline"
+                      className="text-xs font-semibold text-[#5F2D31] hover:underline"
                     >
                       Ver todos
                     </button>
                   </div>
-                  <p className="text-xs md:text-[13.5px] text-[#33130C] mt-1 leading-snug">
+                  <p className="text-xs md:text-[13.5px] text-[#4A0A03] mt-1 leading-snug">
                     {selectedMaterial.description}
                   </p>
                 </div>
               </>
             ) : (
               <>
-                <div className="w-14 h-14 rounded-full bg-[#682E34] text-[#F4E6D4] flex items-center justify-center text-3xl font-bold shrink-0">
+                <div className="w-14 h-14 rounded-full bg-[#5F2D31] text-[#CFAD82] flex items-center justify-center text-3xl font-bold shrink-0">
                   ?
                 </div>
                 <div>
-                  <h2 className="text-lg md:text-[20px] font-semibold text-[#4A170E]">
+                  <h2 className="text-lg md:text-[20px] font-semibold text-[#732714]">
                     Elegí un material para conocer más
                   </h2>
-                  <p className="text-xs md:text-[13.5px] text-[#33130C] mt-1 leading-snug">
+                  <p className="text-xs md:text-[13.5px] text-[#4A0A03] mt-1 leading-snug">
                     Los artesanos elaboran sus productos con diversos materiales propios de la
                     región basándose en conocimientos tradicionales arraigados a su historia.
                   </p>
@@ -242,7 +243,7 @@ export const CatalogPage: React.FC = () => {
         {/* Grilla de 4 columnas */}
         {displayProducts.length === 0 ? (
           <div className="bg-[#DFCBB2]/80 rounded-xl p-10 text-center my-8">
-            <p className="text-lg font-semibold text-[#4A170E]">
+            <p className="text-lg font-semibold text-[#732714]">
               No se encontraron piezas con los filtros seleccionados.
             </p>
             <button

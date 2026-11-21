@@ -81,13 +81,13 @@ export const ProductDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16">
-      <div className="max-w-[960px] mx-auto space-y-12">
+    <div className="bg-kraft-texture min-h-screen py-8 md:py-14 px-4 sm:px-6 md:px-16">
+      <div className="max-w-[960px] mx-auto space-y-10 md:space-y-12">
         {/* 1. FICHA PRINCIPAL DEL PRODUCTO */}
-        <div className="bg-[#D6BFA6]/85 rounded-2xl p-7 md:p-10 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div className="bg-[#D8C5AE]/65 rounded-2xl p-5 sm:p-7 md:p-10 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           {/* Columna izquierda: Datos técnicos y botón Comprar */}
           <div className="md:col-span-6 space-y-3 text-[#2B0F08]">
-            <h1 className="font-display-serif text-3xl md:text-[38px] font-bold text-[#4A170E] leading-tight mb-3">
+            <h1 className="font-display-serif text-3xl md:text-[38px] font-normal text-[#5C2014] leading-tight mb-3">
               {product.name}
             </h1>
 
@@ -122,21 +122,20 @@ export const ProductDetailPage: React.FC = () => {
 
             <div className="pt-4">
               {product.piece_type === 'fija' && product.stock === 0 ? (
-                <span className="inline-block bg-[#6B4A3E] text-white px-8 py-2.5 rounded font-bold">
+                <span className="inline-block bg-[#6B4A3E] text-[#E5C9A3] px-8 py-2.5 rounded font-bold">
                   Sin stock disponible
                 </span>
               ) : (
                 <button
                   type="button"
                   onClick={() => navigate(`/checkout/entrega/${product.slug}`)}
-                  className="btn-artesanal w-full sm:w-64 py-2.5 text-xl md:text-2xl font-bold"
+                  className="btn-artesanal w-full sm:w-64 py-2.5 text-xl md:text-2xl font-bold text-[#E5C9A3]"
                 >
                   Comprar
                 </button>
               )}
             </div>
           </div>
-
           {/* Columna derecha: Imagen principal + flechas + 3 miniaturas */}
           <div className="md:col-span-6 space-y-4">
             <div className="relative bg-[#363F45] aspect-[4/4.3] flex items-center justify-center overflow-hidden shadow-md">
@@ -145,7 +144,7 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() =>
                   setSelectedImageIdx((i) => (i === 0 ? gallery.length - 1 : i - 1))
                 }
-                className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
+                className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20"
               />
 
               <img
@@ -159,7 +158,7 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() =>
                   setSelectedImageIdx((i) => (i === gallery.length - 1 ? 0 : i + 1))
                 }
-                className="absolute -right-4 top-1/2 -translate-y-1/2 z-20"
+                className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20"
               />
             </div>
 
@@ -187,12 +186,12 @@ export const ProductDetailPage: React.FC = () => {
         </div>
 
         {/* 2. BLOQUE "UN POCO DE MI HISTORIA" + CONOCER AL ARTESANO */}
-        <div className="bg-[#D6BFA6]/85 rounded-2xl p-7 md:p-9 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-[#D8C5AE]/65 rounded-2xl p-5 sm:p-7 md:p-9 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-xl">
-            <h2 className="font-display-serif text-2xl md:text-[34px] font-bold text-[#4A170E] mb-3">
+            <h2 className="font-display-serif text-2xl md:text-[34px] font-normal text-[#5C2014] mb-3">
               Un poco de mi historia
             </h2>
-            <p className="text-sm md:text-[15px] text-[#33130C] leading-relaxed">
+            <p className="text-sm md:text-[15px] text-[#732714] leading-relaxed">
               {artisan.history_text}
             </p>
           </div>
@@ -207,7 +206,7 @@ export const ProductDetailPage: React.FC = () => {
             </div>
             <Link
               to={`/artesano/${artisan.slug}`}
-              className="btn-artesanal px-5 py-1.5 text-sm md:text-base -mt-3 relative z-10"
+              className="btn-artesanal-dark text-[#E5C9A3] px-5 py-1.5 text-sm md:text-base -mt-3 relative z-10"
             >
               Conocer al artesano
             </Link>
@@ -216,48 +215,47 @@ export const ProductDetailPage: React.FC = () => {
 
         {/* 3. MÁS PRODUCTOS DEL ARTESANO */}
         <section className="space-y-5">
-          <h2 className="font-display-serif text-2xl md:text-[34px] font-bold text-[#4A170E]">
+          <h2 className="font-display-serif text-2xl md:text-[34px] font-normal text-[#5C2014]">
             Más productos del Artesano
           </h2>
 
           <div className="relative">
             <CarouselArrow
               direction="left"
-              onClick={() => {}}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
+              onClick={() => { }}
+              className="hidden md:flex absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20"
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {moreFromArtisan.map((item, idx) => (
                 <ProductCard
                   key={`more-${item.id}-${idx}`}
                   product={item}
                   artisan={artisan}
-                  highlighted={idx === 0}
                   showArtisanName={false}
                 />
               ))}
             </div>
             <CarouselArrow
               direction="right"
-              onClick={() => {}}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20"
+              onClick={() => { }}
+              className="hidden md:flex absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20"
             />
           </div>
         </section>
 
         {/* 4. PRODUCTOS SIMILARES */}
         <section className="space-y-5">
-          <h2 className="font-display-serif text-2xl md:text-[34px] font-bold text-[#4A170E]">
+          <h2 className="font-display-serif text-2xl md:text-[34px] font-normal text-[#5C2014]">
             Productos similares
           </h2>
 
           <div className="relative">
             <CarouselArrow
               direction="left"
-              onClick={() => {}}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20"
+              onClick={() => { }}
+              className="hidden md:flex absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20"
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {similarProducts.map((item, idx) => (
                 <ProductCard
                   key={`sim-${item.id}-${idx}`}
@@ -269,8 +267,8 @@ export const ProductDetailPage: React.FC = () => {
             </div>
             <CarouselArrow
               direction="right"
-              onClick={() => {}}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20"
+              onClick={() => { }}
+              className="hidden md:flex absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20"
             />
           </div>
         </section>

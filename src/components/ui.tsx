@@ -11,10 +11,10 @@ export const MaterialTimeline: React.FC<{
   allowToggleAll?: boolean;
 }> = ({ materials, selectedMaterialId, onSelect, allowToggleAll = true }) => {
   return (
-    <div className="w-full max-w-[920px] mx-auto my-6 px-2">
+    <div className="w-full max-w-[920px] mx-auto my-6 px-0 sm:px-2">
       <div className="relative flex items-start justify-between">
         {/* Línea conectora horizontal */}
-        <div className="absolute top-[15px] left-[6%] right-[6%] h-[1.5px] bg-[#6A4535]/60 z-0" />
+        <div className="absolute top-[13px] sm:top-[15px] left-[6%] right-[6%] h-[1.5px] bg-[#6A4535]/60 z-0" />
 
         {materials.map((mat) => {
           const isSelected = selectedMaterialId === mat.id;
@@ -30,18 +30,18 @@ export const MaterialTimeline: React.FC<{
                   onSelect(mat.id);
                 }
               }}
-              className="relative z-10 flex flex-col items-center group focus:outline-none w-24 md:w-28"
+              className="relative z-10 flex flex-col items-center group focus:outline-none flex-1 min-w-0 md:flex-none md:w-28"
             >
               <span
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-sm ${isSelected
-                  ? 'bg-[#5E2822] text-[#F4E6D4] ring-4 ring-[#741712]/30 scale-110'
-                  : 'bg-[#BC9E82] text-[#3B170E] group-hover:bg-[#8E6754] group-hover:text-white'
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-sm ${isSelected
+                  ? 'bg-[a68454ff ] text-[#CFAD82] scale-105'
+                  : 'bg-[#A68454] text-[#4A0A03] group-hover:bg-[#5F2D31] group-hover:text-[#CFAD82]'
                   }`}
               >
                 {mat.id}
               </span>
               <span
-                className={`mt-2.5 text-center text-xs md:text-[15px] leading-tight whitespace-pre-line transition-colors ${isSelected
+                className={`mt-2.5 text-center text-[10px] sm:text-xs md:text-[15px] leading-tight whitespace-pre-line transition-colors ${isSelected
                   ? 'font-bold text-[#741712] underline underline-offset-4'
                   : 'font-semibold text-[#3B170E] group-hover:text-[#741712]'
                   }`}
@@ -81,8 +81,8 @@ export const ProductCard: React.FC<{
     const { favoriteProductIds, toggleFavorite } = useApp();
     const isFav = favoriteProductIds.includes(product.id);
     const footerBg = highlighted
-      ? 'bg-[#865D4E] text-[#F5E9D9]'
-      : 'bg-[#BBA182] text-[#2F110A]';
+      ? 'bg-[#5F2D31] text-[#CFAD82]'
+      : 'bg-[#BBA182] text-[#4A0A03]';
 
     const cardContent = (
       <>
@@ -102,7 +102,7 @@ export const ProductCard: React.FC<{
 
         {/* Zócalo curvo convexo con icono de corazón a la izquierda y estrella dorada a la derecha */}
         <div
-          className={`product-card-footer ${footerBg} flex-1 px-3.5 pt-2 pb-4 min-h-[88px] flex items-center justify-between gap-2 transition-colors group-hover:bg-[#865D4E] group-hover:text-[#F5E9D9]`}
+          className={`product-card-footer ${footerBg} flex-1 px-2.5 sm:px-3.5 pt-2 pb-4 min-h-[80px] sm:min-h-[88px] flex items-center justify-between gap-2 transition-colors group-hover:bg-[#5F2D31] group-hover:text-[#CFAD82]`}
         >
           {/* Botón de corazón (Favorito) */}
           <button

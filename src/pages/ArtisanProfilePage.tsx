@@ -21,11 +21,11 @@ export const ArtisanProfilePage: React.FC = () => {
   }, [products, artisan.id]);
 
   return (
-    <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-6 md:px-16">
+    <div className="bg-kraft-texture min-h-screen py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-16">
       <div className="max-w-[960px] mx-auto space-y-10">
         {/* 1. BLOQUE SUPERIOR DE PERFIL (2 COLUMNAS) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch pt-8">
-          <div className="md:col-span-5 relative bg-[#865D4E] text-[#F5E9D9] rounded-xl px-7 pt-16 pb-8 shadow-md flex flex-col justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch pt-14 md:pt-8">
+          <div className="md:col-span-5 relative bg-[#865D4E] text-[#F5E9D9] rounded-xl px-5 sm:px-7 pt-16 pb-8 shadow-md flex flex-col justify-between">
             <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-black shadow-lg border-2 border-[#865D4E]">
               <img
                 src={artisan.avatar_url}
@@ -54,7 +54,7 @@ export const ArtisanProfilePage: React.FC = () => {
               </h1>
             </div>
 
-            <div className="mt-6 space-y-2.5 text-sm md:text-[15px] text-[#F5E9D9]">
+            <div className="mt-6 space-y-2.5 text-sm md:text-[15px] text-[#F5E9D9] break-words">
               <p className="font-semibold">Datos de contacto:</p>
               <p>{artisan.phone}</p>
               <p>{artisan.instagram || 'Artesanales_Eltimbo'}</p>
@@ -62,7 +62,7 @@ export const ArtisanProfilePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="md:col-span-7 bg-[#D6BFA6]/85 rounded-xl p-7 md:p-9 shadow-sm flex flex-col justify-between">
+          <div className="md:col-span-7 bg-[#D6BFA6]/85 rounded-xl p-5 sm:p-7 md:p-9 shadow-sm flex flex-col justify-between">
             <div>
               <h2 className="font-bold text-lg md:text-xl text-[#4A170E] mb-3">
                 Un poco sobre mí...
@@ -77,7 +77,7 @@ export const ArtisanProfilePage: React.FC = () => {
                 href={`https://wa.me/549${artisan.phone.replace(/\D/g, '')}`}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-artesanal px-8 py-1.5 text-base md:text-lg"
+                className="btn-artesanal inline-block px-8 py-1.5 text-base md:text-lg"
               >
                 ¡Contactar!
               </a>
@@ -87,7 +87,7 @@ export const ArtisanProfilePage: React.FC = () => {
 
         {/* 2. BLOQUE "UN POCO DE MI HISTORIA" CON FOTO CURVA A LA DERECHA */}
         <div className="bg-[#D6BFA6]/85 rounded-xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-7 p-7 md:p-9">
+          <div className="md:col-span-7 p-5 sm:p-7 md:p-9">
             <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E] mb-3">
               Un poco de mi historia
             </h2>
@@ -111,7 +111,7 @@ export const ArtisanProfilePage: React.FC = () => {
             Conocé mis productos
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {artisanProducts.map((prod, idx) => (
               <ProductCard
                 key={`${prod.id}-${idx}`}

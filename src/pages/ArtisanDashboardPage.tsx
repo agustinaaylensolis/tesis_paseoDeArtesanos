@@ -5,7 +5,7 @@ import { uploadMediaFile } from '../lib/supabase';
 import { Product } from '../types/database';
 import { ProductCard } from '../components/ui';
 
-/* PANEL EXCLUSIVO DEL ROL ARTESANO: CRUD DE CATÁLOGO Y ACCESO AL CURSO (paginas.pdf págs. 5 y 6, Parte de la web Andrés pág. 3) */
+/* PANEL EXCLUSIVO DEL ROL ARTESANO: CRUD DE CATÁLOGO Y ACCESO AL CURSO */
 export const ArtisanDashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const {
@@ -60,7 +60,6 @@ export const ArtisanDashboardPage: React.FC = () => {
     artisan.story_image_url || null
   );
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
-  const [uploadingStoryImg, setUploadingStoryImg] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
   const [openShared, setOpenShared] = useState(true);
@@ -89,20 +88,6 @@ export const ArtisanDashboardPage: React.FC = () => {
       setFeedbackMsg('¡Foto de perfil actualizada!');
     } finally {
       setUploadingAvatar(false);
-    }
-  };
-
-  const handleStoryImageUpload = async (file?: File | null) => {
-    if (!file) return;
-    setUploadingStoryImg(true);
-    setFeedbackMsg(null);
-    try {
-      const url = await uploadMediaFile(file, 'artesanos-historia');
-      setStoryImageUrl(url);
-      await updateArtisanProfile(artisan.id, { story_image_url: url });
-      setFeedbackMsg('¡Imagen de tu historia actualizada!');
-    } finally {
-      setUploadingStoryImg(false);
     }
   };
 
@@ -189,17 +174,21 @@ export const ArtisanDashboardPage: React.FC = () => {
       setSavingPiece(false);
     }
   };
-
   /* ================= PANTALLA CRUD DE ALTA / EDICIÓN / ELIMINACIÓN DE PIEZA ================= */
   if (editingMode !== 'none') {
     return (
-      <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-6 md:px-16">
-        <div className="max-w-[900px] mx-auto bg-[#D6BFA6]/85 rounded-2xl p-8 md:p-12 shadow-md">
+      <div
+        className="bg-kraft-texture min-h-screen py-12 md:py-16 px-4 sm:px-6 md:px-16"
+        style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+      >
+        <div className="max-w-[920px] mx-auto bg-[#D8C5AE]/65 rounded-2xl p-6 sm:p-10 md:p-14 shadow-sm">
           <form onSubmit={handleSavePiece}>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-              <div className="md:col-span-6 space-y-4 text-sm md:text-[15.5px] text-[#2B0F08]">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start">
+              {/* Columna izquierda: Campos de texto y radios */}
+              <div className="md:col-span-7 md:pt-8 space-y-2.5 text-sm md:text-[15px] text-[#2B0F08]">
+                {/* Grupo 1: Datos principales */}
                 <div className="flex items-baseline gap-2">
-                  <label className="font-medium shrink-0">Nombre de la pieza:</label>
+                  <label className="shrink-0">Nombre de la pieza:</label>
                   <input
                     type="text"
                     required
@@ -207,30 +196,29 @@ export const ArtisanDashboardPage: React.FC = () => {
                     onChange={(e) =>
                       setPieceForm((prev) => ({ ...prev, name: e.target.value }))
                     }
-                    placeholder="Billetera"
-                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5 font-medium"
+                    placeholder="Ej: Billetera"
+                    className="w-full bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5 placeholder-transparent focus:placeholder-[#2B0F08]/45"
                   />
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <label className="font-medium shrink-0">Medidas:</label>
+                  <label className="shrink-0">Medidas:</label>
                   <input
                     type="text"
                     value={pieceForm.dimensions}
                     onChange={(e) =>
                       setPieceForm((prev) => ({ ...prev, dimensions: e.target.value }))
                     }
-                    placeholder="11 x 7 centímetros"
-                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                    placeholder="Ej: 11 x 7 centímetros"
+                    className="w-full bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5 placeholder-transparent focus:placeholder-[#2B0F08]/45"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="block font-medium">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <label className="shrink-0">
                     Precio (si se omite queda como consultable):
                   </label>
-                  <div className="flex items-center gap-1">
-                    <span>$</span>
+                  <div className="flex items-baseline gap-1">
                     <input
                       type="number"
                       value={pieceForm.price ?? ''}
@@ -240,14 +228,14 @@ export const ArtisanDashboardPage: React.FC = () => {
                           price: e.target.value ? Number(e.target.value) : null,
                         }))
                       }
-                      placeholder="15.000"
-                      className="w-40 bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                      placeholder="Ej: $ 15.000"
+                      className="w-28 bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5 placeholder-transparent focus:placeholder-[#2B0F08]/45"
                     />
                   </div>
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <label className="font-medium shrink-0">
+                  <label className="shrink-0">
                     Stock (si contas con existencias):
                   </label>
                   <input
@@ -260,25 +248,26 @@ export const ArtisanDashboardPage: React.FC = () => {
                         stock: Number(e.target.value),
                       }))
                     }
-                    className="w-20 bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                    className="w-20 bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5"
                   />
                 </div>
 
-                <div className="flex items-baseline gap-2 pt-2">
-                  <label className="font-medium shrink-0">Horas de trabajo:</label>
+                {/* Grupo 2: Oficio */}
+                <div className="flex items-baseline gap-2 pt-3">
+                  <label className="shrink-0">Horas de trabajo:</label>
                   <input
                     type="text"
                     value={pieceForm.work_hours}
                     onChange={(e) =>
                       setPieceForm((prev) => ({ ...prev, work_hours: e.target.value }))
                     }
-                    placeholder="8"
-                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                    placeholder="Ej: 8 horas "
+                    className="w-full bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5 placeholder-transparent focus:placeholder-[#2B0F08]/45"
                   />
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <label className="font-medium shrink-0">Material/es:</label>
+                  <label className="shrink-0">Material/es:</label>
                   <input
                     type="text"
                     value={pieceForm.material_label}
@@ -288,27 +277,28 @@ export const ArtisanDashboardPage: React.FC = () => {
                         material_label: e.target.value,
                       }))
                     }
-                    placeholder="Cuero"
-                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                    placeholder="Ej: Cuero"
+                    className="w-full bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5 placeholder-transparent focus:placeholder-[#2B0F08]/45"
                   />
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <label className="font-medium shrink-0">Técnica/s:</label>
+                  <label className="shrink-0">Técnica/s:</label>
                   <input
                     type="text"
                     value={pieceForm.technique}
                     onChange={(e) =>
                       setPieceForm((prev) => ({ ...prev, technique: e.target.value }))
                     }
-                    placeholder="Cincelado"
-                    className="w-full bg-transparent border-b border-[#6A4535]/50 focus:border-[#4A170E] focus:outline-none py-0.5"
+                    placeholder="Ej: Cincelado"
+                    className="w-full bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-0.5 placeholder-transparent focus:placeholder-[#2B0F08]/45"
                   />
                 </div>
 
+                {/* Grupo 3: Descripción */}
                 {editingMode === 'create' && (
-                  <div className="space-y-1 pt-1">
-                    <label className="block font-medium">Descripción:</label>
+                  <div className="pt-3 space-y-1">
+                    <label className="block">Descripción:</label>
                     <textarea
                       rows={2}
                       value={pieceForm.short_description}
@@ -318,15 +308,16 @@ export const ArtisanDashboardPage: React.FC = () => {
                           short_description: e.target.value,
                         }))
                       }
-                      placeholder="Historia y proceso de elaboración de la pieza..."
-                      className="w-full bg-[#DFCCB6]/60 rounded p-2 text-sm focus:outline-none"
+                      placeholder="Ej: Historia y proceso de elaboración de la pieza..."
+                      className="w-full bg-transparent border-b border-transparent hover:border-[#6A4535]/30 focus:border-[#5C2014] focus:outline-none py-1 text-sm resize-none placeholder-transparent focus:placeholder-[#2B0F08]/45"
                     />
                   </div>
                 )}
 
-                <div className="pt-3 space-y-2">
-                  <p className="font-medium">Categoría</p>
-                  <label className="flex items-center gap-3 cursor-pointer">
+                {/* Grupo 4: Categoría */}
+                <div className="pt-5 space-y-2">
+                  <p>Categoría</p>
+                  <label className="flex items-center gap-3 cursor-pointer pl-1">
                     <input
                       type="radio"
                       name="cat_type"
@@ -340,16 +331,15 @@ export const ArtisanDashboardPage: React.FC = () => {
                       className="sr-only"
                     />
                     <span
-                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
-                        pieceForm.category_type === 'decorativo'
-                          ? 'bg-[#D8923E]'
-                          : 'bg-transparent'
-                      }`}
+                      className={`w-3.5 h-3.5 rounded-full border border-[#DF953A] flex items-center justify-center transition-colors ${pieceForm.category_type === 'decorativo'
+                        ? 'bg-[#DF953A]'
+                        : 'bg-transparent'
+                        }`}
                     />
                     <span>Decorativo</span>
                   </label>
 
-                  <label className="flex items-center gap-3 cursor-pointer">
+                  <label className="flex items-center gap-3 cursor-pointer pl-1">
                     <input
                       type="radio"
                       name="cat_type"
@@ -363,19 +353,19 @@ export const ArtisanDashboardPage: React.FC = () => {
                       className="sr-only"
                     />
                     <span
-                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
-                        pieceForm.category_type === 'utilitario'
-                          ? 'bg-[#D8923E]'
-                          : 'bg-transparent'
-                      }`}
+                      className={`w-3.5 h-3.5 rounded-full border border-[#DF953A] flex items-center justify-center transition-colors ${pieceForm.category_type === 'utilitario'
+                        ? 'bg-[#DF953A]'
+                        : 'bg-transparent'
+                        }`}
                     />
                     <span>Utilitario</span>
                   </label>
                 </div>
 
-                <div className="pt-3 space-y-2">
-                  <p className="font-medium">¿Es un diseño de autor exclusivo?</p>
-                  <label className="flex items-center gap-3 cursor-pointer">
+                {/* Grupo 5: Diseño exclusivo */}
+                <div className="pt-4 space-y-2">
+                  <p>¿Es un diseño de autor exclusivo?</p>
+                  <label className="flex items-center gap-3 cursor-pointer pl-1">
                     <input
                       type="radio"
                       name="exclusive"
@@ -386,14 +376,13 @@ export const ArtisanDashboardPage: React.FC = () => {
                       className="sr-only"
                     />
                     <span
-                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
-                        pieceForm.is_featured ? 'bg-[#D8923E]' : 'bg-transparent'
-                      }`}
+                      className={`w-3.5 h-3.5 rounded-full border border-[#DF953A] flex items-center justify-center transition-colors ${pieceForm.is_featured ? 'bg-[#DF953A]' : 'bg-transparent'
+                        }`}
                     />
                     <span>Si</span>
                   </label>
 
-                  <label className="flex items-center gap-3 cursor-pointer">
+                  <label className="flex items-center gap-3 cursor-pointer pl-1">
                     <input
                       type="radio"
                       name="exclusive"
@@ -404,21 +393,21 @@ export const ArtisanDashboardPage: React.FC = () => {
                       className="sr-only"
                     />
                     <span
-                      className={`w-4 h-4 rounded-full border border-[#D8923E] flex items-center justify-center ${
-                        !pieceForm.is_featured ? 'bg-[#D8923E]' : 'bg-transparent'
-                      }`}
+                      className={`w-3.5 h-3.5 rounded-full border border-[#DF953A] flex items-center justify-center transition-colors ${!pieceForm.is_featured ? 'bg-[#DF953A]' : 'bg-transparent'
+                        }`}
                     />
                     <span>No</span>
                   </label>
                 </div>
               </div>
 
-              <div className="md:col-span-6 space-y-3">
-                <p className="text-sm md:text-[15.5px] text-[#2B0F08] font-medium">
+              {/* Columna derecha: Añadir fotografías */}
+              <div className="md:col-span-5 space-y-3">
+                <p className="text-sm md:text-[15px] text-[#2B0F08]">
                   Añadir fotografías
                 </p>
 
-                <label className="block w-full aspect-[3/3.8] bg-black cursor-pointer relative overflow-hidden shadow-md group">
+                <label className="block w-full aspect-[3/3.7] bg-black cursor-pointer relative overflow-hidden shadow-md group">
                   <input
                     type="file"
                     accept="image/*"
@@ -447,23 +436,24 @@ export const ArtisanDashboardPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Botones inferiores */}
             <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
               {editingMode === 'create' ? (
-                <div className="w-full flex justify-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setEditingMode('none')}
-                    className="px-6 py-2 text-sm font-semibold text-[#4A170E] hover:underline"
-                  >
-                    Cancelar
-                  </button>
+                <div className="w-full flex flex-col items-center gap-3">
                   <button
                     type="submit"
                     disabled={savingPiece}
-                    className="btn-artesanal-dark px-14 py-2 text-lg"
+                    className="btn-artesanal-dark text-[#E5C9A3] px-14 py-2 text-base md:text-lg shadow-lg"
                     style={{ transform: 'rotate(0deg)' }}
                   >
                     {savingPiece ? 'Publicando...' : 'Publicar'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingMode('none')}
+                    className="text-xs font-medium text-[#5C2014] hover:underline"
+                  >
+                    Cancelar
                   </button>
                 </div>
               ) : (
@@ -471,7 +461,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={savingPiece}
-                    className="btn-artesanal-dark px-10 py-2 text-base md:text-lg"
+                    className="btn-artesanal-dark text-[#E5C9A3] px-10 py-2 text-base md:text-lg shadow-lg"
                     style={{ transform: 'rotate(0deg)' }}
                   >
                     {savingPiece ? 'Guardando...' : 'Guardar cambios'}
@@ -481,7 +471,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setEditingMode('none')}
-                      className="text-sm font-semibold text-[#4A170E] hover:underline"
+                      className="text-sm font-medium text-[#5C2014] hover:underline"
                     >
                       Volver
                     </button>
@@ -489,7 +479,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                       type="button"
                       onClick={handleDeletePiece}
                       disabled={savingPiece}
-                      className="btn-artesanal-dark px-12 py-2 text-base md:text-lg"
+                      className="btn-artesanal-dark text-[#E5C9A3] px-12 py-2 text-base md:text-lg shadow-lg"
                       style={{ transform: 'rotate(0deg)' }}
                     >
                       Eliminar
@@ -504,22 +494,26 @@ export const ArtisanDashboardPage: React.FC = () => {
     );
   }
 
+  /* ================= PANTALLA PRINCIPAL DEL PANEL DEL ARTESANO ================= */
   return (
-    <div className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16">
-      <div className="max-w-[960px] mx-auto space-y-10">
+    <div
+      className="bg-kraft-texture min-h-screen py-10 md:py-14 px-4 sm:px-6 md:px-16"
+      style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+    >
+      <div className="max-w-[960px] mx-auto space-y-12">
         {feedbackMsg && (
-          <div className="bg-[#4E120B] text-[#F4E6D4] px-5 py-3 rounded-lg text-sm font-medium shadow">
+          <div className="bg-[#4E120B] text-[#E5C9A3] px-5 py-3 rounded-lg text-sm font-medium shadow">
             {feedbackMsg}
           </div>
         )}
 
         {/* 1. BLOQUE SUPERIOR DE PERFIL (2 COLUMNAS) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch pt-8">
-          <div className="md:col-span-5 relative bg-[#865D4E] text-[#F5E9D9] rounded-xl px-7 pt-16 pb-8 shadow-md flex flex-col justify-between">
-            {/* Círculo superior clickable para subir/cambiar la foto de perfil del artesano */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch pt-12">
+          {/* Tarjeta izquierda: Avatar negro + Datos de contacto */}
+          <div className="md:col-span-5 relative bg-[#865D4E] text-[#F5E9D9] rounded-xl px-8 pt-20 pb-8 shadow-sm flex flex-col justify-between">
             <label
               title="Hacé clic para subir o cambiar tu foto de perfil"
-              className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-[#5B2220] shadow-lg flex items-center justify-center text-5xl font-bold text-[#C8A796] cursor-pointer group border-2 border-[#865D4E]"
+              className="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-black shadow-lg flex items-center justify-center text-5xl font-bold text-[#C8B5A0] cursor-pointer group"
             >
               <input
                 type="file"
@@ -547,26 +541,29 @@ export const ArtisanDashboardPage: React.FC = () => {
               )}
             </label>
 
-            <div className="text-center mt-2">
+            <div className="text-center mt-1">
               {isEditingBio ? (
                 <input
                   type="text"
                   value={brandName}
                   onChange={(e) => setBrandName(e.target.value)}
-                  className="w-full text-center bg-transparent border-b border-white/60 italic font-bold text-2xl text-[#E6CEB5] focus:outline-none"
+                  className="w-full text-center bg-transparent border-b border-white/60 italic font-bold text-2xl text-[#E5C9A3] focus:outline-none"
                   placeholder="Nombre del taller o marca"
                 />
               ) : (
-                <h1 className="italic font-bold text-2xl md:text-[26px] text-[#E6CEB5] leading-tight">
+                <h1
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+                  className="italic font-bold text-2xl md:text-[34px] text-[#E5C9A3] leading-tight"
+                >
                   {brandName}
                 </h1>
               )}
             </div>
 
-            <div className="mt-6 space-y-2 text-sm md:text-[15px] text-[#F5E9D9]">
-              <p className="font-semibold">Datos de contacto:</p>
+            <div className="mt-7 space-y-3 text-sm md:text-[15px] text-[#F5E9D9]">
+              <p className="font-medium">Datos de contacto:</p>
               {isEditingBio ? (
-                <>
+                <div className="space-y-2">
                   <input
                     type="text"
                     value={phone}
@@ -588,37 +585,55 @@ export const ArtisanDashboardPage: React.FC = () => {
                     className="w-full bg-transparent border-b border-white/50 py-0.5 focus:outline-none"
                     placeholder="Dirección o localidad"
                   />
-                </>
+                </div>
               ) : (
-                <>
+                <div className="space-y-2.5">
                   <p>{phone}</p>
                   <p>{instagram}</p>
                   <p>{address}</p>
-                </>
+                </div>
               )}
             </div>
           </div>
 
-          <div className="md:col-span-7 bg-[#D6BFA6]/85 rounded-xl p-7 md:p-9 shadow-sm flex flex-col justify-between">
-            <div>
-              <h2 className="font-bold text-lg md:text-xl text-[#4A170E] mb-3">
-                Un poco sobre mí...
-              </h2>
-              {isEditingBio ? (
-                <textarea
-                  rows={4}
-                  value={shortBio}
-                  onChange={(e) => setShortBio(e.target.value)}
-                  className="w-full bg-[#DFCCB6] p-3 rounded text-sm md:text-base text-[#33130C] focus:outline-none"
-                />
-              ) : (
-                <p className="text-base md:text-[17px] text-[#33130C] leading-relaxed whitespace-pre-line">
-                  {shortBio}
+          {/* Tarjeta derecha: Un poco sobre mí + Materiales + Técnicas */}
+          <div className="md:col-span-7 bg-[#D8C5AE]/65 rounded-xl p-7 md:p-9 shadow-sm flex flex-col justify-between text-[#2B0F08]">
+            <div className="space-y-5">
+              <div>
+                <h2 className="font-normal text-lg md:text-[25px] text-[#2B0F08] mb-2">
+                  Un poco sobre mí...
+                </h2>
+                {isEditingBio ? (
+                  <textarea
+                    rows={3}
+                    value={shortBio}
+                    onChange={(e) => setShortBio(e.target.value)}
+                    className="w-full bg-[#DFCCB6] p-3 rounded text-sm md:text-base text-[#2B0F08] focus:outline-none"
+                  />
+                ) : (
+                  <p className="text-sm md:text-[15.5px] leading-relaxed whitespace-pre-line">
+                    {shortBio}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-3 text-sm md:text-[15.5px]">
+                <p>
+                  <span className="font-semibold">Materiales que trabaja*</span>{' '}
+                  {artisan.materials_text && (
+                    <span className="block text-sm opacity-90">{artisan.materials_text}</span>
+                  )}
                 </p>
-              )}
+                <p>
+                  <span className="font-semibold">Técnicas que utilizás</span>{' '}
+                  {artisan.techniques && (
+                    <span className="block text-sm opacity-90">{artisan.techniques}</span>
+                  )}
+                </p>
+              </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-center gap-4">
+            <div className="mt-6 flex items-center justify-start gap-4">
               {isEditingBio ? (
                 <>
                   <button
@@ -635,9 +650,9 @@ export const ArtisanDashboardPage: React.FC = () => {
                       setIsEditingBio(false);
                       setFeedbackMsg('¡Perfil y descripción guardados con éxito!');
                     }}
-                    className="btn-artesanal-dark px-8 py-1.5 text-sm md:text-base"
+                    className="btn-artesanal-dark text-[#E5C9A3] px-8 py-1.5 text-sm md:text-base"
                   >
-                    Guardar mi perfil
+                    Guardar perfil
                   </button>
                   <button
                     type="button"
@@ -645,7 +660,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                       logout();
                       navigate('/crear-cuenta');
                     }}
-                    className="text-xs text-[#741712] font-semibold underline"
+                    className="text-xs text-[#732714] font-semibold underline"
                   >
                     Cerrar sesión
                   </button>
@@ -654,95 +669,76 @@ export const ArtisanDashboardPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditingBio(true)}
-                  className="btn-artesanal-dark px-8 py-1.5 text-sm md:text-base"
+                  className="btn-artesanal-dark text-[#E5C9A3] px-9 py-1.5 text-sm md:text-base"
                 >
-                  Editar mi perfil
+                  Editar perfil
                 </button>
               )}
             </div>
           </div>
         </div>
 
-        {/* 2. CONTÁ TU HISTORIA */}
-        <div className="bg-[#D6BFA6]/85 rounded-xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-12 items-stretch">
-          <div className="md:col-span-7 p-7 md:p-9">
-            <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E] mb-3">
-              Contá tu historia
+        {/* 2. UN POCO DE MI HISTORIA (Directo sobre el papel kraft) */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-xl">
+            <h2
+              className="font-display-serif text-3xl md:text-[34px] font-normal text-[#5C2014] mb-3"
+              style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+            >
+              Un poco de mi historia
             </h2>
             {isEditingHistory ? (
               <textarea
                 rows={4}
                 value={historyText}
                 onChange={(e) => setHistoryText(e.target.value)}
-                className="w-full bg-[#DFCCB6] p-3 rounded text-sm text-[#3B170E] focus:outline-none"
+                className="w-full bg-[#D8C5AE]/80 p-3 rounded text-sm md:text-[15px] text-[#2B0F08] focus:outline-none"
               />
             ) : (
-              <p className="text-sm md:text-[15px] text-[#3B170E] leading-relaxed whitespace-pre-line">
+              <p className="text-sm md:text-[15.5px] text-[#2B0F08] leading-relaxed whitespace-pre-line">
                 {historyText}
               </p>
             )}
           </div>
 
-          <div className="md:col-span-5 bg-[#865D4E] md:rounded-l-[120px] p-6 relative overflow-hidden flex flex-col items-center justify-center gap-3">
-            {storyImageUrl && (
-              <img
-                src={storyImageUrl}
-                alt="Historia del taller"
-                className="absolute inset-0 w-full h-full object-cover opacity-45"
-              />
+          <div className="shrink-0">
+            {isEditingHistory ? (
+              <button
+                type="button"
+                onClick={async () => {
+                  await updateArtisanProfile(artisan.id, {
+                    history_text: historyText,
+                    story_image_url: storyImageUrl || artisan.story_image_url,
+                  });
+                  setIsEditingHistory(false);
+                  setFeedbackMsg('¡Historia guardada con éxito!');
+                }}
+                className="btn-artesanal-dark text-[#E5C9A3] px-7 py-1.5 text-sm md:text-base"
+              >
+                Guardar descripción
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsEditingHistory(true)}
+                className="btn-artesanal-dark text-[#E5C9A3] px-7 py-1.5 text-sm md:text-base"
+              >
+                Editar descripción
+              </button>
             )}
-
-            <label
-              title="Subir o cambiar imagen de tu historia"
-              className="relative z-10 cursor-pointer flex flex-col items-center group"
-            >
-              <input
-                type="file"
-                accept="image/*"
-                className="sr-only"
-                onChange={(e) => handleStoryImageUpload(e.target.files?.[0])}
-              />
-              <span className="text-6xl font-bold text-[#E6CEB5] group-hover:scale-110 transition-transform select-none drop-shadow">
-                {uploadingStoryImg ? '...' : '+'}
-              </span>
-            </label>
-
-            <div className="relative z-10">
-              {isEditingHistory ? (
-                <button
-                  type="button"
-                  onClick={async () => {
-                    await updateArtisanProfile(artisan.id, {
-                      history_text: historyText,
-                      story_image_url: storyImageUrl || artisan.story_image_url,
-                    });
-                    setIsEditingHistory(false);
-                    setFeedbackMsg('¡Historia guardada con éxito!');
-                  }}
-                  className="btn-artesanal-dark px-6 py-1.5 text-sm"
-                >
-                  Guardar descripción
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setIsEditingHistory(true)}
-                  className="btn-artesanal-dark px-6 py-1.5 text-sm"
-                >
-                  Editar descripción
-                </button>
-              )}
-            </div>
           </div>
         </div>
 
         {/* 3. OPTIMIZÁ TU VIDRIERA DIGITAL */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="max-w-lg">
-            <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E]">
+            <h2
+              className="font-display-serif text-3xl md:text-[34px] font-normal text-[#5C2014]"
+              style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+            >
               Optimizá tu vidriera digital
             </h2>
-            <p className="text-xs md:text-sm text-[#3B170E] mt-1.5 leading-relaxed">
+            <p className="text-sm md:text-[15px] text-[#2B0F08] mt-2 leading-relaxed">
               ¿Querés aprender a promocionar tus piezas de forma práctica y eficiente para
               comunicar su valor cultural? accedé a un curso corto y aprendé esto y mucho
               más.
@@ -751,7 +747,7 @@ export const ArtisanDashboardPage: React.FC = () => {
 
           <Link
             to="/curso"
-            className="btn-artesanal px-10 py-2 text-base md:text-lg shrink-0 text-center"
+            className="btn-artesanal-dark text-[#E5C9A3] px-12 py-2 text-base md:text-lg shrink-0 text-center"
           >
             Ver Curso
           </Link>
@@ -759,7 +755,10 @@ export const ArtisanDashboardPage: React.FC = () => {
 
         {/* 4. COMPARTÍ UNA NUEVA PIEZA */}
         <section className="space-y-4">
-          <h2 className="font-display-serif text-2xl md:text-[32px] font-bold text-[#4A170E]">
+          <h2
+            className="font-display-serif text-3xl md:text-[32px] font-normal text-[#5C2014]"
+            style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+          >
             Compartí una nueva pieza
           </h2>
 
@@ -768,12 +767,12 @@ export const ArtisanDashboardPage: React.FC = () => {
             className="w-44 sm:w-48 cursor-pointer flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1"
           >
             <div className="bg-[#865D4E] w-full aspect-[3/3.3] flex items-center justify-center">
-              <span className="text-6xl font-bold text-[#C8A796] select-none">+</span>
+              <span className="text-6xl font-bold text-[#E5C9A3] select-none">+</span>
             </div>
             <div className="product-card-footer bg-[#DCC7AE] px-4 pt-2 pb-4 flex justify-center">
               <button
                 type="button"
-                className="relative z-10 btn-artesanal-dark px-7 py-1 text-sm"
+                className="relative z-10 btn-artesanal-dark text-[#E5C9A3] px-7 py-1 text-sm"
                 style={{ transform: 'rotate(0deg)' }}
               >
                 Añadir
@@ -782,31 +781,34 @@ export const ArtisanDashboardPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 5. LOS PRODUCTOS QUE COMPARTISTE ▼ */}
+        {/* 5. MI CATÁLOGO ▼ */}
         <section className="space-y-4">
           <button
             type="button"
             onClick={() => setOpenShared((v) => !v)}
-            className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
+            className="w-full bg-[#D8C5AE]/65 hover:bg-[#D8C5AE]/85 rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
           >
-            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
-              Los productos que compartiste
+            <span
+              className="font-display-serif text-2xl md:text-[30px] font-normal text-[#5C2014]"
+              style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+            >
+              Mi catálogo
             </span>
-            <span className="text-[#4A170E] text-xl">{openShared ? '▼' : '▶'}</span>
+            <span className="text-[#5C2014] text-xl">{openShared ? '▼' : '▶'}</span>
           </button>
 
           {openShared && (
             <div className="space-y-4">
               {sharedProducts.length === 0 ? (
-                <div className="bg-[#D6BFA6]/75 rounded-xl p-8 text-center text-sm md:text-base text-[#4A170E]">
+                <div className="bg-[#D8C5AE]/65 rounded-xl p-8 text-center text-sm md:text-base text-[#5C2014]">
                   Todavía no compartiste productos en tu catálogo. Hacé clic en{' '}
                   <strong>Añadir (+)</strong> arriba en{' '}
                   <em>Compartí una nueva pieza</em> para publicar tu primer producto.
                 </div>
               ) : (
                 <>
-                  <p className="text-xs md:text-sm text-[#3B170E] px-1">
-                    Selecciona un producto para eliminarlo o editar su información.
+                  <p className="text-xs md:text-sm text-[#2B0F08] px-1">
+                    Seleccioná un producto para eliminarlo o editar su información.
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -815,7 +817,6 @@ export const ArtisanDashboardPage: React.FC = () => {
                         key={`shared-${prod.id}-${idx}`}
                         product={prod}
                         artisan={artisan}
-                        highlighted={idx === 0}
                         showArtisanName={false}
                         onClickOverride={(p) => openEditForm(p)}
                       />
@@ -832,17 +833,20 @@ export const ArtisanDashboardPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setOpenSold((v) => !v)}
-            className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
+            className="w-full bg-[#D8C5AE]/65 hover:bg-[#D8C5AE]/85 rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
           >
-            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+            <span
+              className="font-display-serif text-2xl md:text-[30px] font-normal text-[#5C2014]"
+              style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+            >
               Los productos que vendiste
             </span>
-            <span className="text-[#4A170E] text-xl">{openSold ? '▼' : '▶'}</span>
+            <span className="text-[#5C2014] text-xl">{openSold ? '▼' : '▶'}</span>
           </button>
 
           {openSold && (
-            <div className="bg-[#D6BFA6]/80 rounded-2xl p-6 md:p-8 shadow-sm overflow-x-auto">
-              <table className="w-full text-left text-sm md:text-[15px] text-[#2B0F08]">
+            <div className="bg-[#D8C5AE]/65 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm overflow-x-auto">
+              <table className="w-full min-w-[520px] text-left text-sm md:text-[15px] text-[#2B0F08]">
                 <thead>
                   <tr className="border-b border-[#8C6E58]/50 font-bold">
                     <th className="pb-3 pr-4">Fecha</th>
@@ -893,17 +897,20 @@ export const ArtisanDashboardPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setOpenBought((v) => !v)}
-            className="w-full bg-[#CDB59C] hover:bg-[#C3A98E] rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
+            className="w-full bg-[#D8C5AE]/65 hover:bg-[#D8C5AE]/85 rounded-xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors"
           >
-            <span className="font-display-serif text-2xl md:text-[30px] font-bold text-[#4A170E]">
+            <span
+              className="font-display-serif text-2xl md:text-[30px] font-normal text-[#5C2014]"
+              style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+            >
               Los productos que compraste
             </span>
-            <span className="text-[#4A170E] text-xl">{openBought ? '▼' : '▶'}</span>
+            <span className="text-[#5C2014] text-xl">{openBought ? '▼' : '▶'}</span>
           </button>
 
           {openBought && (
-            <div className="bg-[#D6BFA6]/80 rounded-2xl p-6 md:p-8 shadow-sm overflow-x-auto">
-              <table className="w-full text-left text-sm md:text-[15px] text-[#2B0F08]">
+            <div className="bg-[#D8C5AE]/65 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm overflow-x-auto">
+              <table className="w-full min-w-[520px] text-left text-sm md:text-[15px] text-[#2B0F08]">
                 <thead>
                   <tr className="border-b border-[#8C6E58]/50 font-bold">
                     <th className="pb-3 pr-4">Fecha</th>
@@ -925,6 +932,6 @@ export const ArtisanDashboardPage: React.FC = () => {
           )}
         </section>
       </div>
-    </div>
+    </div >
   );
 };

@@ -5,7 +5,7 @@ import { MapPin, Clock, Phone, AtSign, Instagram } from 'lucide-react';
 export const PhysicalPointsPage: React.FC = () => {
   return (
     <div
-      className="min-h-screen py-12 md:py-16 px-6 md:px-16 bg-cover bg-center"
+      className="min-h-screen py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-16 bg-cover overflow-x-hidden bg-center"
       style={{
         backgroundColor: '#D3B99C',
         backgroundImage: "url('/assets/ui/fondo-beige-textura.webp')",
@@ -21,18 +21,18 @@ export const PhysicalPointsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
           <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-4">
             <h1
-              className="text-4xl sm:text-5xl md:text-[52px] font-normal text-[#5E2A22] leading-[1.08] tracking-wide"
+              className="text-4xl sm:text-5xl lg:text-[52px] font-normal text-[#5E2A22] leading-[1.08] tracking-wide"
               style={{ fontFamily: '"lubaline", Georgia, serif' }}
             >
               Museo de Artesanías
               <br />
               Tradicionales
             </h1>
-            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed">
               El MAT fue inaugurado el 11 de agosto de 1981, depende del Instituto de Cultura
               de la provincia.
             </p>
-            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed">
               El edificio tiene una historia compleja que data de 1889, pasando por varios
               propietarios hasta que fue adquirido por el Estado en 1977.
             </p>
@@ -57,7 +57,7 @@ export const PhysicalPointsPage: React.FC = () => {
             />
           </div>
 
-          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-3 text-sm md:text-[20px] text-[#33130C] leading-relaxed order-1 md:order-2">
+          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-3 text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed order-1 md:order-2">
             <p>
               Declarado <strong>Monumento Histórico</strong> en 1989, es uno de los pocos
               ejemplos arquitectónicos coloniales de la ciudad. La casa, construida en 1806
@@ -73,7 +73,7 @@ export const PhysicalPointsPage: React.FC = () => {
 
         {/* Bloque 3: Actividades y talleres (Izq) | pf-museo-3 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-3 text-sm md:text-[20px] text-[#33130C] leading-relaxed">
+          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-3 text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed">
             <p>
               • Posee exhibiciones permanentes y temporales de artesanías tradicionales
             </p>
@@ -110,7 +110,7 @@ export const PhysicalPointsPage: React.FC = () => {
 
           <div className="md:col-span-6 pl-0 md:pl-7 py-8 order-1 md:order-2">
             <p
-              className="italic font-normal text-2xl sm:text-3xl md:text-[43px] text-[#8A1912] tracking-[0.02em]"
+              className="italic font-normal text-2xl sm:text-3xl md:text-4xl lg:text-[43px] text-[#8A1912] tracking-[0.02em]"
               style={{
                 fontFamily: '"broadsheet", Georgia, serif',
                 lineHeight: 1.65
@@ -129,7 +129,7 @@ export const PhysicalPointsPage: React.FC = () => {
 
         {/* Bloque 5: Datos de contacto y horarios del MAT (Izq) | pf-museo-5 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm md:text-[20px] text-[#33130C]">
+          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C]">
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#4A170E] mt-1 shrink-0" />
               <div>
@@ -150,7 +150,7 @@ export const PhysicalPointsPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0 break-words">
               <Phone className="w-4 h-4 text-[#4A170E] shrink-0" />
               <span>3794292608</span>
             </div>
@@ -160,9 +160,9 @@ export const PhysicalPointsPage: React.FC = () => {
               <span>museodeartesaniastradicionales@gmail.com</span>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0 break-words">
               <Instagram className="w-4 h-4 text-[#4A170E] shrink-0" />
-              <span>museodeartesaniastradicionales</span>
+              <span className="break-all">museodeartesaniastradicionales</span>
             </div>
           </div>
 
@@ -189,16 +189,16 @@ export const PhysicalPointsPage: React.FC = () => {
 
           <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-4 order-1 md:order-2">
             <h2
-              className="text-4xl sm:text-5xl md:text-[52px] font-normal text-[#5E2A22] leading-[1.08] tracking-wide"
+              className="text-4xl sm:text-5xl lg:text-[52px] font-normal text-[#5E2A22] leading-[1.08] tracking-wide"
               style={{ fontFamily: '"lubaline", Georgia, serif' }}
             >
               Feria Ita Bera
             </h2>
-            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed">
               La feria conocida como Espacio Itá Berá es un paseo de artesanos y
               emprendedores correntinos.
             </p>
-            <p className="text-sm md:text-[20px] text-[#33130C] leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed">
               El proyecto nació como un colectivo multimarca liderado por mujeres
               emprendedoras para promover el diseño local, la sustentabilidad y el turismo.
             </p>
@@ -207,7 +207,7 @@ export const PhysicalPointsPage: React.FC = () => {
 
         {/* Bloque 7: ¿Qué vas a encontrar? (Izq) | pf-feria-2 (Der) */}
         <div className="grid grid-cols-1 md:grid-cols-12 items-center">
-          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm md:text-[20px] text-[#33130C] leading-relaxed">
+          <div className="md:col-span-6 pr-0 md:pr-8 py-6 space-y-2.5 text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] leading-relaxed">
             <p className="font-semibold">¿Qué vas a encontrar?</p>
             <p>• Productos artesanales y regionales de Corrientes.</p>
             <p>• Souvenirs, regalería personalizada y decoración.</p>
@@ -236,7 +236,7 @@ export const PhysicalPointsPage: React.FC = () => {
             />
           </div>
 
-          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-2.5 text-sm md:text-[20px] text-[#33130C] order-1 md:order-2">
+          <div className="md:col-span-6 pl-0 md:pl-10 py-6 space-y-2.5 text-sm sm:text-base md:text-lg lg:text-[20px] text-[#33130C] order-1 md:order-2">
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#4A170E] mt-1 shrink-0" />
               <div>
@@ -255,17 +255,17 @@ export const PhysicalPointsPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0 break-words">
               <Phone className="w-4 h-4 text-[#4A170E] shrink-0" />
               <span>3794292608</span>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0 break-words">
               <AtSign className="w-4 h-4 text-[#4A170E] shrink-0" />
-              <span>Feriaitabera@gmail.com</span>
+              <span className="break-all">Feriaitabera@gmail.com</span>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0 break-words">
               <Instagram className="w-4 h-4 text-[#4A170E] shrink-0" />
               <span>Espacioitabera</span>
             </div>

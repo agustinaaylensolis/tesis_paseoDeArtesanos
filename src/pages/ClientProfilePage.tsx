@@ -76,10 +76,10 @@ export const ClientProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-6 md:px-16">
+    <div className="bg-kraft-texture min-h-screen py-12 md:py-16 px-4 sm:px-6 md:px-16">
       <div className="max-w-[960px] mx-auto space-y-10">
         {/* 1. TARJETA SUPERIOR MARRÓN DEL CLIENTE (Andrés Navarro) */}
-        <div className="max-w-[680px] mx-auto bg-[#865D4E] text-[#F5E9D9] rounded-xl p-8 md:p-10 shadow-md flex flex-col sm:flex-row items-center justify-center gap-8">
+        <div className="max-w-[680px] mx-auto bg-[#865D4E] text-[#F5E9D9] rounded-xl p-6 sm:p-8 md:p-10 shadow-md flex flex-col sm:flex-row items-center justify-center gap-8">
           <label className="w-32 h-32 rounded-full bg-[#5B2220] flex items-center justify-center text-5xl font-bold text-[#C8A796] shrink-0 shadow-inner cursor-pointer overflow-hidden relative group">
             <input
               type="file"
@@ -191,8 +191,8 @@ export const ClientProfilePage: React.FC = () => {
           </button>
 
           {openBought && (
-            <div className="bg-[#D6BFA6]/80 rounded-2xl p-6 md:p-8 shadow-sm overflow-x-auto">
-              <table className="w-full text-left text-sm md:text-[15px] text-[#2B0F08]">
+            <div className="bg-[#D6BFA6]/80 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm overflow-x-auto">
+              <table className="w-full min-w-[520px] text-left text-sm md:text-[15px] text-[#2B0F08]">
                 <thead>
                   <tr className="border-b border-[#8C6E58]/50 font-bold">
                     <th className="pb-3 pr-4">Fecha</th>

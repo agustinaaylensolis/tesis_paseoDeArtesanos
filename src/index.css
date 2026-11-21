@@ -114,3 +114,10 @@
   z-index: 1;
 }
 
+
+/* Evita scroll horizontal accidental en móviles */
+html,
+body {
+  overflow-x: hidden;
+}
+

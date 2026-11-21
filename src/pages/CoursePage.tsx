@@ -12,8 +12,8 @@ export const CoursePage: React.FC = () => {
   };
 
   return (
-    <div className="bg-course-editorial min-h-screen py-12 md:py-16 px-6 md:px-16 text-[#23120B]">
-      <div className="max-w-[1080px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+    <div className="bg-course-editorial min-h-screen py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-16 text-[#23120B] overflow-x-hidden">
+      <div className="max-w-[1080px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
         {/* COLUMNA PRINCIPAL (8 cols) */}
         <div className="lg:col-span-8">
           {/* ================= VISTA 0: ÍNDICE DEL CURSO ================= */}
@@ -26,7 +26,7 @@ export const CoursePage: React.FC = () => {
               {/* Tarjeta U1 */}
               <div
                 onClick={() => selectUnit(1)}
-                className="bg-[#D5C9B8] rounded-xl p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
+                className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
                   <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
@@ -34,7 +34,7 @@ export const CoursePage: React.FC = () => {
                   </span>
                   <h2 className="text-lg md:text-xl font-bold">Unidad 1: Presentación</h2>
                 </div>
-                <div className="pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
+                <div className="pl-0 sm:pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
                   <p className="font-bold">Conocé sobre el curso | Duración 10 min.</p>
                   <p>¿Qué es Corriente artesanal?</p>
                   <p>¿Qué se puede aprender del curso?</p>
@@ -45,7 +45,7 @@ export const CoursePage: React.FC = () => {
               {/* Tarjeta U2 */}
               <div
                 onClick={() => selectUnit(2)}
-                className="bg-[#D5C9B8] rounded-xl p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
+                className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
                   <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
@@ -55,7 +55,7 @@ export const CoursePage: React.FC = () => {
                     Unidad 2: Comunicación efectiva
                   </h2>
                 </div>
-                <div className="pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
+                <div className="pl-0 sm:pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
                   <p className="font-bold">
                     Contar historias que vendan | Duración 20 min.
                   </p>
@@ -67,7 +67,7 @@ export const CoursePage: React.FC = () => {
               {/* Tarjeta U3 */}
               <div
                 onClick={() => selectUnit(3)}
-                className="bg-[#D5C9B8] rounded-xl p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
+                className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
                   <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
@@ -77,7 +77,7 @@ export const CoursePage: React.FC = () => {
                     Unidad 3: Introducción a la fotografía
                   </h2>
                 </div>
-                <div className="pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
+                <div className="pl-0 sm:pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
                   <p className="font-bold">
                     Como fotografiar tus piezas | Duración 25 min.
                   </p>
@@ -91,7 +91,7 @@ export const CoursePage: React.FC = () => {
               {/* Tarjeta U4 */}
               <div
                 onClick={() => selectUnit(4)}
-                className="bg-[#D5C9B8] rounded-xl p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
+                className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
                   <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
@@ -101,7 +101,7 @@ export const CoursePage: React.FC = () => {
                     Unidad 4: Optimizar la vidriera digital
                   </h2>
                 </div>
-                <div className="pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
+                <div className="pl-0 sm:pl-11 pt-3 space-y-1.5 text-sm md:text-[15px]">
                   <p className="font-bold">
                     Tu vidriera digital lista | Duración 15 minutos
                   </p>
@@ -151,7 +151,7 @@ export const CoursePage: React.FC = () => {
                 </h2>
 
                 <div
-                  className="text-4xl md:text-5xl text-[#33130C] py-2 select-none leading-none"
+                  className="text-3xl sm:text-4xl md:text-5xl text-[#33130C] py-2 break-words select-none leading-none"
                   style={{
                     fontFamily:
                       '"kit-sans", "KitSans-Light", "Cormorant Garamond", Georgia, serif',
@@ -228,11 +228,11 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-6 flex items-center justify-between max-w-lg">
+              <div className="pt-6 flex items-center justify-between gap-3 max-w-lg">
                 <button
                   type="button"
                   onClick={() => selectUnit(0)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Volver al
                   <br />
@@ -241,7 +241,7 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(2)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Siguiente
                   <br />
@@ -297,7 +297,7 @@ export const CoursePage: React.FC = () => {
                   ámbitos de la comunicación.
                 </p>
 
-                <div className="bg-[#DFD5C6] border border-[#BFB29F] rounded-xl p-6 my-4 text-center shadow-sm space-y-3">
+                <div className="bg-[#DFD5C6] border border-[#BFB29F] rounded-xl p-4 sm:p-6 my-4 text-center shadow-sm space-y-3">
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium">
                     <span>
                       Comunicar enfocados en los
@@ -342,22 +342,22 @@ export const CoursePage: React.FC = () => {
                 </p>
 
                 <div className="space-y-4 pt-2 max-w-lg">
-                  <div className="grid grid-cols-12 gap-4 items-center">
-                    <span className="col-span-4 font-bold text-base md:text-lg">Conocer</span>
-                    <span className="col-span-8 text-xs md:text-sm">
+                  <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                    <span className="col-span-12 sm:col-span-4 font-bold text-base md:text-lg">Conocer</span>
+                    <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
                       Refiere al primer contacto, parte de un desconocimiento casi total
                     </span>
                   </div>
-                  <div className="grid grid-cols-12 gap-4 items-center">
-                    <span className="col-span-4 font-bold text-base md:text-lg">Conectar</span>
-                    <span className="col-span-8 text-xs md:text-sm">
+                  <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                    <span className="col-span-12 sm:col-span-4 font-bold text-base md:text-lg">Conectar</span>
+                    <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
                       Se busca lograrlo a través de la transmisión de su proceso, de los
                       conocimientos heredados, la relación con nuestra historia local
                     </span>
                   </div>
-                  <div className="grid grid-cols-12 gap-4 items-center">
-                    <span className="col-span-4 font-bold text-base md:text-lg">Valorar</span>
-                    <span className="col-span-8 text-xs md:text-sm">
+                  <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                    <span className="col-span-12 sm:col-span-4 font-bold text-base md:text-lg">Valorar</span>
+                    <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
                       Una vez reconocido la identidad cultural que contiene y la labor que hay
                       detrás se puede llegar a la apreciación económica del objeto
                     </span>
@@ -433,11 +433,11 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-6 flex items-center justify-between max-w-lg">
+              <div className="pt-6 flex items-center justify-between gap-3 max-w-lg">
                 <button
                   type="button"
                   onClick={() => selectUnit(1)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Unidad
                   <br />
@@ -446,7 +446,7 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(3)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Siguiente
                   <br />
@@ -646,7 +646,7 @@ export const CoursePage: React.FC = () => {
                   escena vas a capturar en una fotografía.
                 </p>
 
-                <div className="flex flex-wrap items-end justify-around gap-6 py-4">
+                <div className="flex flex-wrap items-end justify-around gap-4 sm:gap-6 py-4">
                   <div className="flex flex-col items-center gap-2">
                     <span className="font-bold">1:1</span>
                     <div className="w-20 h-20 bg-[#D5C9B8] border border-[#5B493E]" />
@@ -680,7 +680,7 @@ export const CoursePage: React.FC = () => {
                   se clasifican en:
                 </p>
 
-                <div className="bg-[#D5C9B8] rounded-xl p-6 flex flex-col sm:flex-row items-center justify-around gap-6">
+                <div className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-around gap-6">
                   <img
                     src="/assets/course/cesto-angulos.jpg"
                     alt="Ángulos de cámara"
@@ -717,13 +717,13 @@ export const CoursePage: React.FC = () => {
                   transmitir
                 </p>
 
-                <div className="grid grid-cols-3 gap-3 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                   <div>
                     <span className="block text-xs font-semibold mb-1">Picado</span>
                     <img
                       src="/assets/course/angulo-picado.jpg"
                       alt="Ángulo Picado"
-                      className="w-full h-36 object-cover rounded"
+                      className="w-full h-48 sm:h-36 object-cover rounded"
                     />
                   </div>
                   <div>
@@ -731,7 +731,7 @@ export const CoursePage: React.FC = () => {
                     <img
                       src="/assets/course/angulo-normal.jpg"
                       alt="Ángulo Normal"
-                      className="w-full h-36 object-cover rounded"
+                      className="w-full h-48 sm:h-36 object-cover rounded"
                     />
                   </div>
                   <div>
@@ -739,7 +739,7 @@ export const CoursePage: React.FC = () => {
                     <img
                       src="/assets/course/angulo-cenital.jpg"
                       alt="Ángulo Cenital"
-                      className="w-full h-36 object-cover rounded"
+                      className="w-full h-48 sm:h-36 object-cover rounded"
                     />
                   </div>
                 </div>
@@ -765,11 +765,11 @@ export const CoursePage: React.FC = () => {
                 </ol>
               </div>
 
-              <div className="pt-6 flex items-center justify-between max-w-lg">
+              <div className="pt-6 flex items-center justify-between gap-3 max-w-lg">
                 <button
                   type="button"
                   onClick={() => selectUnit(2)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Unidad
                   <br />
@@ -778,7 +778,7 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(4)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Siguiente
                   <br />
@@ -844,7 +844,7 @@ export const CoursePage: React.FC = () => {
                 </p>
 
                 {/* Diagrama interactivo 1: Tarjeta de Perfil en HTML nítido */}
-                <div className="bg-kraft-texture rounded-xl p-6 md:p-8 shadow-sm max-w-xl">
+                <div className="bg-kraft-texture rounded-xl p-4 sm:p-6 md:p-8 shadow-sm max-w-xl">
                   <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch pt-5">
                     <div className="sm:col-span-6 relative bg-[#865D4E] text-[#F5E9D9] rounded-lg px-5 pt-11 pb-5 shadow">
                       <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-black text-white flex items-center justify-center text-2xl font-bold shadow">
@@ -883,7 +883,7 @@ export const CoursePage: React.FC = () => {
                 </p>
 
                 {/* Diagrama interactivo 2: Un poco de mi historia en HTML nítido */}
-                <div className="bg-kraft-texture rounded-xl p-6 md:p-7 shadow-sm max-w-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="bg-kraft-texture rounded-xl p-4 sm:p-6 md:p-7 shadow-sm max-w-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-1.5 max-w-xs">
                     <h3 className="font-display-serif text-lg font-bold text-[#4A170E]">
                       Un poco de mi historia
@@ -962,7 +962,7 @@ export const CoursePage: React.FC = () => {
                   al momento de cargar un producto podés sumar estos datos como ficha técnica:
                 </p>
 
-                <div className="grid grid-cols-2 gap-6 max-w-md pt-1 text-xs md:text-sm">
+                <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-md pt-1 text-xs md:text-sm">
                   <div className="space-y-1.5">
                     <p className="font-bold">Datos genéricos</p>
                     <p>Nombre</p>
@@ -980,9 +980,9 @@ export const CoursePage: React.FC = () => {
                 </div>
 
                 {/* Diagrama HTML nítido de la ficha de carga de pieza */}
-                <div className="bg-kraft-texture rounded-xl p-6 shadow-sm max-w-xl">
-                  <div className="bg-[#D6BFA6]/90 rounded-xl p-5 grid grid-cols-12 gap-5 items-start">
-                    <div className="col-span-7 space-y-2 text-[11px] text-[#2B0F08]">
+                <div className="bg-kraft-texture rounded-xl p-4 sm:p-6 shadow-sm max-w-xl">
+                  <div className="bg-[#D6BFA6]/90 rounded-xl p-4 sm:p-5 grid grid-cols-12 gap-4 sm:gap-5 items-start">
+                    <div className="col-span-12 sm:col-span-7 space-y-2 text-[11px] text-[#2B0F08]">
                       <div className="border-l-2 border-[#741712] pl-2.5 space-y-1">
                         <p className="text-[10px] font-bold uppercase text-[#741712]">
                           Datos genéricos
@@ -1019,7 +1019,7 @@ export const CoursePage: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="col-span-5 space-y-1.5">
+                    <div className="col-span-12 sm:col-span-5 space-y-1.5 max-w-[200px] sm:max-w-none">
                       <p className="text-[11px] font-medium">Añadir fotografías</p>
                       <div className="bg-black aspect-[3/3.6] flex items-center justify-center text-[#C8B29B] text-4xl font-bold">
                         +
@@ -1046,11 +1046,11 @@ export const CoursePage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-6 flex items-center justify-between max-w-lg">
+              <div className="pt-6 flex items-center justify-between gap-3 max-w-lg">
                 <button
                   type="button"
                   onClick={() => selectUnit(3)}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Unidad
                   <br />
@@ -1059,7 +1059,7 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => navigate('/mi-perfil-artesano')}
-                  className="btn-artesanal px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
                 >
                   Finalizar
                   <br />

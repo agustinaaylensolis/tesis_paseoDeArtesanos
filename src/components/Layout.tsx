@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, AtSign, Instagram, MapPin, User } from 'lucide-react';
+import { Phone, AtSign, Instagram, MapPin, User, Menu, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export const BrandLogo: React.FC<{ className?: string; size?: 'sm' | 'md' | 'lg' }> = ({
@@ -57,6 +57,9 @@ export const Header: React.FC = () => {
       : '/crear-cuenta';
 
   // En las pantallas de registro/crear cuenta (o cuando el usuario es guest) se muestra "Crear cuenta"; cuando está logueado como cliente o artesano se muestra el icono de perfil tal como en las capturas
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => setMenuOpen(false), [location.pathname]);
+
   const isAuthFormPage =
     location.pathname === '/crear-cuenta' ||
     location.pathname === '/registro-artesano' ||
@@ -64,7 +67,7 @@ export const Header: React.FC = () => {
 
   return (
     <header className="bg-[#340E07] text-[#E6CEAC] sticky top-0 z-50 shadow-md border-b border-[#4C1910]">
-      <div className="max-w-[1360px] mx-auto px-6 md:px-14 h-20 flex items-center justify-between">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 md:px-14 h-16 sm:h-20 flex items-center justify-between relative">
         <Link
           to="/"
           className="hover:opacity-90 transition-opacity"
@@ -73,7 +76,19 @@ export const Header: React.FC = () => {
           <BrandLogo size="md" />
         </Link>
 
-        <nav className="flex items-center gap-6 md:gap-11 text-lg md:text-[22px] font-display-serif tracking-wide">
+        <button
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? 'Cerrar men�' : 'Abrir men�'}
+          aria-expanded={menuOpen}
+          className="md:hidden p-2 rounded hover:bg-[#4E180E] transition-colors"
+        >
+          {menuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+        </button>
+
+        <nav
+          className={`${menuOpen ? 'flex' : 'hidden'} md:flex absolute md:static top-full left-0 right-0 flex-col md:flex-row items-start md:items-center gap-5 md:gap-11 px-6 py-5 md:p-0 bg-[#340E07] md:bg-transparent border-b border-[#4C1910] md:border-0 shadow-md md:shadow-none text-xl md:text-[22px] font-display-serif tracking-wide`}
+        >
           <Link
             to="/puntos-fisicos"
             className={`hover:text-white transition-colors ${
@@ -136,7 +151,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="relative bg-transparent pt-10 overflow-hidden">
       <div
-        className="text-[#E6CEAC] pt-20 md:pt-28 pb-12 px-6 md:px-16 relative"
+        className="text-[#E6CEAC] pt-16 md:pt-28 pb-10 md:pb-12 px-4 sm:px-6 md:px-16 relative"
         style={{
           backgroundImage: "url('/assets/ui/foooooter.webp')",
           // Recorta los márgenes blancos de la imagen para que llegue de borde a borde
@@ -188,7 +203,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="md:col-span-7 flex flex-col gap-3.5 text-base md:text-lg text-[#EAD5B8] md:pl-12">
+          <div className="md:col-span-7 flex flex-col gap-3.5 text-sm sm:text-base md:text-lg min-w-0 text-[#EAD5B8] md:pl-12">
             <a
               href="https://wa.me/5493794880175"
               target="_blank"

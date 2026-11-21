@@ -156,19 +156,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
   const [loading, setLoading] = useState<boolean>(true);
 
+  // El rol se guarda por sesión del navegador: en cada visita nueva el usuario arranca
+  // como invitado (el icono de perfil lleva a "Crear cuenta") y, tras registrarse o
+  // ingresar, se redirige al perfil de cliente o artesano según corresponda.
   const [userRole, setUserRoleState] = useState<UserRole>(() => {
     try {
-      const saved = localStorage.getItem('ca_user_role') as UserRole | null;
-      return saved || 'cliente';
+      localStorage.removeItem('ca_user_role');
+      const saved = sessionStorage.getItem('ca_user_role') as UserRole | null;
+      return saved || 'guest';
     } catch {
-      return 'cliente';
+      return 'guest';
     }
   });
 
   const setUserRole = (role: UserRole) => {
     setUserRoleState(role);
     try {
-      localStorage.setItem('ca_user_role', role);
+      sessionStorage.setItem('ca_user_role', role);
     } catch {}
   };
 

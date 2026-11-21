@@ -35,7 +35,7 @@ export const ArtisansPage: React.FC = () => {
   }, [filteredArtisans, selectedMaterialId, searchQuery]);
 
   return (
-    <div className="bg-kraft-texture min-h-screen py-10 md:py-14 px-6 md:px-16">
+    <div className="bg-kraft-texture min-h-screen py-8 sm:py-10 md:py-14 px-4 sm:px-6 md:px-16">
       <div className="max-w-[1080px] mx-auto">
         {/* Cabecera: Título + Buscador */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -43,7 +43,7 @@ export const ArtisansPage: React.FC = () => {
             Artesanos Tradicionales
           </h1>
 
-          <div className="flex items-center h-9 w-full md:w-64 shadow-sm">
+          <div className="flex items-center h-9 w-full md:w-64 shrink-0 shadow-sm">
             <div className="bg-[#3D1E14] text-white h-full px-2.5 flex items-center justify-center">
               <Search className="w-4 h-4" />
             </div>
@@ -65,7 +65,7 @@ export const ArtisansPage: React.FC = () => {
         />
 
         {selectedMaterialId !== null && (
-          <div className="flex items-center justify-between bg-[#DFCBB2]/80 px-4 py-2 rounded mb-8 text-sm">
+          <div className="flex items-center justify-between gap-3 flex-wrap bg-[#DFCBB2]/80 px-4 py-2 rounded mb-8 text-sm">
             <span>
               Filtrando artesanos por:{' '}
               <strong>
@@ -83,11 +83,11 @@ export const ArtisansPage: React.FC = () => {
         )}
 
         {/* Grilla 3x3 con avatares circulares superpuestos */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-16 mt-16 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-16 mt-16 pt-4">
           {displayArtisans.map((artisan) => (
             <div
               key={artisan.id}
-              className="relative bg-[#D6BFA6]/85 rounded-xl px-6 pt-16 pb-6 shadow-sm flex flex-col justify-between"
+              className="relative bg-[#D6BFA6]/85 rounded-xl px-4 sm:px-6 pt-16 pb-6 shadow-sm flex flex-col justify-between"
             >
               {/* Avatar circular superpuesto */}
               <div className="absolute -top-11 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden shadow-md bg-black border-2 border-[#C8AE93]">

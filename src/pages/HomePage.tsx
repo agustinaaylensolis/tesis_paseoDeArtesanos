@@ -41,14 +41,10 @@ export const HomePage: React.FC = () => {
 
   return (
     <div
-      className="w-full overflow-x-hidden bg-no-repeat bg-top bg-[#D3B99C]"
-      style={{
-        backgroundImage: "url('/assets/ui/fondo-landing-unido.webp')",
-        backgroundSize: '100% auto',
-      }}
+      className="w-full overflow-x-hidden bg-no-repeat bg-top bg-[#D3B99C] bg-[url('/assets/ui/fondo-beige-textura.webp')] bg-[length:100%_auto] bg-repeat-y md:bg-no-repeat md:bg-[url('/assets/ui/fondo-landing-unido.webp')]"
     >
       {/* 1. HERO SECTION — Calibrado exactamente a la zona roja (0..2280 de 1921x6522) */}
-      <section className="relative text-[#E6A34B] md:aspect-[1921/2280] flex flex-col justify-between pt-14 md:pt-[8vw] pb-16 md:pb-[10vw] px-6 md:px-[13.5vw] overflow-hidden">
+      <section className="relative text-[#E6A34B] bg-[#3A0F08] bg-[url('/assets/ui/fondo-bordo-textura.webp')] bg-cover md:bg-none md:bg-transparent md:aspect-[1921/2280] flex flex-col justify-between pt-10 sm:pt-14 md:pt-[8vw] pb-12 sm:pb-16 md:pb-[10vw] px-4 sm:px-6 md:px-[13.5vw] overflow-hidden">
         {/* Guarda oficial de cruz andina/guaraní en el lateral derecho (coordenadas exactas x=1374..1730, y=48..2174 en 1921x2280) */}
         <div
           className="hidden sm:block absolute pointer-events-none select-none"
@@ -74,7 +70,7 @@ export const HomePage: React.FC = () => {
         {/* Bloque 1: Título PASEO DE ARTESANOS DIGITAL */}
         <div className="relative z-10">
           <h1
-            className="text-6xl sm:text-6xl md:text-[8.5vw] font-normal text-[#E49B3E] leading-[1.2] tracking-[0.04em]"
+            className="text-5xl sm:text-6xl md:text-[8.5vw] font-normal text-[#E49B3E] leading-[1.2] tracking-[0.04em]"
             style={{
               fontFamily: '"lubaline", Georgia, serif',
             }}
@@ -130,7 +126,7 @@ export const HomePage: React.FC = () => {
 
         {/* Bloque 3: Lema inferior en cursiva */}
         <div className="relative z-10">
-          <p className="italic text-4xl sm:text-5xl md:text-[4vw] text-[#EED9BF] leading-[2]"
+          <p className="italic text-2xl sm:text-4xl md:text-[4vw] text-[#EED9BF] leading-[1.6] sm:leading-[2]"
             style={{ fontFamily: '"broadsheet", Georgia, serif' }}>
             Revaloricemos juntos la
             <br />
@@ -140,7 +136,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 2. FRANJA AMARILLA MOSTAZA — Calibrada exactamente a (2280..2690 de 1921x6522) */}
-      <section className="relative md:aspect-[1921/410] flex items-center py-10 md:py-0 px-6 md:px-[14vw]">
+      <section className="relative bg-[#E59838] md:bg-transparent md:aspect-[1921/410] flex items-center py-10 md:py-0 px-4 sm:px-6 md:px-[14vw]">
         {/* Media cruz andina oficial */}
         <img
           src="/assets/ui/cruz-andina-izq-crop.png"
@@ -157,7 +153,7 @@ export const HomePage: React.FC = () => {
         <div className="w-full z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Bloque de texto: más grande y sin max-w-lg que lo corte en escritorio */}
           <div className="max-w-lg md:max-w-[44vw]">
-            <h2 className="font-display-serif text-5xl sm:text-5xl md:text-[3.1vw] font-bold text-[#4A140C] leading-tight">
+            <h2 className="font-display-serif text-3xl sm:text-5xl md:text-[3.1vw] font-bold text-[#4A140C] leading-tight">
               ¿Sos artesano tradicional?
             </h2>
             <p className="font-serif italic text-base md:text-[1.55vw] text-[#4A140C] mt-5 font-semibold">
@@ -179,7 +175,7 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/registro-artesano"
-              className="btn-artesanal md:absolute md:right-[20vw] md:top-[11.5vw] z-10 px-6 md:px-[2.2vw] py-2.5 md:py-[1.15vw] text-sm md:text-[1.85vw] uppercase tracking-[0.06em] font-bold"
+              className="btn-artesanal md:absolute md:right-[20vw] md:top-[11.5vw] z-10 px-4 sm:px-6 md:px-[2.2vw] py-2.5 md:py-[1.15vw] text-sm md:text-[1.85vw] uppercase tracking-[0.06em] font-bold"
             >
               ¡REGISTRATE!
             </Link>
@@ -187,7 +183,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
       {/* 3. ARCO CURVO MARRÓN OSCURO — Calibrado exactamente a (2690..2945 de 1921x6522) */}
-      <section className="relative md:aspect-[1921/255] flex items-center py-6 md:py-0 px-6 md:px-[13.5vw]">
+      <section className="relative bg-[#2E0805] rounded-b-[50%_40px] md:rounded-none md:bg-transparent md:aspect-[1921/255] flex items-center py-6 md:py-0 px-4 sm:px-6 md:px-[13.5vw]">
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-6 items-center justify-items-center text-[#F3E3CE] md:-mt-[1.4vw]">
           <Link
             to="/artesanos"
@@ -196,7 +192,7 @@ export const HomePage: React.FC = () => {
             <img
               src="/assets/ui/icon-artesanos-crop.png"
               alt="Artesanos"
-              className="w-28 h-28 md:w-[5vw] md:h-[4.7vw] object-contain shrink-0"
+              className="w-20 h-20 sm:w-28 sm:h-28 md:w-[5vw] md:h-[4.7vw] object-contain shrink-0"
             />
             <div>
               <div className="font-display-serif text-2xl md:text-[3vw] font-bold text-[#E59849] leading-none">
@@ -214,7 +210,7 @@ export const HomePage: React.FC = () => {
             <img
               src="/assets/ui/icon-estrella-beige-crop.png"
               alt="Diseños exclusivos"
-              className="w-28 h-28 md:w-[5vw] md:h-[4.7vw] object-contain shrink-0"
+              className="w-20 h-20 sm:w-28 sm:h-28 md:w-[5vw] md:h-[4.7vw] object-contain shrink-0"
             />
             <div>
               <div className="font-display-serif text-2xl md:text-[3vw] font-bold text-[#E59849] leading-none">
@@ -235,7 +231,7 @@ export const HomePage: React.FC = () => {
             <img
               src="/assets/ui/icon-bolsa-crop.png"
               alt="Productos"
-              className="w-28 h-28 md:w-[5vw] md:h-[4.7vw] object-contain shrink-0"
+              className="w-20 h-20 sm:w-28 sm:h-28 md:w-[5vw] md:h-[4.7vw] object-contain shrink-0"
             />
             <div>
               <div className="font-display-serif text-2xl md:text-[3vw] font-bold text-[#E59849] leading-none">
@@ -247,7 +243,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
       {/* 4. CUERPO BEIGE TEXTURIZADO — Empieza exactamente debajo del arco marrón (y >= 2945) */}
-      <div className="pt-8 md:pt-[2.8vw] pb-16 px-6 md:px-[13.5vw]">
+      <div className="pt-8 md:pt-[2.8vw] pb-16 px-4 sm:px-6 md:px-[13.5vw]">
         <section className="w-full mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 md:mb-[2.4vw]">
             <h2
@@ -307,13 +303,13 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* 7 Columnas Verticales de Materiales */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-1.5 md:gap-[0.65vw] mt-4 md:-mt-[3.4vw] relative z-10">
+          <div className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-7 gap-1.5 md:gap-[0.65vw] mt-4 md:-mt-[3.4vw] relative z-10 pb-2 md:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
             {materials.map((mat, idx) => (
               <Link
                 key={mat.id}
                 to={`/catalogo?material=${mat.id}`}
                 title={`Explorar ${mat.name}`}
-                className="group relative flex flex-col items-center justify-end overflow-hidden hover:brightness-110 transition-all"
+                className="group relative flex flex-col items-center justify-end overflow-hidden hover:brightness-110 transition-all shrink-0 w-[40%] sm:w-[24%] md:w-auto snap-start"
               >
                 <img
                   src={`/assets/ui/home-mat-${idx + 1}-crop.png`}
