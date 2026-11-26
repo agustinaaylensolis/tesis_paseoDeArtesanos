@@ -116,13 +116,11 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(1)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-9 py-2.5 text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_primer_unidad.svg"
-                    alt="Ir a la primer unidad"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Ir a la
+                  <br />
+                  primer unidad
                 </button>
               </div>
 
@@ -256,24 +254,20 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(0)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_inicio.svg"
-                    alt="Volver al inicio"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Volver al
+                  <br />
+                  inicio
                 </button>
                 <button
                   type="button"
                   onClick={() => selectUnit(2)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_siguiente_unidad.svg"
-                    alt="Siguiente unidad"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Siguiente
+                  <br />
+                  unidad
                 </button>
               </div>
             </div>
@@ -453,24 +447,20 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(1)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_unidad_anterior.svg"
-                    alt="Unidad anterior"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Unidad
+                  <br />
+                  anterior
                 </button>
                 <button
                   type="button"
                   onClick={() => selectUnit(3)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_siguiente_unidad.svg"
-                    alt="Siguiente unidad"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Siguiente
+                  <br />
+                  unidad
                 </button>
               </div>
             </div>
@@ -780,24 +770,20 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(2)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_unidad_anterior.svg"
-                    alt="Unidad anterior"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Unidad
+                  <br />
+                  anterior
                 </button>
                 <button
                   type="button"
                   onClick={() => selectUnit(4)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_siguiente_unidad.svg"
-                    alt="Siguiente unidad"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Siguiente
+                  <br />
+                  unidad
                 </button>
               </div>
             </div>
@@ -1075,24 +1061,20 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(3)}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_unidad_anterior.svg"
-                    alt="Unidad anterior"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Unidad
+                  <br />
+                  anterior
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate('/mi-perfil-artesano')}
-                  className="hover:scale-105 transition-transform focus:outline-none"
+                  className="btn-ui-rojo px-8 py-2.5 text-sm md:text-base leading-tight text-center shadow-md"
                 >
-                  <img
-                    src="/assets/ui/btn_finalizar.svg"
-                    alt="Finalizar el curso"
-                    className="h-20 sm:h-24 w-auto object-contain"
-                  />
+                  Finalizar
+                  <br />
+                  el curso
                 </button>
               </div>
             </div>
