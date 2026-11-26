@@ -95,7 +95,7 @@ export const CatalogPage: React.FC = () => {
             style={{ fontFamily: '"broadsheet", Georgia, serif' }}
           >
             {selectedMaterial
-              ? 'Catálogo de Artesanías Tradicionales'
+              ? '¡Conocé las artesanías tradicionales!'
               : '¡Conocé las artesanías tradicionales!'}
           </h1>
 
@@ -113,6 +113,7 @@ export const CatalogPage: React.FC = () => {
           </div>
         </div>
 
+
         {/* Selector tipo píldora Utilitario / Decorativo + Píldora Diseños Exclusivos */}
         <div
           className="flex flex-wrap items-center gap-3.5 mb-5"
@@ -126,8 +127,8 @@ export const CatalogPage: React.FC = () => {
                 setOnlyExclusive(false);
               }}
               className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold cursor-pointer transition-all ${categoryType === 'utilitario' && !onlyExclusive
-                  ? 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
-                  : 'text-[#4A0A03] hover:bg-[#5F2D31]/15 hover:text-[#5F2D31]'
+                ? 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
+                : 'text-[#4A0A03] hover:bg-[#5F2D31]/15 hover:text-[#5F2D31]'
                 }`}
             >
               Utilitario
@@ -139,8 +140,8 @@ export const CatalogPage: React.FC = () => {
                 setOnlyExclusive(false);
               }}
               className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold cursor-pointer transition-all ${categoryType === 'decorativo' && !onlyExclusive
-                  ? 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
-                  : 'text-[#4A0A03] hover:bg-[#5F2D31]/15 hover:text-[#5F2D31]'
+                ? 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
+                : 'text-[#4A0A03] hover:bg-[#5F2D31]/15 hover:text-[#5F2D31]'
                 }`}
             >
               Decorativo
@@ -151,8 +152,8 @@ export const CatalogPage: React.FC = () => {
             type="button"
             onClick={() => setOnlyExclusive((prev) => !prev)}
             className={`px-5 py-1 rounded-full text-sm md:text-[15px] font-bold cursor-pointer transition-all ${onlyExclusive
-                ? 'bg-[#732714] text-[#CFAD82] ring-2 ring-[#E59838]'
-                : 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
+              ? 'bg-[#732714] text-[#CFAD82] ring-2 ring-[#E59838]'
+              : 'bg-[#5F2D31] text-[#CFAD82] hover:brightness-110'
               }`}
           >
             Diseños Exclusivos
@@ -193,11 +194,11 @@ export const CatalogPage: React.FC = () => {
           <div className="relative z-10 flex items-center gap-6 w-full">
             {selectedMaterial ? (
               <>
-                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow border border-[#8C6245]/40 bg-[#4A0A03]">
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow">
                   <img
                     src={selectedMaterial.image_url}
                     alt={selectedMaterial.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-125"
                   />
                 </div>
                 <div className="flex-1">
@@ -267,7 +268,7 @@ export const CatalogPage: React.FC = () => {
                 key={`${product.id}-${index}`}
                 product={product}
                 artisan={artisanMap.get(product.artisan_id)}
-                highlighted={index === 0 || (selectedMaterialId !== null && index === 8)}
+                highlighted={product.is_featured}
                 showArtisanName={true}
               />
             ))}

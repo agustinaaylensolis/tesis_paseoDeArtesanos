@@ -32,7 +32,7 @@ const PurchaseThanksCard: React.FC<{ productName: string }> = ({ productName }) 
       <div className="pt-4 flex justify-center">
         <Link
           to="/"
-          className="btn-artesanal-dark text-[#E5C9A3] px-14 py-2 text-base md:text-lg shadow-lg"
+          className="btn-ui-marron text-[#E5C9A3] px-14 py-2 text-base md:text-lg shadow-lg"
         >
           Volver al inicio
         </Link>
@@ -168,7 +168,7 @@ export const DeliveryCheckoutPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate(`/checkout/pago/${product.slug}`)}
-              className="btn-artesanal-dark w-56 py-2 px-6 text-base md:text-lg"
+              className="btn-ui-marron w-56 py-2 px-6 text-base md:text-lg"
             >
               Transferir
             </button>
@@ -176,7 +176,7 @@ export const DeliveryCheckoutPage: React.FC = () => {
               type="button"
               onClick={handleCashPayment}
               disabled={processingCash}
-              className="btn-artesanal-dark w-56 py-2 px-6 text-base md:text-lg"
+              className="btn-ui-marron w-56 py-2 px-6 text-base md:text-lg"
             >
               {processingCash ? 'Registrando...' : 'Pagar en efectivo'}
             </button>
@@ -308,7 +308,7 @@ export const PaymentCheckoutPage: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="btn-artesanal-dark text-[#E5C9A3] px-10 py-2 text-base md:text-lg"
+              className="btn-ui-marron text-[#E5C9A3] px-10 py-2 text-base md:text-lg"
             >
               {submitting ? 'Procesando...' : 'Añadir medio de pago'}
             </button>
@@ -348,7 +348,7 @@ export const PaymentCheckoutPage: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="btn-artesanal-dark text-[#E5C9A3] w-full py-2.5 px-6 text-lg md:text-xl disabled:opacity-60"
+              className="btn-ui-marron text-[#E5C9A3] w-full py-2.5 px-6 text-lg md:text-xl disabled:opacity-60"
             >
               {submitting ? 'Procesando...' : 'Pagar y finalizar'}
             </button>

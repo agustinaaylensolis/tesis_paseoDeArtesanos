@@ -99,9 +99,11 @@ export const ClientProfilePage: React.FC = () => {
             ) : uploadingAvatar ? (
               <span className="text-xs">Subiendo...</span>
             ) : (
-              <span className="group-hover:scale-110 transition-transform select-none">
-                +
-              </span>
+              <img
+                src="/assets/products/signomas_individual.svg"
+                alt="+"
+                className="w-20 h-20 object-contain group-hover:scale-110 transition-transform select-none pointer-events-none"
+              />
             )}
           </label>
 
@@ -158,7 +160,7 @@ export const ClientProfilePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleSaveProfile}
-                    className="btn-artesanal-dark px-6 py-1 text-sm"
+                    className="btn-ui-marron px-7 py-1.5 text-sm"
                   >
                     Guardar cambios
                   </button>
@@ -177,7 +179,7 @@ export const ClientProfilePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditing(true)}
-                  className="btn-artesanal-dark px-6 py-1 text-sm"
+                  className="btn-ui-marron px-7 py-1.5 text-sm"
                 >
                   Editar mi perfil
                 </button>

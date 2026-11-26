@@ -12,14 +12,14 @@ export const CoursePage: React.FC = () => {
   };
 
   return (
-    <div className="bg-course-editorial min-h-screen py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-16 text-[#23120B] overflow-x-hidden">
+    <div className="bg-course-editorial min-h-screen py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-16 text-[#34120E] overflow-x-hidden">
       <div className="max-w-[1080px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
         {/* COLUMNA PRINCIPAL (8 cols) */}
         <div className="lg:col-span-8">
           {/* ================= VISTA 0: ÍNDICE DEL CURSO ================= */}
           {unit === 0 && (
             <div className="space-y-7">
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-[38px] font-bold text-[#23120B]">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-[38px] font-bold text-[#34120E]">
                 Curso de comunicación para artesanos
               </h1>
 
@@ -29,7 +29,7 @@ export const CoursePage: React.FC = () => {
                 className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
-                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#34120E] text-xs font-bold flex items-center justify-center shrink-0">
                     U1
                   </span>
                   <h2 className="text-lg md:text-xl font-bold">Unidad 1: Presentación</h2>
@@ -48,7 +48,7 @@ export const CoursePage: React.FC = () => {
                 className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
-                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#34120E] text-xs font-bold flex items-center justify-center shrink-0">
                     U2
                   </span>
                   <h2 className="text-lg md:text-xl font-bold">
@@ -70,7 +70,7 @@ export const CoursePage: React.FC = () => {
                 className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
-                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#34120E] text-xs font-bold flex items-center justify-center shrink-0">
                     U3
                   </span>
                   <h2 className="text-lg md:text-xl font-bold">
@@ -94,7 +94,7 @@ export const CoursePage: React.FC = () => {
                 className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 shadow-sm cursor-pointer hover:brightness-[0.98] transition-all"
               >
                 <div className="flex items-center gap-3 border-b border-[#4A251B]/40 pb-2.5">
-                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#23120B] text-xs font-bold flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full border-2 border-[#741712] text-[#34120E] text-xs font-bold flex items-center justify-center shrink-0">
                     U4
                   </span>
                   <h2 className="text-lg md:text-xl font-bold">
@@ -116,11 +116,13 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(1)}
-                  className="btn-artesanal px-8 py-2 text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Ir a la
-                  <br />
-                  primer unidad
+                  <img
+                    src="/assets/ui/btn_primer_unidad.svg"
+                    alt="Ir a la primer unidad"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
               </div>
 
@@ -143,23 +145,21 @@ export const CoursePage: React.FC = () => {
           {/* ================= VISTA 1: UNIDAD 1 - PRESENTACIÓN ================= */}
           {unit === 1 && (
             <div className="space-y-8">
-              <h1 className="font-serif text-3xl md:text-4xl font-bold">Presentación</h1>
+              <h1 className="text-3xl md:text-4xl font-normal"
+                style={{ fontFamily: '"broadsheet", Georgia, serif' }}>
+                Presentación</h1>
 
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>
                   ¿Qué es Corriente artesanal?
                 </h2>
 
-                <div
-                  className="text-3xl sm:text-4xl md:text-5xl text-[#33130C] py-2 break-words select-none leading-none"
-                  style={{
-                    fontFamily:
-                      '"kit-sans", "KitSans-Light", "Cormorant Garamond", Georgia, serif',
-                  }}
-                >
-                  <div className="tracking-[0.12em]">C~RRIENTE</div>
-                  <div className="tracking-[0.1em] -mt-1">ARTESANAL</div>
-                </div>
+                <img
+                  src="/assets/ui/signo_marcario_marroncito.svg"
+                  alt="Corriente Artesanal"
+                  className="h-20 sm:h-24 md:h-28 w-auto object-contain py-1"
+                />
 
                 <p className="text-sm md:text-[15px] leading-relaxed">
                   Este proyecto social tiene el objetivo de fortalecer desde la comunicación
@@ -171,7 +171,10 @@ export const CoursePage: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">
+                <h2
+                  className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+                >
                   ¿Qué se puede aprender de este manual?
                 </h2>
                 <p className="text-sm md:text-[15px] leading-relaxed">
@@ -181,30 +184,51 @@ export const CoursePage: React.FC = () => {
 
                 <ul className="space-y-2.5 pl-3 text-base md:text-[17px]">
                   <li className="flex items-center gap-2.5">
-                    <span className="text-[#741712] text-lg">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0"
+                    />
                     <span>Adquirir saberes sobre comunicación estrátegica</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <span className="text-[#741712] text-lg">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0"
+                    />
                     <span>Adentrarse en nociones básicas del diseño gráfico</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <span className="text-[#741712] text-lg">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0"
+                    />
                     <span>Comprender lo que abarca la identidad visual</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <span className="text-[#741712] text-lg">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0"
+                    />
                     <span>Tomar fotografías con el celular</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <span className="text-[#741712] text-lg">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0"
+                    />
                     <span>Como crear una vidriera digital óptima</span>
                   </li>
                 </ul>
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>
                   ¿Qué esperamos del usuario de este manual?
                 </h2>
                 <p className="text-sm md:text-[15px] leading-relaxed">
@@ -232,20 +256,24 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(0)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Volver al
-                  <br />
-                  inicio
+                  <img
+                    src="/assets/ui/btn_inicio.svg"
+                    alt="Volver al inicio"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
                 <button
                   type="button"
                   onClick={() => selectUnit(2)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Siguiente
-                  <br />
-                  unidad
+                  <img
+                    src="/assets/ui/btn_siguiente_unidad.svg"
+                    alt="Siguiente unidad"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
               </div>
             </div>
@@ -255,7 +283,9 @@ export const CoursePage: React.FC = () => {
           {unit === 2 && (
             <div className="space-y-8">
               <div className="space-y-3">
-                <h1 className="font-serif text-3xl md:text-4xl font-bold">
+                <h1
+                  className="text-3xl md:text-4xl font-normal"
+                  style={{ fontFamily: '"broadsheet", Georgia, serif' }}>
                   ¿Qué es la comunicación?
                 </h1>
                 <p className="text-sm md:text-[15px] leading-relaxed">
@@ -268,7 +298,8 @@ export const CoursePage: React.FC = () => {
               </div>
 
               <div className="space-y-3 text-sm md:text-[15px] leading-relaxed">
-                <h2 className="text-lg md:text-xl font-bold">
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>
                   ¿Por qué comunicar adecuadamente?
                 </h2>
                 <p>
@@ -297,76 +328,58 @@ export const CoursePage: React.FC = () => {
                   ámbitos de la comunicación.
                 </p>
 
-                <div className="bg-[#DFD5C6] border border-[#BFB29F] rounded-xl p-4 sm:p-6 my-4 text-center shadow-sm space-y-3">
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium">
-                    <span>
-                      Comunicar enfocados en los
-                      <br />
-                      valores culturales
-                    </span>
-                    <span className="text-xl font-bold">→</span>
-                    <span>
-                      Articulando mensajes visuales
-                      <br />
-                      para ser más directos
-                    </span>
-                  </div>
-                  <div className="border-t border-[#8B7D6B] pt-2 max-w-md mx-auto text-sm font-medium">
-                    A través de una estrategia
-                    <br />
-                    coherente e integral
-                  </div>
+                <div className="my-4 flex justify-center">
+                  <img
+                    src="/assets/ui/grafico_comunicacion.svg"
+                    alt="Gráfico de estrategia de comunicación"
+                    className="w-full max-w-2xl h-auto object-contain"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-4 pt-2 max-w-lg">
+                <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                  <span
+                    className="col-span-12 sm:col-span-4 font-normal text-2xl md:text-3xl"
+                    style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+                  >
+                    Conocer
+                  </span>
+                  <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
+                    Refiere al primer contacto, parte de un desconocimiento casi total
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                  <span
+                    className="col-span-12 sm:col-span-4 font-normal text-2xl md:text-3xl"
+                    style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+                  >
+                    Conectar
+                  </span>
+                  <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
+                    Se busca lograrlo a través de la transmisión de su proceso, de los
+                    conocimientos heredados, la relación con nuestra historia local
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
+                  <span
+                    className="col-span-12 sm:col-span-4 font-normal text-2xl md:text-3xl"
+                    style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+                  >
+                    Valorar
+                  </span>
+                  <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
+                    Una vez reconocido la identidad cultural que contiene y la labor que hay
+                    detrás se puede llegar a la apreciación económica del objeto
+                  </span>
                 </div>
               </div>
 
               <div className="space-y-4 text-sm md:text-[15px] leading-relaxed">
-                <h2 className="font-serif text-2xl md:text-3xl font-bold">
-                  Comunicar lo cultural
-                </h2>
-                <p>
-                  Como todo artesano sabe, el valor de una pieza hecha a mano está más allá de
-                  lo observable a simple vista, es en la mixtura de conocimientos heredados
-                  sobre el material, las técnicas utilizadas, el tiempo destinado a cada
-                  proceso y los detalles para lograr el mejor acabado donde reside realmente su
-                  particularidad.
-                </p>
-                <p>
-                  El conflicto surge cuando estos mensajes son recibidos por un público cada vez
-                  más reducido, ya sea por desconocimiento o ignorancia, entonces en un entorno
-                  de inmediatez y superficialidad no se llega a indagar en el conocimiento y
-                  proceso que lleva la producción de esta índole.
-                </p>
-                <p>
-                  Es por esto que consideramos fundamental orientar la comunicación hacía
-                  mensajes que busquen reforzar estas ideas mediante la siguiente sucesión:
-                </p>
-
-                <div className="space-y-4 pt-2 max-w-lg">
-                  <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
-                    <span className="col-span-12 sm:col-span-4 font-bold text-base md:text-lg">Conocer</span>
-                    <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
-                      Refiere al primer contacto, parte de un desconocimiento casi total
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
-                    <span className="col-span-12 sm:col-span-4 font-bold text-base md:text-lg">Conectar</span>
-                    <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
-                      Se busca lograrlo a través de la transmisión de su proceso, de los
-                      conocimientos heredados, la relación con nuestra historia local
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
-                    <span className="col-span-12 sm:col-span-4 font-bold text-base md:text-lg">Valorar</span>
-                    <span className="col-span-12 sm:col-span-8 text-xs md:text-sm -mt-2 sm:mt-0">
-                      Una vez reconocido la identidad cultural que contiene y la labor que hay
-                      detrás se puede llegar a la apreciación económica del objeto
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4 text-sm md:text-[15px] leading-relaxed">
-                <h2 className="font-serif text-2xl md:text-3xl font-bold">
+                <h2 className="text-3xl md:text-4xl font-normal"
+                  style={{ fontFamily: '"broadsheet", Georgia, serif' }}>
                   Comunicación estratégica
                 </h2>
                 <p>
@@ -376,7 +389,8 @@ export const CoursePage: React.FC = () => {
                   es decir definir qué aspectos de la producción son clave
                 </p>
 
-                <h3 className="font-bold pt-1">¿Qué se puede comunicar de una pieza?</h3>
+                <h3 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>¿Qué se puede comunicar de una pieza?</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs md:text-sm">
                   <div className="space-y-1">
                     <p>¿Qué es la pieza?</p>
@@ -393,7 +407,8 @@ export const CoursePage: React.FC = () => {
                   </div>
                 </div>
 
-                <h3 className="font-bold pt-2">¿Y sobre el valor que hay detrás?</h3>
+                <h3 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>¿Y sobre el valor que hay detrás?</h3>
                 <div className="space-y-1 text-xs md:text-sm">
                   <p>El tiempo de elaboración.</p>
                   <p>Origen y preparación de los materiales.</p>
@@ -403,7 +418,8 @@ export const CoursePage: React.FC = () => {
                   <p>La relación con la tradición</p>
                 </div>
 
-                <h3 className="font-bold pt-2">
+                <h3 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>
                   Comunicar sin limitarse a mostrar el producto
                 </h3>
                 <p className="text-xs md:text-sm">
@@ -437,20 +453,24 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(1)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Unidad
-                  <br />
-                  anterior
+                  <img
+                    src="/assets/ui/btn_unidad_anterior.svg"
+                    alt="Unidad anterior"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
                 <button
                   type="button"
                   onClick={() => selectUnit(3)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Siguiente
-                  <br />
-                  unidad
+                  <img
+                    src="/assets/ui/btn_siguiente_unidad.svg"
+                    alt="Siguiente unidad"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
               </div>
             </div>
@@ -460,8 +480,11 @@ export const CoursePage: React.FC = () => {
           {unit === 3 && (
             <div className="space-y-8 text-sm md:text-[15px] leading-relaxed">
               <div className="space-y-3">
-                <h1 className="font-serif text-3xl md:text-4xl font-bold">Fotografía</h1>
-                <h2 className="text-lg md:text-xl font-bold">¿Qué es la fotografía?</h2>
+                <h1 className="text-3xl md:text-4xl font-normal"
+                  style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+                >Fotografía</h1>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>¿Qué es la fotografía?</h2>
                 <p>
                   La fotografía es el arte y la técnica de obtener imágenes duraderas debido a
                   la acción de la luz. Y también es el proceso de proyectar imágenes,
@@ -477,7 +500,8 @@ export const CoursePage: React.FC = () => {
               </div>
 
               <div className="space-y-3">
-                <h2 className="text-lg md:text-xl font-bold">Fotografiar con el celular</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Fotografiar con el celular</h2>
                 <p>
                   El celular puede ser el recurso más accesible y menos complicado de utilizar
                   para fotografiar y promover la producción artesanal. Sin embargo, la falta de
@@ -513,12 +537,13 @@ export const CoursePage: React.FC = () => {
 
               {/* 5 Reglas de la fotografía con celular — Con fotografía limpia + iconos SVG nítidos */}
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>
                   5 Reglas de la fotografía con celular
                 </h2>
 
                 <div className="space-y-3">
-                  <h3 className="font-bold">#1 Usá ambas manos</h3>
+                  <h3 className="font-medium text-xl md:text-1xl">#1 Usá ambas manos</h3>
                   <p>
                     Si se sujeta el teléfono como si fuera una cámara, con ambas manos resulta
                     mejor para tomar las fotografías, no todos tenemos un pulso de cirujano,
@@ -553,7 +578,7 @@ export const CoursePage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1 pt-2">
-                  <h3 className="font-bold">#2 En lo posible no usar zoom</h3>
+                  <h3 className="font-medium text-xl md:text-1xl">#2 En lo posible no usar zoom</h3>
                   <p>
                     La mayoría de los teléfonos móviles tienen un zoom digital que no acerca la
                     imagen, sino que la amplía y la recorta, haciendo que tu foto tenga
@@ -562,7 +587,7 @@ export const CoursePage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <h3 className="font-bold">#3 Apagá el flash</h3>
+                  <h3 className="font-medium text-xl md:text-1xl">#3 Apagá el flash</h3>
                   <p>
                     El flash de los celulares es mucho peor que el de una cámara, si bien en
                     algunas ocasiones, cuando haya poca luz, puede ser necesario, la luz que
@@ -571,7 +596,7 @@ export const CoursePage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <h3 className="font-bold">#4 Ajustá el enfoque</h3>
+                  <h3 className="font-medium text-xl md:text-1xl">#4 Ajustá el enfoque</h3>
                   <p>
                     Por defecto, el celular automáticamente elige los puntos de enfoque, y
                     generalmente enfocan el objeto que esté más cerca de la cámara pero,
@@ -582,7 +607,7 @@ export const CoursePage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <h3 className="font-bold">#5 Iluminación</h3>
+                  <h3 className="font-medium text-xl md:text-1xl">#5 Iluminación</h3>
                   <p>
                     Ajustar la iluminación de tu foto es fundamental para que la luz se esté
                     usando a tu favor, para ajustarla podés elegir el punto donde se medirá la
@@ -595,7 +620,8 @@ export const CoursePage: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Definir el fondo</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Definir el fondo</h2>
                 <p>
                   El primer paso para tener éxito en una fotografía de productos es tener un
                   buen fondo, se puede elegir un fondo neutro, ya sea blanco, negro, colores no
@@ -615,7 +641,8 @@ export const CoursePage: React.FC = () => {
                       alt="Fondo infinito"
                       className="w-full h-44 object-cover rounded shadow-sm bg-white"
                     />
-                    <h3 className="font-bold text-sm">Fondo infinito</h3>
+                    <h3 className="text-sm md:text-base font-bold"
+                      style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Fondo infinito</h3>
                     <p className="text-xs leading-relaxed">
                       Se utiliza una lámina flexible que cae en forma continua desde el plano
                       vertical hasta cubrir el plano horizontal formando una curvatura que
@@ -629,7 +656,8 @@ export const CoursePage: React.FC = () => {
                       alt="Fondo con división"
                       className="w-full h-44 object-cover rounded shadow-sm"
                     />
-                    <h3 className="font-bold text-sm">Fondo con división</h3>
+                    <h3 className="text-sm md:text-base font-bold"
+                      style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Fondo con división</h3>
                     <p className="text-xs leading-relaxed">
                       Usando piezas cartón rígido o corrugado forrados con diferentes colores y
                       texturas, se puede obtener un fondo con corte visible.
@@ -639,7 +667,8 @@ export const CoursePage: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Conocer los formatos</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Conocer los formatos</h2>
                 <p>
                   El encuadre, en fotografía, hace alusión a la porción de la escena que, como
                   fotógrafo/a, utilizarás para tus fotografías. Es decir, qué proporción de la
@@ -673,41 +702,20 @@ export const CoursePage: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Entender los ángulos</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Entender los ángulos</h2>
                 <p>
                   Los ángulos en la fotografía son la posición o el punto de vista desde el cual
                   se coloca la cámara con respecto al sujeto u objeto que se va a fotografiar,
                   se clasifican en:
                 </p>
 
-                <div className="bg-[#D5C9B8] rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-around gap-6">
+                <div className="my-4 flex justify-center">
                   <img
-                    src="/assets/course/cesto-angulos.jpg"
-                    alt="Ángulos de cámara"
-                    className="w-36 h-36 object-contain rounded"
+                    src="/assets/ui/grafico_fotografia.svg"
+                    alt="Ángulos de cámara en fotografía"
+                    className="w-full max-w-2xl h-auto object-contain"
                   />
-                  <ul className="space-y-2.5 text-xs md:text-sm font-semibold">
-                    <li className="flex items-center gap-3">
-                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
-                      <span>Ángulo cenital</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
-                      <span>Ángulo picado</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
-                      <span>Ángulo normal</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
-                      <span>Ángulo contrapicado</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-8 h-[1.5px] bg-[#5B2220]" />
-                      <span>Ángulo nadir</span>
-                    </li>
-                  </ul>
                 </div>
 
                 <p className="text-xs md:text-sm">
@@ -717,36 +725,39 @@ export const CoursePage: React.FC = () => {
                   transmitir
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-                  <div>
-                    <span className="block text-xs font-semibold mb-1">Picado</span>
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-center pt-2">
+                  <div className="sm:col-span-6">
+                    <span className="block text-sm md:text-base font-medium mb-2">Picado</span>
                     <img
                       src="/assets/course/angulo-picado.jpg"
                       alt="Ángulo Picado"
-                      className="w-full h-48 sm:h-36 object-cover rounded"
+                      className="w-full h-56 sm:h-52 md:h-60 object-cover"
                     />
                   </div>
-                  <div>
-                    <span className="block text-xs font-semibold mb-1">Normal</span>
+
+                  <div className="sm:col-span-3">
+                    <span className="block text-sm md:text-base font-medium mb-2">Normal</span>
                     <img
                       src="/assets/course/angulo-normal.jpg"
                       alt="Ángulo Normal"
-                      className="w-full h-48 sm:h-36 object-cover rounded"
+                      className="w-full h-56 sm:h-52 md:h-60 object-cover"
                     />
                   </div>
-                  <div>
-                    <span className="block text-xs font-semibold mb-1">Cenital</span>
+
+                  <div className="sm:col-span-3">
+                    <span className="block text-sm md:text-base font-medium mb-2">Cenital</span>
                     <img
                       src="/assets/course/angulo-cenital.jpg"
                       alt="Ángulo Cenital"
-                      className="w-full h-48 sm:h-36 object-cover rounded"
+                      className="w-full h-56 sm:h-52 md:h-60 object-cover"
                     />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <h2 className="text-lg md:text-xl font-bold">Planificar la sesión</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }} >Planificar la sesión</h2>
                 <p>
                   Para aprovechar mejor el tiempo y los recursos hay que planificar con
                   anticipación lo que se va a fotografiar. El protagonista debe ser la pieza,
@@ -769,20 +780,24 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(2)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Unidad
-                  <br />
-                  anterior
+                  <img
+                    src="/assets/ui/btn_unidad_anterior.svg"
+                    alt="Unidad anterior"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
                 <button
                   type="button"
                   onClick={() => selectUnit(4)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Siguiente
-                  <br />
-                  unidad
+                  <img
+                    src="/assets/ui/btn_siguiente_unidad.svg"
+                    alt="Siguiente unidad"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
               </div>
             </div>
@@ -792,7 +807,8 @@ export const CoursePage: React.FC = () => {
           {unit === 4 && (
             <div className="space-y-8 text-sm md:text-[15px] leading-relaxed">
               <div className="space-y-4">
-                <h1 className="font-serif text-3xl md:text-4xl font-bold">
+                <h1 className="text-3xl md:text-4xl font-normal"
+                  style={{ fontFamily: '"broadsheet", Georgia, serif' }}>
                   Optimizar tu vidriera digital
                 </h1>
                 <p>
@@ -803,22 +819,38 @@ export const CoursePage: React.FC = () => {
 
                 <ul className="space-y-2.5 pl-3 text-base">
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#741712] text-lg leading-none mt-0.5">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>Mayor alcance, permite llegar a muchas más personas</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#741712] text-lg leading-none mt-0.5">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>Funciona las 24hs, sin estar sujeto a tu tiempo</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#741712] text-lg leading-none mt-0.5">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>
                       Es un espacio exclusivo para artesanos tradicionales, lo que evita
                       competencias desleales
                     </span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="text-[#741712] text-lg leading-none mt-0.5">✵</span>
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>
                       Permite comunicar el proceso, con detenimiento y detalle para que el
                       público pueda conocer más a fondo la historia de cada pieza
@@ -834,7 +866,8 @@ export const CoursePage: React.FC = () => {
 
               {/* Completar tu perfil — Maquetado en HTML/CSS 100% nítido (sin capturas pixeladas) */}
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Completar tu perfil</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Completar tu perfil</h2>
                 <p>
                   Para iniciar con la personalización de tu perfil tenés la opción de subir una
                   foto tocando en el círculo negro, también dispones de un espacio para contar
@@ -843,31 +876,40 @@ export const CoursePage: React.FC = () => {
                   registrados.
                 </p>
 
-                {/* Diagrama interactivo 1: Tarjeta de Perfil en HTML nítido */}
-                <div className="bg-kraft-texture rounded-xl p-4 sm:p-6 md:p-8 shadow-sm max-w-xl">
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch pt-5">
-                    <div className="sm:col-span-6 relative bg-[#865D4E] text-[#F5E9D9] rounded-lg px-5 pt-11 pb-5 shadow">
-                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-black text-white flex items-center justify-center text-2xl font-bold shadow">
-                        +
+                {/* Diagrama interactivo 1: Tarjeta de Perfil */}
+                <div className="bg-kraft-texture px-6 py-8 sm:px-10 sm:py-9 max-w-xl">
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-stretch pt-8">
+                    {/* Columna izquierda: tarjeta marrón */}
+                    <div className="sm:col-span-6 relative bg-[#845C4E] text-[#F5E9D9] rounded-md px-5 pt-14 pb-6">
+                      <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-black flex items-center justify-center overflow-hidden">
+                        <img
+                          src="/assets/products/signomas_individual.svg"
+                          alt="+"
+                          className="w-120 h-120 object-contain select-none pointer-events-none"
+                        />
                       </div>
-                      <p className="italic font-bold text-center text-base text-[#E6CEB5] leading-snug">
+
+                      <p className="italic font-bold text-center text-lg text-[#E6CEB5] leading-snug">
                         Nombre personal
                         <br />o del negocio
                       </p>
-                      <div className="mt-3 space-y-1 text-[11px] text-[#F5E9D9]/95">
+
+                      <div className="mt-5 space-y-2.5 text-[11px] text-[#F5E9D9]/95">
                         <p>Contacto: 3794 557744</p>
                         <p>Instagram: Artesanales_Silvia</p>
                         <p>Taller: 9 de Julio 111</p>
                       </div>
                     </div>
 
-                    <div className="sm:col-span-6 bg-[#D6BFA6]/90 rounded-lg p-5 flex flex-col justify-between">
-                      <p className="text-xs text-[#33130C] leading-relaxed">
+                    {/* Columna derecha: tarjeta beige translúcida */}
+                    <div className="sm:col-span-6 bg-[#D6BFA6]/55 rounded-md px-6 py-7 flex flex-col justify-between">
+                      <p className="text-xs text-[#2B0F08] leading-relaxed">
                         Breve descripción: nombre, materiales y técnicas con las que trabajas,
                         algún característica que te diferencie.
                       </p>
-                      <div className="mt-4 flex justify-center">
-                        <span className="bg-[#4E120B] text-[#F4E6D4] text-[11px] font-semibold px-5 py-1 shadow">
+
+                      <div className="mt-6 flex justify-center">
+                        <span className="bg-[#4E120B] text-[#F4E6D4] text-xs font-medium px-6 py-1 shadow-[0_3px_6px_rgba(0,0,0,0.35)]">
                           Editar perfil
                         </span>
                       </div>
@@ -882,13 +924,16 @@ export const CoursePage: React.FC = () => {
                   oficio.
                 </p>
 
-                {/* Diagrama interactivo 2: Un poco de mi historia en HTML nítido */}
-                <div className="bg-kraft-texture rounded-xl p-4 sm:p-6 md:p-7 shadow-sm max-w-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="space-y-1.5 max-w-xs">
-                    <h3 className="font-display-serif text-lg font-bold text-[#4A170E]">
+                {/* Diagrama interactivo 2: Un poco de mi historia */}
+                <div className="bg-kraft-texture px-6 py-8 sm:px-9 sm:py-9 max-w-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                  <div className="space-y-2.5 max-w-[340px]">
+                    <h3
+                      className="text-2xl font-bold text-[#4A170E] leading-tight"
+                      style={{ fontFamily: '"broadsheet", Georgia, serif' }}
+                    >
                       Un poco de mi historia
                     </h3>
-                    <p className="text-[11px] text-[#33130C] leading-relaxed">
+                    <p className="text-[11px] sm:text-xs text-[#2B0F08] leading-relaxed">
                       Mi acercamiento a la artesanía comenzó hace más de diez años, cuando
                       descubrí el mundo del trabajo con metales y piedras naturales. Al
                       principio, todo era curiosidad: me interesaba conocer los materiales,
@@ -896,31 +941,45 @@ export const CoursePage: React.FC = () => {
                       transformarse en objetos...
                     </p>
                   </div>
-                  <span className="bg-[#4E120B] text-[#F4E6D4] text-[11px] font-semibold px-4 py-1.5 shadow shrink-0">
+
+                  <span className="bg-[#4E120B] text-[#F4E6D4] text-xs font-medium px-4 py-1.5 shadow-[0_3px_6px_rgba(0,0,0,0.35)] shrink-0 sm:mt-6">
                     Editar descripción
                   </span>
                 </div>
               </div>
 
+
+
+
               {/* Categorías de piezas */}
               <div className="space-y-3">
-                <h2 className="text-lg md:text-xl font-bold">Categorías de piezas</h2>
+                <h2 className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}>Categorías de piezas</h2>
                 <p>
                   Al momento de cargar un producto en tu catálogo vas a encontrar algunas
                   categorías para definir mejor tu producto, que son:
                 </p>
 
                 <ul className="space-y-3 pl-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#741712] mt-0.5">✵</span>
+                  <li className="flex items-start gap-2.5">
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>
                       <strong>Utilitario / decorativo:</strong> para diferenciar si son
                       solamente estéticas o pensadas para el uso, también pueden corresponder a
                       ambas, con piezas que se pueden utilizar pero también coleccionar.
                     </span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#741712] mt-0.5">✵</span>
+                  <li className="flex items-start gap-2.5">
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
+
                     <span>
                       <strong>Diseño de autor exclusivo:</strong> piezas que por ciertas
                       características como las técnicas, procesos, detalles, diseños u otros
@@ -928,8 +987,12 @@ export const CoursePage: React.FC = () => {
                       una estrella.
                     </span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#741712] mt-0.5">✵</span>
+                  <li className="flex items-start gap-2.5">
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>
                       <strong>Stock:</strong> si contás con una cantidad de piezas en
                       existencia, aclararlo es muy beneficioso ya que posibilita una entrega
@@ -938,8 +1001,12 @@ export const CoursePage: React.FC = () => {
                       realización.
                     </span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#741712] mt-0.5">✵</span>
+                  <li className="flex items-start gap-2.5">
+                    <img
+                      src="/assets/ui/estrellita_curso.svg"
+                      alt=""
+                      className="w-4 h-4 object-contain shrink-0 mt-1"
+                    />
                     <span>
                       <strong>Precio:</strong> puede ser un precio fijo, cuando el modelo es
                       regular o estándar, o indefinido para que los interesados consulten ya sea
@@ -949,10 +1016,14 @@ export const CoursePage: React.FC = () => {
                   </li>
                 </ul>
               </div>
-
-              {/* Descripciones de piezas — Con esquema HTML nítido */}
+              {/* Descripciones de piezas */}
               <div className="space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Descripciones de piezas</h2>
+                <h2
+                  className="text-lg md:text-xl font-bold"
+                  style={{ fontFamily: '"sitka-text", Georgia, serif' }}
+                >
+                  Descripciones de piezas
+                </h2>
                 <p>
                   Como sucede en cada venta presencial, tenés la posibilidad de contar sobre la
                   elaboración de la pieza, cómo lo hiciste, de qué material, sus cualidades,
@@ -962,75 +1033,30 @@ export const CoursePage: React.FC = () => {
                   al momento de cargar un producto podés sumar estos datos como ficha técnica:
                 </p>
 
-                <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-md pt-1 text-xs md:text-sm">
-                  <div className="space-y-1.5">
-                    <p className="font-bold">Datos genéricos</p>
-                    <p>Nombre</p>
-                    <p>Medidas</p>
-                    <p>Precio (o si es consultable)</p>
-                    <p>Stock (para entrega inmediata)</p>
-                  </div>
-                  <div className="space-y-1.5">
-                    <p className="font-bold">Datos específicos</p>
-                    <p>Horas de trabajo</p>
-                    <p>Material/es</p>
-                    <p>Técnica/s</p>
-                    <p>Breve descripción</p>
-                  </div>
-                </div>
-
-                {/* Diagrama HTML nítido de la ficha de carga de pieza */}
-                <div className="bg-kraft-texture rounded-xl p-4 sm:p-6 shadow-sm max-w-xl">
-                  <div className="bg-[#D6BFA6]/90 rounded-xl p-4 sm:p-5 grid grid-cols-12 gap-4 sm:gap-5 items-start">
-                    <div className="col-span-12 sm:col-span-7 space-y-2 text-[11px] text-[#2B0F08]">
-                      <div className="border-l-2 border-[#741712] pl-2.5 space-y-1">
-                        <p className="text-[10px] font-bold uppercase text-[#741712]">
-                          Datos genéricos
-                        </p>
-                        <p>Nombre de la pieza:</p>
-                        <p>Medidas:</p>
-                        <p>Precio (si se omite queda como consultable):</p>
-                        <p>Stock (si contas con existencias):</p>
-                      </div>
-
-                      <div className="border-l-2 border-[#741712] pl-2.5 space-y-1 pt-1">
-                        <p className="text-[10px] font-bold uppercase text-[#741712]">
-                          Datos específicos
-                        </p>
-                        <p>Horas de trabajo:</p>
-                        <p>Material/es:</p>
-                        <p>Técnica/s:</p>
-                      </div>
-
-                      <div className="border border-[#741712] rounded p-2 mt-1">
-                        <p className="font-semibold">Descripción:</p>
-                      </div>
-
-                      <div className="pt-1 space-y-1">
-                        <p className="font-semibold">Categoría</p>
-                        <p className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full border border-[#D8923E] inline-block" />
-                          <span>Decorativo</span>
-                        </p>
-                        <p className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#D8923E] inline-block" />
-                          <span>Utilitario</span>
-                        </p>
-                      </div>
+                {/* 👇 ACÁ VA EL BLOQUE NUEVO (reemplaza las 2 columnas + la imagen) */}
+                <div className="w-full max-w-2xl pt-1">
+                  <div className="grid grid-cols-[45%_55%] gap-4 text-xs md:text-sm mb-1">
+                    <div className="space-y-1.5">
+                      <p className="font-bold">Datos genéricos</p>
+                      <p>Nombre</p>
+                      <p>Medidas</p>
+                      <p>Precio (o si es consultable)</p>
+                      <p>Stock (para entrega inmediata)</p>
                     </div>
-
-                    <div className="col-span-12 sm:col-span-5 space-y-1.5 max-w-[200px] sm:max-w-none">
-                      <p className="text-[11px] font-medium">Añadir fotografías</p>
-                      <div className="bg-black aspect-[3/3.6] flex items-center justify-center text-[#C8B29B] text-4xl font-bold">
-                        +
-                      </div>
+                    <div className="space-y-1.5">
+                      <p className="font-bold">Datos específicos</p>
+                      <p>Horas de trabajo</p>
+                      <p>Material/es</p>
+                      <p>Técnica/s</p>
+                      <p>Breve descripción</p>
                     </div>
                   </div>
-                  <div className="mt-4 flex justify-center">
-                    <span className="bg-[#4E120B] text-[#F4E6D4] text-xs font-semibold px-8 py-1 shadow">
-                      Publicar
-                    </span>
-                  </div>
+
+                  <img
+                    src="/assets/ui/grafico_optimizar_vidriera.svg"
+                    alt="Ficha técnica de carga de pieza"
+                    className="w-full h-auto block -mb-24 md:-mb-40"
+                  />
                 </div>
 
                 <p>
@@ -1045,25 +1071,28 @@ export const CoursePage: React.FC = () => {
                   del proceso.
                 </p>
               </div>
-
               <div className="pt-6 flex items-center justify-between gap-3 max-w-lg">
                 <button
                   type="button"
                   onClick={() => selectUnit(3)}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Unidad
-                  <br />
-                  anterior
+                  <img
+                    src="/assets/ui/btn_unidad_anterior.svg"
+                    alt="Unidad anterior"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate('/mi-perfil-artesano')}
-                  className="btn-artesanal px-4 sm:px-8 py-2 text-sm md:text-base leading-tight text-center"
+                  className="hover:scale-105 transition-transform focus:outline-none"
                 >
-                  Finalizar
-                  <br />
-                  el curso
+                  <img
+                    src="/assets/ui/btn_finalizar.svg"
+                    alt="Finalizar el curso"
+                    className="h-20 sm:h-24 w-auto object-contain"
+                  />
                 </button>
               </div>
             </div>
@@ -1073,7 +1102,7 @@ export const CoursePage: React.FC = () => {
         {/* BARRA LATERAL DERECHA FIJA: ACCESO RÁPIDO (4 cols) */}
         <aside className="lg:col-span-4 lg:sticky lg:top-28 lg:pl-8">
           <div className="border-b border-[#4A251B] pb-1.5 mb-3">
-            <h3 className="text-sm font-bold text-[#23120B]">Acceso rápido</h3>
+            <h3 className="text-sm font-bold text-[#34120E]">Acceso rápido</h3>
           </div>
 
           <ul className="space-y-2.5 text-xs md:text-sm">
@@ -1087,9 +1116,8 @@ export const CoursePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => selectUnit(item.id)}
-                  className={`flex items-center gap-2.5 text-left hover:text-[#741712] transition-colors ${
-                    unit === item.id ? 'font-bold text-[#741712]' : 'text-[#23120B]'
-                  }`}
+                  className={`flex items-center gap-2.5 text-left hover:text-[#741712] transition-colors ${unit === item.id ? 'font-bold text-[#741712]' : 'text-[#34120E]'
+                    }`}
                 >
                   <span className="w-5 h-5 rounded-full border border-[#741712] text-[10px] font-bold flex items-center justify-center shrink-0">
                     {item.code}

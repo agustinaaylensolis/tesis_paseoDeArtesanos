@@ -58,7 +58,7 @@ export const App: React.FC = () => {
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-kraft-texture">
           <Header />
-          <main className="flex-1">
+          <main className="flex-1 [&>*]:pb-24 md:[&>*]:pb-32">
             <Routes>
               {/* Marketplace y vistas públicas accesibles para ambos roles */}
               <Route path="/" element={<HomePage />} />

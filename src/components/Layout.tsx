@@ -73,7 +73,11 @@ export const Header: React.FC = () => {
           className="hover:opacity-90 transition-opacity"
           aria-label="Inicio Corriente Artesanal"
         >
-          <BrandLogo size="md" />
+          <img
+            src="/assets/ui/signo_marcario.svg"
+            alt="Corriente Artesanal"
+            className="h-[72px] md:h-[80px] -my-3 w-auto object-contain select-none"
+          />
         </Link>
 
         <button
@@ -149,15 +153,15 @@ export const Header: React.FC = () => {
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-transparent pt-10 overflow-hidden">
+    <footer className="relative z-10 -mt-10 md:-mt-16 bg-transparent overflow-hidden">
       <div
-        className="text-[#E6CEAC] pt-16 md:pt-28 pb-10 md:pb-12 px-4 sm:px-6 md:px-16 relative"
+        className="text-[#E6CEAC] pt-16 md:pt-28 pb-10 md:pb-12 px-4 sm:px-6 md:px-16 relative bg-[#2B0C08]"
         style={{
-          backgroundImage: "url('/assets/ui/foooooter.webp')",
-          // Recorta los márgenes blancos de la imagen para que llegue de borde a borde
-          backgroundSize: '109.6% 153%',
-          backgroundPosition: '67.6% 51.7%',
+          backgroundImage: "url('/assets/ui/footerlanding.jpg')",
+          backgroundSize: '104% 110%',
+          backgroundPosition: 'center 30%',
           backgroundRepeat: 'no-repeat',
+          clipPath: 'ellipse(95% 96% at 55% 98%)',
         }}
       >
         <div className="max-w-[1180px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 items-center">

@@ -110,10 +110,10 @@ export const PhysicalPointsPage: React.FC = () => {
 
           <div className="md:col-span-6 pl-0 md:pl-7 py-8 order-1 md:order-2">
             <p
-              className="italic font-normal text-2xl sm:text-3xl md:text-4xl lg:text-[43px] text-[#8A1912] tracking-[0.02em]"
+              className="italic font-normal text-2xl sm:text-3xl md:text-4xl lg:text-[50px] text-[#8A1912] tracking-[0.02em]"
               style={{
                 fontFamily: '"broadsheet", Georgia, serif',
-                lineHeight: 1.65
+                lineHeight: 1.1
               }}
             >
               Su misión es mantener

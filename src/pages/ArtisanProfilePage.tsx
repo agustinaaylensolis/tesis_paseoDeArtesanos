@@ -88,7 +88,7 @@ export const ArtisanProfilePage: React.FC = () => {
                 href={`https://wa.me/549${artisan.phone.replace(/\D/g, '')}`}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-artesanal text-[#E5C9A3] inline-block px-10 py-1.5 text-base md:text-lg shadow-md"
+                className="btn-ui-rojo text-[#E5C9A3] px-12 py-2 text-base md:text-lg"
               >
                 ¡Contactar!
               </a>

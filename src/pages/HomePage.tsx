@@ -68,9 +68,9 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Bloque 1: Título PASEO DE ARTESANOS DIGITAL */}
-        <div className="relative z-10">
+        <div className="relative z-10 md:pt-[18vw] md:pl-[1.5vw]">
           <h1
-            className="text-5xl sm:text-6xl md:text-[8.5vw] font-normal text-[#E49B3E] leading-[1.2] tracking-[0.04em]"
+            className="text-5xl sm:text-6xl md:text-[8vw] font-normal text-[#E49B3E] leading-[1.15] tracking-[0.04em]"
             style={{
               fontFamily: '"lubaline", Georgia, serif',
             }}
@@ -92,12 +92,12 @@ export const HomePage: React.FC = () => {
             Una plataforma para :
           </p>
 
-          <ul className="space-y-3 md:space-y-[1.3vw] text-lg sm:text-xl md:text-[3.5vw] leading-snug">
+          <ul className="flex flex-col gap-5 md:gap-[2.5vw] text-lg sm:text-xl md:text-[3.5vw] leading-tight">
             <li className="flex items-center gap-3.5">
               <img
                 src="/assets/ui/icon-estrella-roja-crop.png"
                 alt=""
-                className="w-4 h-4 md:w-[3.5vw] md:h-[3.5vw] object-contain shrink-0"
+                className="w-4 h-4 md:w-[2.5vw] md:h-[2.5vw] object-contain shrink-0"
               />
               <span>Conocer a los artesanos</span>
             </li>
@@ -110,12 +110,14 @@ export const HomePage: React.FC = () => {
               <span>Descubrir sus productos</span>
             </li>
             <li className="flex items-start gap-3.5">
-              <img
-                src="/assets/ui/icon-estrella-roja-crop.png"
-                alt=""
-                className="w-4 h-4 md:w-[2.5vw] md:h-[2.5vw] object-contain shrink-0 mt-1.5"
-              />
-              <span>
+              <span className="flex items-center h-[1.25em] shrink-0">
+                <img
+                  src="/assets/ui/icon-estrella-roja-crop.png"
+                  alt=""
+                  className="w-4 h-4 md:w-[2.5vw] md:h-[2.5vw] object-contain"
+                />
+              </span>
+              <span className="leading-[1.25]">
                 Acercarte a las historias
                 <br />
                 que existen detrás
@@ -126,7 +128,7 @@ export const HomePage: React.FC = () => {
 
         {/* Bloque 3: Lema inferior en cursiva */}
         <div className="relative z-10">
-          <p className="italic text-2xl sm:text-4xl md:text-[4vw] text-[#EED9BF] leading-[1.6] sm:leading-[2]"
+          <p className="italic text-2xl sm:text-4xl md:text-[4vw] text-[#EED9BF] leading-[1.3] sm:leading-[1.3]"
             style={{ fontFamily: '"broadsheet", Georgia, serif' }}>
             Revaloricemos juntos la
             <br />
@@ -153,7 +155,7 @@ export const HomePage: React.FC = () => {
         <div className="w-full z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Bloque de texto: más grande y sin max-w-lg que lo corte en escritorio */}
           <div className="max-w-lg md:max-w-[44vw]">
-            <h2 className="font-display-serif text-3xl sm:text-5xl md:text-[3.1vw] font-bold text-[#4A140C] leading-tight">
+            <h2 className="font-display-serif text-3xl sm:text-5xl md:text-[3.1vw] font-mediumtext-[#4A140C] leading-tight">
               ¿Sos artesano tradicional?
             </h2>
             <p className="font-serif italic text-base md:text-[1.55vw] text-[#4A140C] mt-5 font-semibold">
@@ -175,7 +177,7 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/registro-artesano"
-              className="btn-artesanal md:absolute md:right-[20vw] md:top-[11.5vw] z-10 px-4 sm:px-6 md:px-[2.2vw] py-2.5 md:py-[1.15vw] text-sm md:text-[1.85vw] uppercase tracking-[0.06em] font-bold"
+              className="btn-ui-rojo md:absolute md:right-[13.5vw] md:top-[11.5vw] z-10 px-6 sm:px-8 md:px-[2.6vw] py-2.5 md:py-[1vw] text-sm md:text-[1.85vw] uppercase tracking-[0.06em] font-bold shadow-md -rotate-[2.5deg]"
             >
               ¡REGISTRATE!
             </Link>
@@ -247,7 +249,7 @@ export const HomePage: React.FC = () => {
         <section className="w-full mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 md:mb-[2.4vw]">
             <h2
-              className="text-3xl sm:text-4xl md:text-[4vw] font-normal text-[#4A170E] leading-[1.15] tracking-wide"
+              className="text-3xl sm:text-4xl md:text-[4vw] font-normal text-[#4A170E] leading-[1.5] sm:leading-[1] tracking-wide"
               style={{
                 fontFamily: '"lubaline", Georgia, serif',
               }}
@@ -274,7 +276,7 @@ export const HomePage: React.FC = () => {
               <div className="absolute bottom-[14%] left-0 right-0 flex justify-center">
                 <Link
                   to="/catalogo?tipo=decorativo"
-                  className="inline-flex flex-col items-center justify-center bg-[#7D1110]/85 hover:bg-[#7D1110] px-4 md:px-[1.15vw] py-1.5 md:py-[0.4vw] text-sm sm:text-base md:text-[1.25vw] font-semibold text-center leading-[1.15] tracking-[0.02em] shadow-[0_4px_12px_rgba(40,8,4,0.5)] transition-colors"
+                  className="btn-ui-rojo flex-col px-6 md:px-[1.8vw] py-1.5 md:py-[0.45vw] text-sm sm:text-base md:text-[1.25vw] font-semibold text-center leading-[1.15] tracking-[0.02em] shadow-[0_4px_12px_rgba(40,8,4,0.5)]"
                   style={{ fontFamily: '"sitka-text", Georgia, serif' }}
                 >
                   <span className="text-[#F3E3CE]">Ver artesanías</span>
@@ -292,7 +294,7 @@ export const HomePage: React.FC = () => {
               <div className="absolute bottom-[14%] left-0 right-0 flex justify-center">
                 <Link
                   to="/catalogo?tipo=utilitario"
-                  className="inline-flex flex-col items-center justify-center bg-[#7D1110]/85 hover:bg-[#7D1110] px-4 md:px-[1.15vw] py-1.5 md:py-[0.4vw] text-sm sm:text-base md:text-[1.25vw] font-semibold text-center leading-[1.15] tracking-[0.02em] shadow-[0_4px_12px_rgba(40,8,4,0.5)] transition-colors"
+                  className="btn-ui-rojo flex-col px-6 md:px-[1.8vw] py-1.5 md:py-[0.45vw] text-sm sm:text-base md:text-[1.25vw] font-semibold text-center leading-[1.15] tracking-[0.02em] shadow-[0_4px_12px_rgba(40,8,4,0.5)]"
                   style={{ fontFamily: '"sitka-text", Georgia, serif' }}
                 >
                   <span className="text-[#F3E3CE]">Ver artesanías</span>
@@ -353,7 +355,7 @@ export const HomePage: React.FC = () => {
               <div className="pt-2 md:pt-[0.8vw]">
                 <Link
                   to="/artesanos"
-                  className="inline-block bg-[#4A2A18] hover:bg-[#5E3620] text-[#E6D2B5] px-8 md:px-[2.2vw] py-2 md:py-[0.5vw] text-sm md:text-[1.15vw] font-medium tracking-[0.02em] shadow-[0_6px_14px_rgba(30,15,5,0.45)] transition-colors"
+                  className="btn-ui-marron text-[#E6D2B5] px-8 md:px-[2.2vw] py-2 md:py-[0.5vw] text-sm md:text-[1.15vw] font-medium tracking-[0.02em] shadow-[0_6px_14px_rgba(30,15,5,0.45)]"
                   style={{ fontFamily: '"sitka-text", Georgia, serif' }}
                 >
                   Conocer a los artesanos
@@ -399,7 +401,7 @@ export const HomePage: React.FC = () => {
               <div className="pt-2 md:pt-[0.8vw]">
                 <Link
                   to="/puntos-fisicos"
-                  className="inline-block bg-[#4A2A18] hover:bg-[#5E3620] text-[#E6D2B5] px-10 md:px-[3vw] py-2 md:py-[0.5vw] text-sm md:text-[1.15vw] font-medium tracking-[0.02em] shadow-[0_6px_14px_rgba(30,15,5,0.45)] transition-colors"
+                  className="btn-ui-marron text-[#E6D2B5] px-10 md:px-[3vw] py-2 md:py-[0.5vw] text-sm md:text-[1.15vw] font-medium tracking-[0.02em] shadow-[0_6px_14px_rgba(30,15,5,0.45)]"
                   style={{ fontFamily: '"sitka-text", Georgia, serif' }}
                 >
                   Ver puntos físicos

@@ -34,7 +34,7 @@ export const MaterialTimeline: React.FC<{
             >
               <span
                 className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all shadow-sm ${isSelected
-                  ? 'bg-[a68454ff ] text-[#CFAD82] scale-105'
+                  ? 'bg-[#5F2D31] text-[#CFAD82] scale-105'
                   : 'bg-[#A68454] text-[#4A0A03] group-hover:bg-[#5F2D31] group-hover:text-[#CFAD82]'
                   }`}
               >

@@ -24,28 +24,41 @@ export const ProductDetailPage: React.FC = () => {
     );
   }, [artisans, product]);
 
-  const defaultThumbs = useMemo(() => {
-    if (product.material_id === 4) {
-      return [
-        '/assets/products/bombilla-detail-1.jpg',
-        '/assets/products/bombilla-detail-2.jpg',
-        '/assets/products/bombilla-detail-3.jpg',
-      ];
-    }
-    return [
-      '/assets/products/billetera-detail-1.jpg',
-      '/assets/products/billetera-detail-2.jpg',
-      '/assets/products/billetera-detail-3.jpg',
-    ];
+  const SIMULATED_DETAIL_CROPS = [
+    'scale-[1.45] object-[50%_20%]',
+    'scale-[1.7] object-center',
+    'scale-[1.55] object-[65%_80%]',
+  ];
+
+  const detailThumbs = useMemo(() => {
+    const rawGallery = product.gallery_urls || [];
+    const realDetailUrls = rawGallery.filter((url) => {
+      if (!url || url === product.main_image_url) return false;
+      if (
+        url.includes('billetera-detail-') &&
+        product.slug !== 'billetera-cincelada'
+      ) {
+        return false;
+      }
+      if (
+        url.includes('bombilla-detail-') &&
+        !product.slug.includes('bombilla')
+      ) {
+        return false;
+      }
+      return true;
+    });
+
+    return [0, 1, 2].map((idx) =>
+      realDetailUrls[idx]
+        ? { url: realDetailUrls[idx], cropClass: '' }
+        : { url: product.main_image_url, cropClass: SIMULATED_DETAIL_CROPS[idx] }
+    );
   }, [product]);
 
   const gallery = useMemo(() => {
-    const urls =
-      product.gallery_urls && product.gallery_urls.length > 0
-        ? product.gallery_urls
-        : defaultThumbs;
-    return [product.main_image_url, ...urls];
-  }, [product, defaultThumbs]);
+    return [{ url: product.main_image_url, cropClass: '' }, ...detailThumbs];
+  }, [product.main_image_url, detailThumbs]);
 
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
 
@@ -129,7 +142,7 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => navigate(`/checkout/entrega/${product.slug}`)}
-                  className="btn-artesanal w-full sm:w-64 py-2.5 text-xl md:text-2xl font-bold text-[#E5C9A3]"
+                  className="btn-ui-rojo w-full sm:w-64 py-2.5 text-xl md:text-2xl font-bold text-[#E5C9A3]"
                 >
                   Comprar
                 </button>
@@ -148,9 +161,11 @@ export const ProductDetailPage: React.FC = () => {
               />
 
               <img
-                src={gallery[selectedImageIdx] || product.main_image_url}
+                src={gallery[selectedImageIdx]?.url || product.main_image_url}
                 alt={product.name}
-                className="w-full h-full object-cover transition-all duration-300"
+                className={`w-full h-full object-cover transition-all duration-300 ${
+                  gallery[selectedImageIdx]?.cropClass || ''
+                }`}
               />
 
               <CarouselArrow
@@ -162,22 +177,25 @@ export const ProductDetailPage: React.FC = () => {
               />
             </div>
 
-            {/* 3 miniaturas inferiores tal como en paginas.pdf pág. 2 */}
+            {/* 3 miniaturas inferiores: fotos reales de detalle o acercamientos CSS de la foto principal */}
             <div className="grid grid-cols-3 gap-3">
-              {defaultThumbs.map((thumbUrl, idx) => (
+              {detailThumbs.map((thumb, idx) => (
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => {
-                    const targetIdx = idx + 1 < gallery.length ? idx + 1 : 0;
-                    setSelectedImageIdx(targetIdx);
-                  }}
-                  className="bg-black aspect-[3/3.6] overflow-hidden border-2 border-transparent hover:border-[#741712] transition-all"
+                  onClick={() =>
+                    setSelectedImageIdx((curr) => (curr === idx + 1 ? 0 : idx + 1))
+                  }
+                  className={`bg-black aspect-[3/3.6] overflow-hidden border-2 transition-all ${
+                    selectedImageIdx === idx + 1
+                      ? 'border-[#741712]'
+                      : 'border-transparent hover:border-[#741712]/70'
+                  }`}
                 >
                   <img
-                    src={thumbUrl}
-                    alt={`Detalle ${idx + 1}`}
-                    className="w-full h-full object-cover"
+                    src={thumb.url}
+                    alt={`Detalle ${idx + 1} de ${product.name}`}
+                    className={`w-full h-full object-cover ${thumb.cropClass}`}
                   />
                 </button>
               ))}

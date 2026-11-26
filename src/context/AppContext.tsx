@@ -49,6 +49,7 @@ export interface PieceFormInput {
   category_type: 'utilitario' | 'decorativo';
   is_featured: boolean;
   image_url: string;
+  gallery_urls?: string[];
 }
 
 interface AppContextValue {
@@ -475,11 +476,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       stock: input.stock ?? 2,
       price: input.price ?? null,
       main_image_url: input.image_url || '/assets/products/billetera-cincelada.jpg',
-      gallery_urls: [
-        input.image_url || '/assets/products/billetera-cincelada.jpg',
-        '/assets/products/billetera-detail-1.jpg',
-        '/assets/products/billetera-detail-2.jpg',
-      ],
+      gallery_urls: (input.gallery_urls || [])
+        .map((u) => u.trim())
+        .filter(Boolean)
+        .slice(0, 3),
       is_featured: input.is_featured,
     };
 
@@ -511,6 +511,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           category_type: updatedProduct.category_type,
           is_featured: updatedProduct.is_featured,
           main_image_url: updatedProduct.main_image_url,
+          gallery_urls: updatedProduct.gallery_urls,
         })
         .eq('slug', updatedProduct.slug);
 

@@ -61,10 +61,10 @@ export const CreateAccountPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-[82vh] py-14 md:py-20 px-4 md:px-14 flex items-center justify-center"
-      style={BurgundyBackdropStyle}
+      className="min-h-[82vh] pt-14 md:pt-20 px-4 md:px-14 flex items-end justify-center"
+      style={{ ...BurgundyBackdropStyle, paddingBottom: 0 }}
     >
-      <div className="bg-[#C8B5A0] rounded-[28px] max-w-[900px] w-full px-5 sm:px-14 md:px-20 py-12 shadow-2xl">
+      <div className="bg-[#C8B5A0] rounded-t-[28px] rounded-b-none max-w-[900px] w-full px-5 sm:px-14 md:px-20 pt-12 pb-20 md:pb-24 shadow-2xl">
         <form onSubmit={handleSubmit} className="space-y-7">
           <div>
             <h1 className="font-display-serif text-3xl sm:text-4xl md:text-[42px] font-normal text-[#4A170E]">
@@ -172,8 +172,7 @@ export const CreateAccountPage: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="btn-artesanal-dark w-full sm:w-80 py-2.5 text-xl md:text-2xl font-bold"
-              style={{ transform: 'rotate(0deg)' }}
+              className="btn-ui-marron w-full sm:w-80 py-2.5 text-xl md:text-2xl font-bold"
             >
               {submitting ? 'Creando cuenta...' : 'Crear cuenta'}
             </button>
@@ -486,9 +485,11 @@ export const ArtisanRegistrationPage: React.FC = () => {
                   ) : uploadingIdx === idx ? (
                     <span className="text-sm font-bold text-[#613426]">Subiendo...</span>
                   ) : (
-                    <span className="text-6xl font-bold text-[#8A715A] group-hover:scale-110 transition-transform select-none">
-                      +
-                    </span>
+                    <img
+                      src="/assets/products/signomas_individual.svg"
+                      alt="+"
+                      className="w-24 h-24 object-contain group-hover:scale-110 transition-transform select-none pointer-events-none"
+                    />
                   )}
                 </label>
               ))}
@@ -499,8 +500,7 @@ export const ArtisanRegistrationPage: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="btn-artesanal px-10 py-2.5 text-lg md:text-xl font-bold"
-              style={{ transform: 'rotate(0deg)' }}
+              className="btn-ui-rojo px-10 py-2.5 text-lg md:text-xl font-bold"
             >
               {submitting ? 'Guardando perfil...' : 'Crear mi perfil'}
             </button>

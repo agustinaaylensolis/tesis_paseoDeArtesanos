@@ -116,7 +116,7 @@ export const ArtisansPage: React.FC = () => {
               <div className="mt-5 flex justify-center">
                 <Link
                   to={`/artesano/${artisan.slug}`}
-                  className="btn-artesanal px-7 py-1 text-xs md:text-sm"
+                  className="btn-ui-marron px-8 py-1.5 text-xs md:text-sm"
                 >
                   Ver más
                 </Link>

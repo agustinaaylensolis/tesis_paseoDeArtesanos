@@ -34,8 +34,10 @@ export const ArtisanDashboardPage: React.FC = () => {
     category_type: 'utilitario',
     is_featured: false,
     image_url: '',
+    gallery_urls: ['', '', ''],
   });
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [uploadingDetailIdx, setUploadingDetailIdx] = useState<number | null>(null);
   const [savingPiece, setSavingPiece] = useState(false);
 
   const artisan = useMemo(() => {
@@ -129,12 +131,25 @@ export const ArtisanDashboardPage: React.FC = () => {
       category_type: 'utilitario',
       is_featured: false,
       image_url: '',
+      gallery_urls: ['', '', ''],
     });
     setEditingMode('create');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const openEditForm = (prod: Product) => {
+    const cleanExistingDetails = (prod.gallery_urls || []).filter((url) => {
+      if (!url || url === prod.main_image_url) return false;
+      if (url.includes('billetera-detail-') && prod.slug !== 'billetera-cincelada') {
+        return false;
+      }
+      if (url.includes('bombilla-detail-') && !prod.slug.includes('bombilla')) {
+        return false;
+      }
+      return true;
+    });
+    const detailSlots = [0, 1, 2].map((i) => cleanExistingDetails[i] || '');
+
     setPieceForm({
       id: prod.id,
       name: prod.name,
@@ -150,6 +165,7 @@ export const ArtisanDashboardPage: React.FC = () => {
       category_type: prod.category_type,
       is_featured: prod.is_featured,
       image_url: prod.main_image_url,
+      gallery_urls: detailSlots,
     });
     setEditingMode('edit');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -164,6 +180,31 @@ export const ArtisanDashboardPage: React.FC = () => {
     } finally {
       setUploadingPhoto(false);
     }
+  };
+
+  const handleDetailPhotoUpload = async (idx: number, file?: File | null) => {
+    if (!file) return;
+    setUploadingDetailIdx(idx);
+    try {
+      const url = await uploadMediaFile(file, 'productos');
+      setPieceForm((prev) => {
+        const nextGallery = [...(prev.gallery_urls || ['', '', ''])];
+        while (nextGallery.length < 3) nextGallery.push('');
+        nextGallery[idx] = url;
+        return { ...prev, gallery_urls: nextGallery };
+      });
+    } finally {
+      setUploadingDetailIdx(null);
+    }
+  };
+
+  const handleRemoveDetailPhoto = (idx: number) => {
+    setPieceForm((prev) => {
+      const nextGallery = [...(prev.gallery_urls || ['', '', ''])];
+      while (nextGallery.length < 3) nextGallery.push('');
+      nextGallery[idx] = '';
+      return { ...prev, gallery_urls: nextGallery };
+    });
   };
 
   const handleSavePiece = async (e: React.FormEvent) => {
@@ -441,9 +482,11 @@ export const ArtisanDashboardPage: React.FC = () => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span className="text-7xl font-bold text-[#B8A18A] group-hover:scale-110 transition-transform select-none">
-                        +
-                      </span>
+                      <img
+                        src="/assets/products/signomas_individual.svg"
+                        alt="+"
+                        className="w-32 h-32 object-contain group-hover:scale-110 transition-transform select-none pointer-events-none"
+                      />
                     </div>
                   )}
                   {uploadingPhoto && (
@@ -452,6 +495,62 @@ export const ArtisanDashboardPage: React.FC = () => {
                     </div>
                   )}
                 </label>
+
+                {/* Hasta 3 fotos de detalle opcionales */}
+                <div className="pt-2 space-y-2">
+                  <p className="text-xs md:text-[13px] text-[#2B0F08]/85">
+                    Fotos de detalle (opcional, hasta 3):
+                  </p>
+                  <div className="grid grid-cols-3 gap-2.5">
+                    {[0, 1, 2].map((idx) => {
+                      const detailUrl = pieceForm.gallery_urls?.[idx] || '';
+                      return (
+                        <div key={`detail-slot-${idx}`} className="relative">
+                          <label className="block w-full aspect-[3/3.4] bg-black/85 cursor-pointer relative overflow-hidden shadow group">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="sr-only"
+                              onChange={(e) =>
+                                handleDetailPhotoUpload(idx, e.target.files?.[0])
+                              }
+                            />
+                            {detailUrl ? (
+                              <img
+                                src={detailUrl}
+                                alt={`Detalle ${idx + 1}`}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <img
+                                  src="/assets/products/signomas_individual.svg"
+                                  alt="+"
+                                  className="w-16 h-16 object-contain group-hover:scale-110 transition-transform select-none pointer-events-none"
+                                />
+                              </div>
+                            )}
+                            {uploadingDetailIdx === idx && (
+                              <div className="absolute inset-0 bg-black/65 flex items-center justify-center text-white text-[11px] font-semibold">
+                                Subiendo...
+                              </div>
+                            )}
+                          </label>
+                          {detailUrl && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveDetailPhoto(idx)}
+                              title="Quitar foto de detalle"
+                              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#741712] text-[#F4E6D4] text-xs font-bold flex items-center justify-center shadow hover:brightness-110"
+                            >
+                              ×
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -462,8 +561,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={savingPiece}
-                    className="btn-artesanal-dark text-[#E5C9A3] px-14 py-2 text-base md:text-lg shadow-lg"
-                    style={{ transform: 'rotate(0deg)' }}
+                    className="btn-ui-marron text-[#E5C9A3] px-14 py-2 text-base md:text-lg shadow-lg"
                   >
                     {savingPiece ? 'Publicando...' : 'Publicar'}
                   </button>
@@ -480,8 +578,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={savingPiece}
-                    className="btn-artesanal-dark text-[#E5C9A3] px-10 py-2 text-base md:text-lg shadow-lg"
-                    style={{ transform: 'rotate(0deg)' }}
+                    className="btn-ui-marron text-[#E5C9A3] px-10 py-2 text-base md:text-lg shadow-lg"
                   >
                     {savingPiece ? 'Guardando...' : 'Guardar cambios'}
                   </button>
@@ -498,8 +595,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                       type="button"
                       onClick={handleDeletePiece}
                       disabled={savingPiece}
-                      className="btn-artesanal-dark text-[#E5C9A3] px-12 py-2 text-base md:text-lg shadow-lg"
-                      style={{ transform: 'rotate(0deg)' }}
+                      className="btn-ui-rojo text-[#E5C9A3] px-12 py-2 text-base md:text-lg shadow-lg"
                     >
                       Eliminar
                     </button>
@@ -550,13 +646,19 @@ export const ArtisanDashboardPage: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                    <span className="text-3xl text-white font-bold">+</span>
+                    <img
+                      src="/assets/products/signomas_individual.svg"
+                      alt="+"
+                      className="w-16 h-16 object-contain select-none pointer-events-none"
+                    />
                   </div>
                 </>
               ) : (
-                <span className="group-hover:scale-110 transition-transform select-none">
-                  +
-                </span>
+                <img
+                  src="/assets/products/signomas_individual.svg"
+                  alt="+"
+                  className="w-20 h-20 object-contain group-hover:scale-110 transition-transform select-none pointer-events-none"
+                />
               )}
             </label>
 
@@ -669,7 +771,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                       setIsEditingBio(false);
                       setFeedbackMsg('¡Perfil y descripción guardados con éxito!');
                     }}
-                    className="btn-artesanal-dark text-[#E5C9A3] px-8 py-1.5 text-sm md:text-base"
+                    className="btn-ui-marron text-[#E5C9A3] px-8 py-1.5 text-sm md:text-base"
                   >
                     Guardar perfil
                   </button>
@@ -688,7 +790,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditingBio(true)}
-                  className="btn-artesanal-dark text-[#E5C9A3] px-9 py-1.5 text-sm md:text-base"
+                  className="btn-ui-marron text-[#E5C9A3] px-9 py-1.5 text-sm md:text-base"
                 >
                   Editar perfil
                 </button>
@@ -732,7 +834,7 @@ export const ArtisanDashboardPage: React.FC = () => {
                   setIsEditingHistory(false);
                   setFeedbackMsg('¡Historia guardada con éxito!');
                 }}
-                className="btn-artesanal-dark text-[#E5C9A3] px-7 py-1.5 text-sm md:text-base"
+                className="btn-ui-marron text-[#E5C9A3] px-7 py-1.5 text-sm md:text-base"
               >
                 Guardar descripción
               </button>
@@ -740,7 +842,7 @@ export const ArtisanDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsEditingHistory(true)}
-                className="btn-artesanal-dark text-[#E5C9A3] px-7 py-1.5 text-sm md:text-base"
+                className="btn-ui-marron text-[#E5C9A3] px-7 py-1.5 text-sm md:text-base"
               >
                 Editar descripción
               </button>
@@ -766,7 +868,7 @@ export const ArtisanDashboardPage: React.FC = () => {
 
           <Link
             to="/curso"
-            className="btn-artesanal-dark text-[#E5C9A3] px-12 py-2 text-base md:text-lg shrink-0 text-center"
+            className="btn-ui-rojo text-[#E5C9A3] px-12 py-2 text-base md:text-lg shrink-0 text-center"
           >
             Ver Curso
           </Link>
@@ -786,13 +888,16 @@ export const ArtisanDashboardPage: React.FC = () => {
             className="w-44 sm:w-48 cursor-pointer flex flex-col rounded-b-[22px] overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1"
           >
             <div className="bg-[#865D4E] w-full aspect-[3/3.3] flex items-center justify-center">
-              <span className="text-6xl font-bold text-[#E5C9A3] select-none">+</span>
+              <img
+                src="/assets/products/signomas_individual.svg"
+                alt="+"
+                className="w-28 h-28 object-contain select-none pointer-events-none"
+              />
             </div>
             <div className="product-card-footer bg-[#DCC7AE] px-4 pt-2 pb-4 flex justify-center">
               <button
                 type="button"
-                className="relative z-10 btn-artesanal-dark text-[#E5C9A3] px-7 py-1 text-sm"
-                style={{ transform: 'rotate(0deg)' }}
+                className="relative z-10 btn-ui-marron text-[#E5C9A3] px-8 py-1.5 text-sm"
               >
                 Añadir
               </button>

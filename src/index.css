@@ -121,3 +121,47 @@ body {
   overflow-x: hidden;
 }
 
+
+/* Botones con forma pildora basados en /assets/ui/btn-marron.webp y btn-rojo.webp */
+.btn-ui-marron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #412718;
+  background-image: url('/assets/ui/btn-marron.webp');
+  background-size: 160% 420%;
+  background-position: center 44%;
+  background-repeat: no-repeat;
+  border-radius: 9999px;
+  color: #E6CEAC;
+  font-family: "sitka-text", "Sitka Text", Sitka, "Lora", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.btn-ui-marron:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+.btn-ui-rojo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #791512;
+  background-image: url('/assets/ui/btn-rojo.webp');
+  background-size: 185% 270%;
+  background-position: center 52%;
+  background-repeat: no-repeat;
+  border-radius: 9999px;
+  color: #E6CEAC;
+  font-family: "sitka-text", "Sitka Text", Sitka, "Lora", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.btn-ui-rojo:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
