@@ -366,9 +366,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       materials_text: input.materials_text,
       material_id: input.material_id || 1,
       techniques: input.techniques || 'Elaboración artesanal',
-      short_bio: `Hola! soy ${input.full_name.split(' ')[0]}, ya llevo ${
+      short_bio: `¡Hola! Soy ${input.full_name.split(' ')[0]}, llevo ${
         input.experience_years || '5 años'
-      } siendo artesano trabajando con ${input.materials_text}`,
+      } dedicándome a la artesanía, trabajando con ${input.materials_text}.`,
       history_text: `Mi acercamiento a la artesanía comenzó hace ${
         input.experience_years || 'varios años'
       }, trabajando con ${input.materials_text} mediante técnicas de ${

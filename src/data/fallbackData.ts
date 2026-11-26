@@ -89,7 +89,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 1,
     techniques: 'Cincelado, fileteado y costura a mano en cuero',
     short_bio:
-      'Hola! soy Ariel, ya llevo 10 años siendo artesana trabajando con cuero cincelado',
+      'Hola! soy Ariel, ya llevo 10 años dedicándome a la artesanía, trabajando con cuero cincelado',
     history_text:
       'Mi acercamiento a la artesanía comenzó hace más de diez años, cuando descubrí el mundo del trabajo con cuero crudo y cincelado. Al principio, todo era curiosidad: me interesaba conocer los materiales, entender cómo se comportaban y descubrir de qué manera podían transformarse en objetos...',
     avatar_url: '/assets/artisans/ariel-morales.jpg',
@@ -116,7 +116,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 4,
     techniques: 'Repujado y cincelado criollo',
     short_bio:
-      'Hola! soy Silvero, ya llevo 20 años siendo artesano trabajando con Plata y Minerales',
+      'Hola! soy Silvero, ya llevo 20 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'Desde joven aprendí el oficio de la platería tradicional correntina en el taller familiar, dedicando cada jornada a cincelar jarras, mates y piezas únicas que transmiten nuestra identidad.',
     avatar_url: '/assets/artisans/silvero-saladas.jpg',
@@ -139,7 +139,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 2,
     techniques: 'Cincelado de bombillas y tejido tradicional',
     short_bio:
-      'Hola! llevo 17 años siendo artesano trabajando con Plata y Minerales',
+      'Hola! llevo 17 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'El trabajo artesanal es parte de mi vida cotidiana. Hace 17 años combino técnicas heredadas de orfebrería y textil para crear piezas duraderas pensadas para el encuentro y el mate.',
     avatar_url: '/assets/artisans/sinforosa-blanco.jpg',
@@ -162,7 +162,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 4,
     techniques: 'Cuchillería criolla, vainas y cincelado',
     short_bio:
-      'Hola! soy Jorge, ya llevo 10 años siendo artesano trabajando con Plata y Minerales',
+      'Hola! soy Jorge, ya llevo 10 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'Especializado en cuchillería criolla, cabos y vainas cinceladas a mano. Cada pieza requiere decenas de horas de batido, recocido y cincelado para lograr grabados profundos y tradicionales.',
     avatar_url: '/assets/artisans/jorge-lossada.jpg',
@@ -185,7 +185,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 1,
     techniques: 'Soguería criolla y talabartería',
     short_bio:
-      'Hola! llevo 10 años siendo artesano trabajando con Plata y Minerales',
+      'Hola! llevo 10 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'Combino el trabajo en cuero crudo y la platería tradicional para elaborar billeteras, mates, cabos de rebenque y piezas camperas fieles a la tradición de Corrientes.',
     avatar_url: '/assets/artisans/a-cerdan.jpg',
@@ -208,7 +208,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 5,
     techniques: 'Talla en madera, fibra y orfebrería',
     short_bio:
-      'Hola! soy Agus, ya llevo 15 años siendo artesana trabajando con Plata y Minerales',
+      'Hola! soy Agus, ya llevo 15 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'Durante 15 años he explorado las formas y texturas de nuestra tierra, buscando que cada pieza cuente una historia ligada a los esteros, la fauna y las costumbres correntinas.',
     avatar_url: '/assets/artisans/agustina-morales.jpg',
@@ -231,7 +231,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 4,
     techniques: 'Cincelado, calado y engarce en plata',
     short_bio:
-      'Hola! soy Silvia, ya llevo 10 años siendo artesana trabajando con Plata y Minerales',
+      'Hola! soy Silvia, ya llevo 10 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'Mi acercamiento a la artesanía comenzó hace más de diez años, cuando descubrí el mundo del trabajo con metales y piedras naturales.',
     avatar_url: '/assets/artisans/a-cerdan.jpg',
@@ -254,7 +254,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 4,
     techniques: 'Mates de tres patas cincelados y repujados',
     short_bio:
-      'Hola! soy José, ya llevo 10 años siendo artesano trabajando con Plata y Minerales',
+      'Hola! soy José, ya llevo 10 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'Me apasiona la hechura de mates de plata cincelados de tres patas, rescatando los ornamentos florales y coloniales característicos del litoral.',
     avatar_url: '/assets/artisans/jose-lopez.jpg',
@@ -277,7 +277,7 @@ export const INITIAL_ARTISANS: Artisan[] = [
     material_id: 7,
     techniques: 'Alfarería, cuero y engarzado en metal',
     short_bio:
-      'Hola! ya llevo 10 años siendo artesano trabajando con Plata y Minerales',
+      'Hola! ya llevo 10 años dedicándome a la artesanía, trabajando con Plata y Minerales',
     history_text:
       'El oficio compartido en familia nos permitió mantener vivas las técnicas tradicionales, cuidando desde la selección de la materia prima hasta el pulido final.',
     avatar_url: '/assets/artisans/david-balbuena.jpg',
