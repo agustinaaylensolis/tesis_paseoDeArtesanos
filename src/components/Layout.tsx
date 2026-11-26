@@ -73,11 +73,7 @@ export const Header: React.FC = () => {
           className="hover:opacity-90 transition-opacity"
           aria-label="Inicio Corriente Artesanal"
         >
-          <img
-            src="/assets/ui/signo_marcario.svg"
-            alt="Corriente Artesanal"
-            className="h-[72px] md:h-[80px] -my-3 w-auto object-contain select-none"
-          />
+          <BrandLogo size="md" />
         </Link>
 
         <button
