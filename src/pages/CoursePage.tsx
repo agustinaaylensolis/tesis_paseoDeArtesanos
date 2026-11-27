@@ -128,8 +128,8 @@ export const CoursePage: React.FC = () => {
                 <p>
                   ¿Preferís leerlo impreso?, tenemos también una opción para vos,{' '}
                   <a
-                    href="/assets/course/manual-comunicacion-artesanos.pdf"
-                    download="Manual-Curso-Comunicacion-Artesanos.pdf"
+                    href="/assets/course/curso-de-comunicacion-para-artesanos.pdf"
+                    download="Curso-de-comunicacion-para-artesanos.pdf"
                     className="underline font-bold text-[#741712] hover:text-[#4A170E]"
                   >
                     descargando el siguiente archivo PDF
